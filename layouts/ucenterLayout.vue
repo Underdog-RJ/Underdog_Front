@@ -108,8 +108,8 @@
         <span v-if="loginInfo.sex===1">男</span>
         <span v-else>女</span>
           </div>
-          <div>
-            <!-- <input type="text"> -->
+          <div style="color:#fff;font-size:15px;font-weight:bold">
+            {{loginInfo.signature||'Ta很烂，什么也没留下'}}
           </div>
         </div>
           </div>

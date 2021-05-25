@@ -15,4 +15,12 @@ export default {
     })
   },
 
+  addOwnPage(ucenterMember){
+    return request({
+      url: '/educenter/member/addOwnPage',
+      method: 'post',
+      data:ucenterMember
+    })
+  }
+
 }

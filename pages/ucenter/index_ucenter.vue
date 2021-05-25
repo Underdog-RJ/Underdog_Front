@@ -2,7 +2,10 @@
   <div class="container u_index">
     <!-- 左边 -->
     <div class="show_left">
-      fasa
+     <div v-html="userInfo.ownpage">
+       {{userInfo.ownpage}}
+       adsadasdasd
+     </div>
     </div>
     <!-- 右边 -->
     <div class="show_right">
@@ -65,7 +68,13 @@ export default {
   layout: "ucenterLayout",
   name: "",
   data() {
-    return {};
+    return {
+      userInfo:""
+    };
+  },
+  created(){
+    this.userInfo=this.$store.state.userInfo;
+    console.log(this.userInfo)
   }
 };
 </script>

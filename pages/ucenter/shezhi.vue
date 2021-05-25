@@ -129,7 +129,8 @@
         </div>
         <div v-if="flagdialog === '3'">
           <div class="item">
-             <tinymce :height="300" v-model="userInfo.id"/>
+             <tinymce :height="300" v-model="userInfo.ownpage"/>
+             <el-button size="small" type="primary" @click="handleSubmitZhuye">提交</el-button>
           </div>
         </div>
       </el-col>
@@ -159,6 +160,13 @@
 import ucenter from "@/api/ucenter";
 import Tinymce from '@/components/Tinymce/index'
 export default {
+  watch:{
+    flagdialog:function(newVal){
+      if(newVal=='2'){
+        this.getUserInfo()
+      }
+    }
+  },
   components:{ Tinymce},  
   layout: "ucenterLayout",
   name: "",
@@ -169,7 +177,9 @@ export default {
       email: "",
       PassworddialogVisible: false,
       password: "",
-      userInfo: {},
+      userInfo: {
+        ownpage:""
+      },
       userSex:[
           {
               value:1,
@@ -183,16 +193,23 @@ export default {
     };
   },
   methods: {
+    async handleSubmitZhuye(){
+      const res=await ucenter.addOwnPage(this.userInfo);
+      if(res.data.code===20000){
+        this.$router.push('/ucenter/index_ucenter')
+        this.userInfo.ownpage=""
+      }
+    },
+    getUserInfo(){
+      this.userInfo=this.$store.state.userInfo
+      console.log(this.userInfo)
+    },
     handleSelect(index) {
       this.flagdialog = index;
     },
     // 上传封面成功调用的方法
     handleAvatarSuccess(res, file) {
-      this.blogInfo.firstPicture = res.data.url;
-    },
-    // 上传封面成功调用的方法
-    handleAvatarSuccessForZS(res, file) {
-      this.blogInfo.zsPicture = res.data.url;
+      this.userInfo.avatar = res.data.url;
     },
     // 上传之前调用的方法
     beforeAvatarUpload(file) {
@@ -207,24 +224,15 @@ export default {
       }
       return isJPG && isLt2M;
     },
-    // 上传之前调用的方法
-    beforeAvatarUploadForZS(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
-      }
-      if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
-      }
-      return isJPG && isLt2M;
-    },
+  
     async save(){
         const res=await ucenter.updateUserInfo(this.userInfo);
+        
         if(res.data.code===20000){
+            console.log(this.userInfo)
             this.$store.commit('initUserInfo', this.userInfo)
-            location.reload()
+            this.flagdialog='1'
+            this.userInfo={}
 
         }
     }
