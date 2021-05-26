@@ -1,89 +1,57 @@
 <template>
   <div class="container u_index">
     <div class="sayContent">
-      <textarea
-        class="textarea_1"
-        v-model="ucenterShuoshuo.shuoshuo"
-        placeholder="请输入此时此刻的心情"
-      >
-      </textarea>
-      <el-row style="right: -90%">
-        <el-button @click="addUcenterShuoshuo" type="primary" plain>发布说说</el-button>
-      </el-row>                   
-                    <section class="">
-                      <section class="lh-bj-list">
-                        <ul class="pr10">
-                          <li
-                            v-for="(comment, index) in data.items"
-                            v-bind:key="index"
-                          >
-                            <div class="noter-txt mt5">
-                              <p>{{ comment.shuoshuo}}</p>
-                            </div>
-                            <div class="of mt5">
-                              
-                              <span class="fr"
-                                >
-                                <el-button type="danger" icon="el-icon-delete" circle></el-button>
-                                <font class="fsize12 c-999 ml5">{{
-                                  comment.gmtCreate
-                                }}</font></span
-                              >
-                            </div>
-                          </li>
-                        </ul>
-                      </section>
-                    </section>
-    <!-- 公共分页 开始 -->
-    <div> 
-    <div class="paging bottom1">
-    <!-- undisable这个class是否存在，取决于数据属性hasPrevious -->
-    <a
-              :class="{ undisable: !data.hasPrevious }"
-              href="#"
-              title="首页"
-              @click.prevent="gotoPage(1)"
-              >首</a
-            >
-            <a
-              :class="{ undisable: !data.hasPrevious }"
-              href="#"
-              title="前一页"
-              @click.prevent="gotoPage(data.ipage.current - 1)"
-              >&lt;</a
-            >
-            <a
-              v-for="page in data.pages"
-              :key="page"
-              :class="{
-                current: data.current == page,
-                undisable: data.current == page
-              }"
-              :title="'第' + page + '页'"
-              href="#"
-              @click.prevent="gotoPage(page)"
-              >{{ page }}</a
-            >
-            <a
-              :class="{ undisable: !data.hasNext }"
-              href="#"
-              title="后一页"
-              @click.prevent="gotoPage(data.current + 1)"
-              >&gt;</a
-            >
-            <a
-              :class="{ undisable: !data.hasNext }"
-              href="#"
-              title="末页"
-              @click.prevent="gotoPage(data.pages)"
-              >末</a
-            >
-            <div class="clear" />
-          </div> 
+      <div>
+        <textarea
+          class="textarea_1"
+          v-model="ucenterShuoshuo.shuoshuo"
+          placeholder="请输入此时此刻的心情"
+        >
+        </textarea>
+        <el-row style="right: -85%">
+          <el-button @click="addUcenterShuoshuo" type="primary" plain
+            >发布说说</el-button
+          >
+        </el-row>
+      </div>
+    <section class="flex">
+        <section class="lh-bj-list flex">
+          <ul class="pr10 flex">
+            <li v-for="(comment, index) in data.items" v-bind:key="index">
+              <div class="noter-txt mt5">
+                <p>{{ comment.shuoshuo }}</p>  
+
+              </div>  
+                <span class="fleft">  
+                <font class="fsize12 c-999 ml5">{{
+                    comment.gmtCreate
+                  }}</font>
+                </span>
+                <span class="fright"> 
+                  <a v-if="comment.isHide" @click="setShuoshuohide(comment.id,0)" style="cursor:pointer">设为隐私</a>
+                  <a v-else @click="setShuoshuohide(comment.id,1)" style="cursor:pointer" >取消隐私</a>
+                  <el-divider direction="vertical"></el-divider>
+                  <a @click="removeUcenterShuoshuo(comment.id)" style="cursor:pointer">删除</a>
+
+
+                </span>
+            </li>
+          </ul>
+        </section>   
+        
+
+      </section>
+
+      </div> 
+  <div class="bottom1">
+        <el-pagination 
+        @current-change="gotoPage"
+        background
+        layout="prev, pager, next"
+        :total= "data.pages*10">
+        </el-pagination>
     </div>
-    <!-- 公共分页 结束 -->
-  </div>
-  </div>
+  </div>    
 </template>
 
 <script>
@@ -94,28 +62,52 @@ export default {
   data() {
     return {
       input: "",
-      page: 1, //当前页
-      limit: 6,
-      data:{},
-      ucenterShuoshuo: {
+      page: "", //当前页
+      limit: 10,
+      data: {
+
       },
+      ucenterShuoshuo: {},
+      id:"1"
     };
   },
   created() {
+    this.id=this.$store.state.userInfo.id;
     this.initshuoshuo();
+
   },
   methods: {
     //初始化说说
     initshuoshuo() {
-      shuoshuo
-        .getPageList(this.page, this.limit)
-        .then(response => {
-          this.data = response.data.data;
-        });
+      shuoshuo.getPageList(1, this.limit,this.id).then((response) => {
+        console.log("id是"+this.id);
+        this.data = response.data.data;
+        console.log("pages"+this.data.pages);
+      });
     },
-    addUcenterShuoshuo(){
-        shuoshuo.addShuoshuo(this.ucenterShuoshuo);
-    }
+    gotoPage(page) {     
+      shuoshuo.getPageList(page,this.limit,this.id).then((response) => {
+        this.data = response.data.data;
+      });
+    },
+    addUcenterShuoshuo() {
+      shuoshuo.addShuoshuo(this.ucenterShuoshuo).then((response) => {
+      this.initshuoshuo();
+      this.ucenterShuoshuo = {};
+      });;
+
+    },
+    removeUcenterShuoshuo(id){
+      shuoshuo.removeShuoshuo(id).then(() => {
+        this.initshuoshuo();
+      });;
+    },
+    setShuoshuohide(id,isHide){
+      shuoshuo.setHide(id,isHide).then(() => {
+        this.initshuoshuo();
+      });;
+
+    },
   },
 };
 </script>
@@ -127,31 +119,62 @@ export default {
   background-color: #fff;
   margin-right: 30px;
 }
+
 .sayContent {
+  position: relative;
   flex: 100%;
   background-color: #fff;
   min-height: 500px;
 }
-.u_index {
-  display: flex;
-  margin-bottom: 10px;
+.fleft {
+position: relative;
+left: -0.5%;
 }
+.fright{
+  position: relative;
+  right: -75%;
+}
+.u_index {
+  min-height: 500px;
+  margin-bottom: 10px;
+  margin:1 ;
+}
+
 .textarea_1 {
-  display: flex;
-  width: 98%;
-  margin: 1%;
-  height: 20%;
+  position: relative;
+  width: 90%;
+  /* margin: auto; */
+  margin-top:30px;
+  height: 10%;
+  left: 5%;
   border: solid 1px rgb(20, 20, 20);
   /* outline-color: rgb(1, 1, 235); */
+}
+.flex{ 
+position: relative; 
 }
 textarea:hover {
   border: solid 1px rgb(13, 147, 180);
 }
+font:hover{
+  color: rgb(57, 45, 219);
+}
+
 .submit-say {
   line-height: 70px;
   position: absolute;
   left: 80%;
   text-align: center;
+}
+.hidex{
+  display:inline;
+}
+.fshuoshuo{
+  position: flex; 
+  margin: 5%;
+}
+.hidey{
+display:  none;
 }
 .el-input {
   margin-right: 300px;
@@ -160,7 +183,11 @@ textarea:hover {
   text-align: center;
 }
 .bottom1 {
-  position:flex;
-  bottom:0;
+   /* position: absolute; */ 
+    margin:auto;
+    text-align: center;
+    /* top:20%; */
+    /* left: 50%;
+     bottom: 0;   */
 }
 </style>
