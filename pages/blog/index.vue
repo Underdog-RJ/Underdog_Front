@@ -239,6 +239,10 @@ export default {
 };
 </script>
 <style scoped>
+.blog-img{
+  display: flex;
+  align-items: center;
+}
 .title_bolg{
   font-size: 20px;
   font-weight: bold;
@@ -285,13 +289,13 @@ export default {
 }
 .img-float {
   margin-right: 10px;
+  text-align: center;
   height: 150px;
   width: 250px;
 }
 .img-float img{
   border-radius: 10px;
-  margin: 10px;
-  text-align: center;
+  margin: auto;
   width: 100%;
 }
 .avatar {

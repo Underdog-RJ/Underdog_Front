@@ -27,9 +27,9 @@
                     <span>博客首图</span>
                   </h6>
                   <div class="course-txt-body-wrap">
-                    <section class="blog_img">
+                    <div class="blog_img">
                       <img :src="blogInfo.firstPicture" alt="" />
-                    </section>
+                    </div>
                   </div>
                 </div>
               </article>
@@ -317,6 +317,9 @@ export default {
 };
 </script>
 <style scoped>
+.blog_img{
+  text-align: center;
+}
 .zsTitle{
   background-color: #cce5ff;
   border-radius: 10px;

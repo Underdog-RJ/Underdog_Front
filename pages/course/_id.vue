@@ -49,7 +49,7 @@
             </section>
             <section class="c-attr-mt" v-if="isBuy || Number(courseWebVo.price) === 0">
               <a
-                href="#"
+                :href="'/player/'+courseId"
                 title="立即观看"
                 class="comm-btn c-btn-3"
                 >立即观看</a
@@ -152,16 +152,10 @@
                                 :key="video.id"
                               >
                                 <!--target="_blank"在新的页面打开-->
-                                <nuxt-link
-                                  :to="'/player/' + video.videoSourceId"
                           
-                                >
-                                  <span class="fr">
-                                    <i class="free-icon vam mr10">免费试听</i>
-                                  </span>
                                   <em class="lh-menu-i-2 icon16 mr5">&nbsp;</em
                                   >{{ video.title }}
-                                </nuxt-link>
+                                
                               </li>
                             </ol>
                           </li>
@@ -312,7 +306,10 @@
           <div class="i-box">
             <div>
               <section class="c-infor-tabTitle c-tab-title">
-                <a title href="javascript:void(0)">主讲讲师</a>
+                <!-- <a title href="/teacher/">主讲讲师</a> -->
+                <nuxt-link :to="'/teacher/'+courseWebVo.teacherId">
+                  <span>主讲讲师</span>
+                </nuxt-link>
               </section>
               <section class="stud-act-list">
                 <ul style="height: auto;">
@@ -328,9 +325,9 @@
                       </a>
                     </div>
                     <section class="hLh30 txtOf">
-                      <a class="c-333 fsize16 fl" href="#">{{
-                        courseWebVo.teacherName
-                      }}</a>
+                      <nuxt-link :to="'/teacher/'+courseWebVo.teacherId">
+                  <span>主讲讲师</span>
+                </nuxt-link>
                     </section>
                     <section class="hLh20 txtOf">
                       <span class="c-999">{{ courseWebVo.intro }}</span>
@@ -384,12 +381,8 @@ export default {
     initCourseInfo() {
       courseApi.getCourseInfo(this.courseId).then(response => {
         this.courseWebVo = response.data.data.courseWebVo;
-        console.log(this.courseWebVo)
         this.chapterVideoList = response.data.data.chapterVideoList;
         this.isBuy = response.data.data.isBuy;
-        this.$store.commit('initChapterVideoList',this.chapterVideoList)
-        this.$store.commit('initCourseTitle',this.courseWebVo.title)
-
       });
     },
     //初始化评论
