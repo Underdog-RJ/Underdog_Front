@@ -2,9 +2,8 @@
   <div class="container u_index">
     <!-- 左边 -->
     <div class="show_left">
-     <div v-html="userInfo.ownpage">
-       {{userInfo.ownpage}}
-       adsadasdasd
+     <div v-html="ucenterMemberZhuye.content">
+       {{ucenterMemberZhuye.content}}
      </div>
     </div>
     <!-- 右边 -->
@@ -64,17 +63,26 @@
 </template>
 
 <script>
+import ucenter from "@/api/ucenter";
 export default {
   layout: "ucenterLayout",
   name: "",
   data() {
     return {
-      userInfo:""
+      userInfo:{},
+      ucenterMemberZhuye:{}
+
     };
   },
   created(){
     this.userInfo=this.$store.state.userInfo;
-    console.log(this.userInfo)
+    this.getOwnPage()
+  },
+  methods:{
+     async getOwnPage(){
+        const res= await ucenter.getOwnPage()
+       this.ucenterMemberZhuye=res.data.data.ucenterMemberZhuye;
+      }
   }
 };
 </script>

@@ -37,7 +37,7 @@
                 </span>
               </li>
               <li class="item_c">绑定邮箱</li>
-              <li class="item_c">1768976999@qq.com</li>
+              <li class="item_c">{{userInfo.mail}}</li>
               <li class="item_c">
                 <el-button
                   @click="EmaildialogVisible = true"
@@ -58,7 +58,7 @@
                 </span>
               </li>
               <li class="item_c">登录密码</li>
-              <li class="item_c">1213123</li>
+              <li class="item_c" type="password" >1213123</li>
               <li class="item_c">
                 <el-button
                   @click="PassworddialogVisible = true"
@@ -129,7 +129,7 @@
         </div>
         <div v-if="flagdialog === '3'">
           <div class="item">
-             <tinymce :height="300" v-model="userInfo.ownpage"/>
+             <tinymce :height="300" v-model="ucenterMemberZhuye.content"/>
              <el-button size="small" type="primary" @click="handleSubmitZhuye">提交</el-button>
           </div>
         </div>
@@ -139,7 +139,7 @@
       <el-input v-model="email" placeholder="请您输入邮箱"></el-input>
       <span slot="footer" class="dialog-footer">
         <el-button @click="EmaildialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="EmaildialogVisible = false"
+        <el-button type="primary" @click="setMail"
           >确 定</el-button
         >
       </span>
@@ -178,8 +178,9 @@ export default {
       PassworddialogVisible: false,
       password: "",
       userInfo: {
-        ownpage:""
+        
       },
+      ucenterMemberZhuye:{},
       userSex:[
           {
               value:1,
@@ -193,11 +194,20 @@ export default {
     };
   },
   methods: {
+     async getOwnPage(){
+        const res= await ucenter.getOwnPage()
+       this.ucenterMemberZhuye=res.data.data.ucenterMemberZhuye;
+      },
+    async setMail(){
+        console.log(this.email)
+        const res= await ucenter.setMail(this.email)
+        this.EmaildialogVisible=false
+    },
     async handleSubmitZhuye(){
-      const res=await ucenter.addOwnPage(this.userInfo);
+      const res=await ucenter.addOwnPage(this.ucenterMemberZhuye);
       if(res.data.code===20000){
         this.$router.push('/ucenter/index_ucenter')
-        this.userInfo.ownpage=""
+        this.ucenterMemberZhuye.content=""
       }
     },
     getUserInfo(){
@@ -239,7 +249,8 @@ export default {
   },
   created() {
     this.userInfo = this.$store.state.userInfo;
-    // console.log(this.userInfo);
+    this.getOwnPage()
+
   }
 };
 </script>

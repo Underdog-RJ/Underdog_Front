@@ -21,6 +21,21 @@ export default {
       method: 'post',
       data:ucenterMember
     })
+  },
+
+  
+  setMail(mail){
+    return request({
+      url: '/educenter/member/setOwnMail/'+mail,
+      method: 'get'
+    })
+  },
+
+  getOwnPage(){
+    return request({
+      url: '/educenter/member/getOwnPage/',
+      method: 'get'
+    })
   }
 
 }

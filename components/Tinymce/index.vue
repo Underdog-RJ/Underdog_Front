@@ -4,9 +4,6 @@
     <div class="editor-custom-btn-container">
       <editorImage color="#1890ff" class="editor-upload-btn" @successCBK="imageSuccessCBK"/>
     </div>
-    <div>
-      dasdasdad
-    </div>
   </div>
 </template>
 

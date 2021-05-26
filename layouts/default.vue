@@ -188,15 +188,22 @@ export default {
       window.location.href="/"
     },
     //微信登录显示的方法
-    wxLogin(){
+    async wxLogin(){
       //把token值放到cookie里面
+      //debugger
       cookie.set('underdogedu_token',this.token,{domain:'localhost'})
       cookie.set('underdogedu_ucenter','',{domain:'localhost'})
       //调用接口，根据token值获取用户信息
-      loginApi.getLoginUserInfo().then(response=>{
-        this.loginInfo=response.data.data.userInfo
-         cookie.set('underdogedu_ucenter',this.loginInfo,{domain:'localhost'})
-      })
+      // loginApi.getLoginUserInfo().then(response=>{
+      //   this.loginInfo=response.data.data.userInfo
+      //    cookie.set('underdogedu_ucenter',this.loginInfo,{domain:'localhost'})
+      // })
+     const res= await loginApi.getLoginUserInfo();
+     if(res.data.code===20000){
+       this.loginInfo=res.data.data.userInfo
+       console.log(this.loginInfo)
+       cookie.set('underdogedu_ucenter',this.loginInfo,{domain:'localhost'})
+     }
     },
     
   },
