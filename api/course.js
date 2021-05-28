@@ -22,6 +22,7 @@ export default {
       method: 'get'
     })
   },
+<<<<<<< HEAD
   setCollect(courseId,flag) {
     return request({
       url: '/educenter/ucenter-kecheng/set_collect',
@@ -41,5 +42,14 @@ export default {
       }
     })
   }
+=======
+    //课程详情的方法
+    getCourseInfo(id) {
+      return request({
+        url: `/eduservice/coursefront/getFrontCourseInfo/${id}`,
+        method: 'get'
+      })
+    },
+>>>>>>> 16ed877176d0f7b47501a7911713935c6e5890fa
 
 }

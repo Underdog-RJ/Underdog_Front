@@ -21,6 +21,7 @@
         </el-menu>
       </el-col>
       <el-col :span="20">
+<<<<<<< HEAD
         <div v-if="flagdialog === '1'">
           <div class="item">
             <article class="comm-course-list" v-if="data.total > 0">
@@ -38,27 +39,64 @@
                           :href="'/course/' + item.id"
                           title="开始学习"
                           class="comm-btn c-btn-1"
+=======
+        <div v-if="flagdialog === '1'">              
+    <div id="aCoursesList">
+      <!-- 网校课程 开始 -->
+        <section class="container">
+
+          <div>
+            <article class="comm-course-list">
+              <ul class="of" id="bna">
+                <li v-for="course in eduList" :key="course.id">
+                  <div class="cc-l-wrap">
+                    <section class="course-img">
+                      <img
+                        :src="course.cover"
+                       
+                        class="img-responsive"
+                        :alt="course.title"
+                      />
+                      <div class="cc-mask">
+                        <a :href="'/course/'+course.id" title="开始学习" class="comm-btn c-btn-1"
+>>>>>>> 16ed877176d0f7b47501a7911713935c6e5890fa
                           >开始学习</a
                         >
                       </div>
                     </section>
                     <h3 class="hLh30 txtOf mt10">
                       <a
+<<<<<<< HEAD
                         :href="'/course/' + item.id"
                         :title="item.title"
                         class="course-title fsize18 c-333"
                         >{{ item.title }}</a
+=======
+                        :href="'/course/'+course.id"
+                        :title="course.title"
+                        class="course-title fsize18 c-333"
+                        >{{ course.title }}</a
+>>>>>>> 16ed877176d0f7b47501a7911713935c6e5890fa
                       >
                     </h3>
                     <section class="mt10 hLh20 of">
                       <span
+<<<<<<< HEAD
                         v-if="Number(item.price) === 0"
                         class="fr jgTag bg-green"
+=======
+                        class="fr jgTag bg-green"
+                        v-if="Number(course.price) === 0"
+>>>>>>> 16ed877176d0f7b47501a7911713935c6e5890fa
                       >
                         <i class="c-fff fsize12 f-fA">免费</i>
                       </span>
                       <span class="fl jgAttr c-ccc f-fA">
+<<<<<<< HEAD
                         <i class="c-999 f-fA">{{ item.viewCount }}人学习</i>
+=======
+                        <i class="c-999 f-fA">9634人学习</i>
+>>>>>>> 16ed877176d0f7b47501a7911713935c6e5890fa
                         |
                         <i class="c-999 f-fA">9634评论</i>
                       </span>
@@ -69,6 +107,7 @@
               <div class="clear"></div>
             </article>
           </div>
+<<<<<<< HEAD
           <div>
             <div class="paging">
               <!-- undisable这个class是否存在，取决于数据属性hasPrevious -->
@@ -115,6 +154,11 @@
               <div class="clear" />
             </div>
           </div>
+=======
+        </section>
+      </div>
+      <!-- /网校课程 结束 -->
+>>>>>>> 16ed877176d0f7b47501a7911713935c6e5890fa
         </div>
         <div v-if="flagdialog === '2'">
           <div class="item"></div>
