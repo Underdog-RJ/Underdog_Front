@@ -22,5 +22,24 @@ export default {
       method: 'get'
     })
   },
+  setCollect(courseId,flag) {
+    return request({
+      url: '/educenter/ucenter-kecheng/set_collect',
+      method: 'get',
+      params:{
+        courseId:courseId,
+        flag:flag
+      }
+    })
+  },
+  isCollect(courseId) {
+    return request({
+      url: '/educenter/ucenter-kecheng/is_collect',
+      method: 'get',
+      params:{
+        courseId:courseId
+      }
+    })
+  }
 
 }

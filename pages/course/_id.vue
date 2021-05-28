@@ -43,8 +43,11 @@
             </section>
             <section class="c-attr-mt of">
               <span class="ml10 vam">
-                <em class="icon18 scIcon"></em>
-                <a class="c-fff vam" title="收藏" href="#">收藏</a>
+                <span>
+                <em v-if="this.flag==0" class="icon18 scIcon"></em>
+                <em v-else class="icon18 sc-end"></em> 
+                </span>             
+                <a @click="setCollect" class="c-fff vam" title="收藏" href="#">收藏</a>
               </span>
             </section>
             <section class="c-attr-mt" v-if="isBuy || Number(courseWebVo.price) === 0">
@@ -365,6 +368,8 @@ export default {
         content: "",
         courseId: ""
       },
+      userId:"1",
+      flag:0,
       courseInfo: {},
       chapterVideoList: [],
       isBuy: false,
@@ -373,8 +378,11 @@ export default {
     };
   },
   created() {
+    this.userId=this.$store.state.userInfo.id;
     this.initComment();
     this.initCourseInfo();
+    this.isCollect();
+
   },
   methods: {
     //查询课程详情信息
@@ -410,6 +418,21 @@ export default {
           this.data = response.data.data;
         });
     },
+    setCollect(){
+
+      courseApi.
+      setCollect(this.$route.params.id,this.flag)
+      .then(response => {
+         this.isCollect();
+        });
+    },
+    isCollect(){
+      courseApi.isCollect(this.$route.params.id)
+      .then(response => {
+          this.flag = response.data.data.flag;
+        });
+      },
+    
     //生成订单
     createOrders() {
       ordersApi.createOrders(this.courseId).then(response => {
