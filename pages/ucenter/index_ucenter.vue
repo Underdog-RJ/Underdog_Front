@@ -2,9 +2,9 @@
   <div class="container u_index">
     <!-- 左边 -->
     <div class="show_left">
-     <div v-html="ucenterMemberZhuye.content">
+     <!-- <div v-html="ucenterMemberZhuye.content">
        {{ucenterMemberZhuye.content}}
-     </div>
+     </div> -->
     </div>
     <!-- 右边 -->
     <div class="show_right">
