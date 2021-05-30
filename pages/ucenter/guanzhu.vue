@@ -22,6 +22,13 @@
             <i class="el-icon-setting"></i>
             <span slot="title">我的关注</span>
           </el-menu-item>
+          <el-menu-item index="5">
+            <i class="el-icon-message"></i>
+            <span slot="title"
+              >您的消息
+              <span>{{ unReadMessageCount }}</span>
+            </span>
+          </el-menu-item>
         </el-menu>
       </el-col>
       <el-col :span="20">
@@ -46,7 +53,7 @@
                 <div>{{ item.signature || "TA很懒，什么都没有留下...." }}</div>
               </div>
               <div class="operation">
-                <el-button type="success" size="mini">进入Ta的主页</el-button>
+                <el-button type="success" size="mini" @click="GoPage(item.id)">进入Ta的主页</el-button>
                 <el-button
                   type="primary"
                   size="mini"
@@ -73,7 +80,7 @@
               <div>{{ item.signature || "TA很懒，什么都没有留下...." }}</div>
             </div>
             <div class="operation">
-              <el-button type="success" size="mini">进入Ta的主页</el-button>
+              <el-button type="success" size="mini"  @click="GoPage(item.id)">进入Ta的主页</el-button>
               <el-button
                 type="primary"
                 size="mini"
@@ -104,7 +111,7 @@
               <div>{{ item.signature || "TA很懒，什么都没有留下...." }}</div>
             </div>
             <div class="operation">
-              <el-button type="success" size="mini">进入Ta的主页</el-button>
+              <el-button type="success" size="mini"  @click="GoPage(item.id)">进入Ta的主页</el-button>
             </div>
           </div>
         </div>
@@ -156,6 +163,26 @@
             </div>
           </div>
         </div>
+        <div v-if="flagdialog === '5'">
+          <div
+            v-for="item in UnUseList"
+            class="item"
+            :key="item.id"
+            @click="toChat(item.id, item.avatar)"
+          >
+            <div class="avatar">
+              <el-avatar :src="item.avatar"></el-avatar>
+            </div>
+            <div class="show">
+              <div>{{ item.nickname }}</div>
+            </div>
+            <div class="operation">
+              <span style="color:teal;font-size:15px;margin-right:5px"
+                >消息数量：{{ item.count }}</span
+              >
+            </div>
+          </div>
+        </div>
       </el-col>
     </el-row>
   </div>
@@ -192,19 +219,50 @@ export default {
           msg: ""
         },
         ext: ""
-      }
+      },
+      unReadMessageList: [],
+      UnUseList: []
     };
   },
   mounted() {
     this.init();
+    this.getUnReadMessageList();
     this.socket.onmessage = res => {
       console.log("收到服务器内容：" + res.data);
-      let messageVo = { type: 2, msg: JSON.parse(res.data).tbChatRecord.message };
+      let messageVo = {
+        type: 2,
+        msg: JSON.parse(res.data).tbChatRecord.message
+      };
       this.messageList.push(messageVo);
-      console.log(this.messageList);
+      let Temp = "";
+      let flag = false;
+      Temp = JSON.parse(res.data).tbChatRecord.userId;
+      for (let i = 0; i < this.unReadMessageList.length; i++) {
+        if (Temp == this.unReadMessageList[i].name) {
+          this.unReadMessageList[i].count = this.unReadMessageList[i].count + 1;
+          flag = true;
+          break;
+        }
+      }
+      if (flag == false) {
+        let tempMessage = {};
+        tempMessage.name = Temp;
+        tempMessage.count = 1;
+        this.unReadMessageList.push(tempMessage);
+      }
     };
   },
   methods: {
+    GoPage(id){
+      this.$router.push('/other/'+id)
+    },
+    //全部的未读消息
+    async getUnReadMessageList() {
+      console.log("safsafasas"+this.userId);
+      const res = await ganzhu.getRecordByUserId(this.userId);
+      this.unReadMessageList = res.data.data.list;
+      console.log("未读消息" + this.unReadMessageList);
+    },
     async search() {
       const res = await ganzhu.getUserByName(this.name);
       this.userList = res.data.data.list;
@@ -215,11 +273,13 @@ export default {
     },
     handleSelect(index) {
       this.flagdialog = index;
+      if (index === "5") {
+        this.getUserInfoByIds();
+      }
     },
     async findFriendReqByUserid() {
       const res = await ganzhu.findFriendReqByUserid();
       this.newsList = res.data.data.list;
-      console.log(this.newsList);
     },
     async handleAgree(id) {
       const res = await ganzhu.acceptFriendReq(id);
@@ -241,6 +301,8 @@ export default {
     },
     toChat(friendId, friendAvatar) {
       this.friendId = friendId;
+      const i = this.unReadMessageList.findIndex(x => x.name == friendId);
+      this.unReadMessageList.splice(i);
       this.flagdialog = "4";
       this.friendAvatar = friendAvatar;
       this.getAllMessage(this.userId, friendId);
@@ -254,7 +316,7 @@ export default {
       } else {
         // 实例化socket
         var socket = new WebSocket(this.path);
-        console.log(socket);
+        console.log("saas"+socket);
         this.socket = socket;
         socket.onopen = res => {
           console.log("连接建立成功");
@@ -266,7 +328,6 @@ export default {
     },
     //获取全部聊天记录
     async getAllMessage(userId, friendId) {
-      //console.log(userId,fr)
       const res = await ganzhu.getAllMessage(userId, friendId);
       this.messageList = res.data.data.list;
       console.log(this.messageList);
@@ -281,6 +342,19 @@ export default {
       console.log(this.messageList);
       this.messageValue = "";
       this.socket.send(JSON.stringify(this.message));
+    },
+    async getUserInfoByIds() {
+      const res = await ganzhu.getUserInfoByIds(this.unReadMessageList);
+      this.UnUseList = res.data.data.list;
+    }
+  },
+  computed: {
+    unReadMessageCount: function() {
+      var temp = 0;
+      for (let i = 0; i < this.unReadMessageList.length; i++) {
+        temp += this.unReadMessageList[i].count;
+      }
+      return temp;
     }
   },
   created() {

@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        banwo
+        待开发，敬请期待
     </div>
 </template>
 

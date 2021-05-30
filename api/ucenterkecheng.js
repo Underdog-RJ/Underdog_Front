@@ -8,4 +8,10 @@ export default {
       method: 'get'
     })
   },
+  getPayKecheng(page,limit) {
+    return request({
+      url: `/educenter/ucenter-kecheng/get_pay/${page}/${limit}`,
+      method: 'get'
+    })
+  },
 }

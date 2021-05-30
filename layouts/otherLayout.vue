@@ -89,68 +89,7 @@
         <div class="clear"></div>
       </section>
     </header>
-    <!-- /公共头引入 -->
-    <div class="container">
-      <div class="bg">
-          <div class="bg_content">
-             <div class="avatar">
-            <el-avatar
-              class="avatar"
-              shape="circle"
-              :size="80"
-              :src="loginInfo.avatar"
-            >
-            </el-avatar>
-        </div>
-        <div class="content_right">
-          <div>
-             <span >{{ loginInfo.nickname }}</span>
-        <span v-if="loginInfo.sex===1">男</span>
-        <span v-else>女</span>
-          </div>
-          <div style="color:#fff;font-size:15px;font-weight:bold">
-            {{loginInfo.signature||'Ta很懒，什么也没留下'}}
-          </div>
-        </div>
-          </div>
-      </div>
-
-      <div class="navStyle">
-        <ul class="nav nav_ucenter">
-          <router-link
-            to="/ucenter/index_ucenter"
-            tag="li"
-            active-class="current"
-            exact
-          >
-            <a>主页</a>
-          </router-link>
-          <router-link to="/ucenter/jianghu" tag="li" active-class="current">
-            <a>江湖</a>
-          </router-link>
-          <router-link to="/ucenter/kecheng" tag="li" active-class="current">
-            <a>课程</a>
-          </router-link>
-          <router-link to="/ucenter/shuoshuo" tag="li" active-class="current">
-            <a>说说</a>
-          </router-link>
-          <router-link to="/ucenter/banwo" tag="li" active-class="current">
-            <a>伴我</a>
-          </router-link>
-          <router-link to="/ucenter/shezhi" tag="li" active-class="current">
-            <a>设置</a>
-          </router-link>
-        </ul>
-        <ul class="nav nav_right">
-          <router-link to="/ucenter/guanzhu" tag="li" active-class="current">
-            <a>我的关注</a>
-          </router-link>
-          <router-link to="/ucenter/fenxi" tag="li" active-class="current">
-            <a>我的粉丝</a>
-          </router-link>
-        </ul>
-      </div>
-    </div>
+   
 
     <nuxt />
 

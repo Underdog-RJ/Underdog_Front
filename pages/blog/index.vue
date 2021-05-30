@@ -75,7 +75,6 @@
                     <img :src="item.firstPicture" class="" :alt="item.title" />
                   </div>
                   <div class="show_left">
-
                     <div class="title_bolg">
                       <a :href="'/blog/' + item.id" :title="item.title">{{
                         item.title
@@ -241,7 +240,6 @@ export default {
 <style scoped>
 .blog-img{
   display: flex;
-  align-items: center;
 }
 .title_bolg{
   font-size: 20px;
@@ -288,8 +286,7 @@ export default {
   display: block;
 }
 .img-float {
-  margin-right: 10px;
-  text-align: center;
+  margin: 20px;
   height: 150px;
   width: 250px;
 }

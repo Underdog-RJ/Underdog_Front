@@ -47,27 +47,13 @@
                       <div class="item_center">
                         <span>{{ item.descption }}</span>
                       </div>
-
                       <div class="item_bottom">
                         <a href="">
                           <span> 作者: {{ item.authorNickname }} </span>
                         </a>
                         <span> 浏览: {{ item.viewCount }} </span>
                         <span>时间: {{ item.gmtCreate }}</span>
-                        <div class="operation">
-                          <el-button
-                            type="primary"
-                            @click="handleEdit(item.id)"
-                            size="small"
-                            >编辑</el-button
-                          >
-                          <el-button
-                            type="danger"
-                            @click="handleDelete(item.id)"
-                            size="small"
-                            >删除</el-button
-                          >
-                        </div>
+  
                       </div>
                     </div>
                   </section>

@@ -286,7 +286,7 @@ export default {
   display: block;
 }
 .img-float {
-  margin-right: 10px;
+  margin: 20px;
   height: 150px;
   width: 250px;
 }

@@ -32,8 +32,6 @@
                   <a v-else @click="setShuoshuohide(comment.id,1)" style="cursor:pointer" >取消隐私</a>
                   <el-divider direction="vertical"></el-divider>
                   <a @click="removeUcenterShuoshuo(comment.id)" style="cursor:pointer">删除</a>
-
-
                 </span>
             </li>
           </ul>

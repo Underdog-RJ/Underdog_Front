@@ -2,9 +2,9 @@
   <div class="container u_index">
     <!-- 左边 -->
     <div class="show_left">
-     <!-- <div v-html="ucenterMemberZhuye.content">
-       {{ucenterMemberZhuye.content}}
-     </div> -->
+     <div v-html="zhuye.content" class="contentHtml">
+       {{zhuye.content}}
+     </div>
     </div>
     <!-- 右边 -->
     <div class="show_right">
@@ -17,18 +17,18 @@
       <div class="show_column2">
 
         <div class="show_column2_item">
-          <span>0</span>
+          <span>{{countInfo.blog}}</span>
           <span>文章数</span>
         </div>
 
         <div class="show_column2_item">
-          <span>0</span>
-          <span>评论数</span>
+          <span>{{countInfo.kecheng}}</span>
+          <span>课程数</span>
         </div>
 
         <div class="show_column2_item">
-          <span>0</span>
-          <span>学习数</span>
+          <span>{{countInfo.shuoshuo}}</span>
+          <span>说说数</span>
         </div>
       </div>
       <div class="show_column3">
@@ -38,11 +38,11 @@
           <div class="show_column3_item2">
               <div>
                 <span>用户ID: </span>
-                <span>2332532</span>
+                <span>{{userInfo.id}}</span>
               </div>
               <div>
                 <span>昵称: </span>
-                <span>RJ</span>
+                <span>{{userInfo.nickname}}</span>
               </div>
               <div>
                 <span>等级: </span>
@@ -54,7 +54,7 @@
               </div>
               <div>
                 <span>注册时间: </span>
-                <span>2021-02-03</span>
+                <span>{{userInfo.gmtCreate}}</span>
               </div>
           </div>
       </div>
@@ -70,24 +70,42 @@ export default {
   data() {
     return {
       userInfo:{},
-      ucenterMemberZhuye:{}
+     zhuye:{
+        content:"这家伙很懒，什么也没留下"
+      },
+      countInfo:{
 
+      }
     };
+  },
+  mounted(){
+      this.getUserCountInfo()
   },
   created(){
     this.userInfo=this.$store.state.userInfo;
+    console.log(this.userInfo)
     this.getOwnPage()
   },
   methods:{
+    async getUserCountInfo(){
+      const res= await ucenter.getUserCountInfo()
+     this.countInfo=res.data.data.countInfo
+    },
      async getOwnPage(){
         const res= await ucenter.getOwnPage()
-       this.ucenterMemberZhuye=res.data.data.ucenterMemberZhuye;
+        if(res.data.data.ucenterMemberZhuye!=null&&res.data.data.ucenterMemberZhuye!=''){
+            this.zhuye=res.data.data.ucenterMemberZhuye;
+        }
       }
   }
 };
 </script>
 
 <style scoped>
+
+.contentHtml>>>img{
+        width: 100%;
+    }
 .in-wrap{
   background-color: #fff !important;
 }
@@ -111,6 +129,7 @@ export default {
   background-color: #fff;
   margin-right: 30px;
   min-height: 500px;
+  max-width: 70%;
 }
 .show_right {
   flex: 25%;
@@ -140,6 +159,7 @@ export default {
   display: flex;
   flex-direction: column;
   background-color: #fff;
+  max-height: 300px;
 }
 .show_column3_item1{
   font-size: 30px;

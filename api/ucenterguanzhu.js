@@ -50,4 +50,21 @@ export default {
       method: 'get'
     })
   },
+
+  //获取全部用户的未读消息
+  getRecordByUserId(userId) {
+    return request({
+      url:`/chat/chatRecord/getRecordByUserId/${userId}`,
+      method: 'get'
+    })
+  },
+
+  //根据根据ids获取用户信息
+  getUserInfoByIds(ids) {
+    return request({
+      url:`/educenter/member/getUserInfoByIds`,
+      method: 'post',
+      data:ids
+    })
+  },
 }

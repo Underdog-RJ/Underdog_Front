@@ -29,7 +29,7 @@
           <div class="item">
             <ul class="item_zh">
               <li class="item_1">
-                <span v-if="email !== ''">
+                <span v-if="userInfo.email !== '' ">
                   <i class="el-icon-check"></i>
                 </span>
                 <span v-else>
@@ -37,7 +37,7 @@
                 </span>
               </li>
               <li class="item_c">绑定邮箱</li>
-              <li class="item_c">{{userInfo.mail}}</li>
+              <li class="item_c">{{ userInfo.mail }}</li>
               <li class="item_c">
                 <el-button
                   @click="EmaildialogVisible = true"
@@ -58,7 +58,7 @@
                 </span>
               </li>
               <li class="item_c">登录密码</li>
-              <li class="item_c" type="password" >1213123</li>
+              <li class="item_c" type="password">1213123</li>
               <li class="item_c">
                 <el-button
                   @click="PassworddialogVisible = true"
@@ -66,6 +66,27 @@
                   size="mini"
                   round
                   >修改密码</el-button
+                >
+              </li>
+            </ul>
+             <ul class="item_zh">
+              <li class="item_1">
+                <span v-if="userInfo.mobile !== ''">
+                  <i class="el-icon-check"></i>
+                </span>
+                <span v-else>
+                  <i class="el-icon-close"></i>
+                </span>
+              </li>
+              <li class="item_c">绑定手机</li>
+              <li class="item_c">{{userInfo.mobile}}</li>
+              <li class="item_c">
+                <el-button
+                  @click="mobiledialogVisible = true"
+                  type="success"
+                  size="mini"
+                  round
+                  >修改电话</el-button
                 >
               </li>
             </ul>
@@ -102,10 +123,10 @@
                 <el-form-item label="性别">
                   <el-select v-model="userInfo.sex" placeholder="请选择">
                     <el-option
-                        v-for="item in userSex"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
+                      v-for="item in userSex"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
                     >
                     </el-option>
                   </el-select>
@@ -115,35 +136,58 @@
                 ><el-form-item label="个性签名">
                   <el-input v-model="userInfo.signature" />
                 </el-form-item>
-<el-form-item label="年龄">
+                <el-form-item label="年龄">
                   <el-input v-model="userInfo.age" />
                 </el-form-item>
                 <el-form-item style="text-align:center">
-                  <el-button type="warning" @click="save"
-                    >保存</el-button
-                  >
+                  <el-button type="warning" @click="save">保存</el-button>
                 </el-form-item>
-              </el-form>~
+              </el-form>
             </div>
           </div>
         </div>
         <div v-if="flagdialog === '3'">
           <div class="item">
-             <tinymce :height="300" v-model="ucenterMemberZhuye.content"/>
-             <el-button size="small" type="primary" @click="handleSubmitZhuye">提交</el-button>
+            <tinymce :height="300" v-model="zhuye.content" />
+            <el-button size="small" type="primary" @click="handleSubmitZhuye"
+              >提交</el-button
+            >
           </div>
         </div>
       </el-col>
     </el-row>
-    <el-dialog :visible.sync="EmaildialogVisible" width="30%">
-      <el-input v-model="email" placeholder="请您输入邮箱"></el-input>
+    <el-dialog 
+    @close="editDialogClosed"
+    :visible.sync="EmaildialogVisible" 
+    width="30%">
+      <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">
+        <el-form-item label="邮箱" prop="email">
+          <el-input v-model="editForm.email"></el-input>
+        </el-form-item>
+      </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="EmaildialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="setMail"
-          >确 定</el-button
-        >
+        <el-button type="primary" @click="setMail">确 定</el-button>
       </span>
     </el-dialog>
+    
+
+   <el-dialog 
+  @close="editDialogClosed"
+    :visible.sync="mobiledialogVisible" 
+    width="30%">
+      <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">
+        <el-form-item label="手机" prop="mobile">
+          <el-input v-model="editForm.mobile"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="mobiledialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="setMobile">确 定</el-button>
+      </span>
+    </el-dialog>
+    
+
     <el-dialog :visible.sync="PassworddialogVisible" width="30%">
       <el-input v-model="password" placeholder="请您输入密码"></el-input>
       <span slot="footer" class="dialog-footer">
@@ -158,61 +202,128 @@
 
 <script>
 import ucenter from "@/api/ucenter";
-import Tinymce from '@/components/Tinymce/index'
+import Tinymce from "@/components/Tinymce/index";
 export default {
-  watch:{
-    flagdialog:function(newVal){
-      if(newVal=='2'){
-        this.getUserInfo()
+  watch: {
+    flagdialog: function(newVal) {
+      if (newVal == "2") {
+        this.getUserInfo();
       }
     }
   },
-  components:{ Tinymce},  
+  components: { Tinymce },
   layout: "ucenterLayout",
   name: "",
   data() {
+    // 验证邮箱的规则
+    var checkmgEmail = (rule, value, cb) => {
+      // 验证邮箱的正则表达式
+      const regmgEmail = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+
+      if (regmgEmail.test(value)) {
+        // 合法的邮箱
+        return cb();
+      }
+
+      cb(new Error("请输入合法的邮箱"));
+    };
+
+    // 验证手机号的规则
+    var checkmgMobile = (rule, value, cb) => {
+      // 验证手机号的正则表达式
+      const regmgMobile = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
+
+      if (regmgMobile.test(value)) {
+        return cb();
+      }
+
+      cb(new Error("请输入合法的手机号"));
+    };
     return {
       flagdialog: "1",
       EmaildialogVisible: false,
-      email: "",
+      editForm:{
+         email: "",
+      },
+      mobiledialogVisible:false,
       PassworddialogVisible: false,
       password: "",
-      userInfo: {
-        
+      userInfo: {},
+      zhuye: {
+        content: "这家伙很懒，什么也没留下"
       },
-      ucenterMemberZhuye:{},
-      userSex:[
-          {
-              value:1,
-              label:'男'
+      tempContent: "这家伙很懒，什么也没留下",
+      // 修改表单的验证规则
+      editFormRules: {
+        //验证的名字需要和表单的名字相同
+        email: [
+          { required: true, message: "请输入邮箱", trigger: "blur" },
+          { validator: checkmgEmail, trigger: "blur" }
+        ],
+        mobile: [
+          { required: true, message: "请输入你的手机号", trigger: "blur" },
+          { validator: checkmgMobile, trigger: "blur" }
+        ]
       },
-       {
-              value:2,
-              label:'女'
-      }],
-      BASE_API:'http://localhost:8222' // 接口API地址
+      userSex: [
+        {
+          value: 1,
+          label: "男"
+        },
+        {
+          value: 2,
+          label: "女"
+        }
+      ],
+      BASE_API: "http://localhost:8222" // 接口API地址
     };
   },
   methods: {
-     async getOwnPage(){
-        const res= await ucenter.getOwnPage()
-       this.ucenterMemberZhuye=res.data.data.ucenterMemberZhuye;
-      },
-    async setMail(){
-        console.log(this.email)
-        const res= await ucenter.setMail(this.email)
-        this.EmaildialogVisible=false
+    //设置手机号
+    setMobile(){
+      this.mobiledialogVisible=false
+      
     },
-    async handleSubmitZhuye(){
-      const res=await ucenter.addOwnPage(this.ucenterMemberZhuye);
-      if(res.data.code===20000){
-        this.$router.push('/ucenter/index_ucenter')
-        this.ucenterMemberZhuye.content=""
+      // 监听修改用户对话框的关闭事件
+    editDialogClosed() {
+      console.log(this.$refs.editFormRef)
+      this.$refs.editFormRef.resetFields()
+    },
+    async getOwnPage() {
+      const res = await ucenter.getOwnPage();
+      if (
+        res.data.data.ucenterMemberZhuye != null &&
+        res.data.data.ucenterMemberZhuye != ""
+      ) {
+        this.zhuye = res.data.data.ucenterMemberZhuye;
       }
     },
-    getUserInfo(){
-      this.userInfo=this.$store.state.userInfo
-      console.log(this.userInfo)
+    async setMail() {
+      this.$refs.editFormRef.validate(async valid => {
+        if (!valid) return;
+        const res = await ucenter.setMail(this.editForm.email);
+        if (res.data.code === 20000) {
+          this.userInfo = res.data.data.ucenterMember;
+          //提示
+          this.$message({
+            type: "success",
+            message: "绑定成功"
+          });
+          this.EmaildialogVisible = false;
+        }
+      });
+    },
+    async handleSubmitZhuye() {
+      //this.ucenterMemberZhuye.content=this.tempContent
+      const res = await ucenter.addOwnPage(this.zhuye);
+      if (res.data.code === 20000) {
+        this.$router.push("/ucenter/index_ucenter");
+        this.zhuye.content = "";
+      }
+    },
+    getUserInfo() {
+      this.userInfo = this.$store.state.userInfo;
+      console.log(this.userInfo);
     },
     handleSelect(index) {
       this.flagdialog = index;
@@ -234,23 +345,22 @@ export default {
       }
       return isJPG && isLt2M;
     },
-  
-    async save(){
-        const res=await ucenter.updateUserInfo(this.userInfo);
-        
-        if(res.data.code===20000){
-            console.log(this.userInfo)
-            this.$store.commit('initUserInfo', this.userInfo)
-            this.flagdialog='1'
-            this.userInfo={}
 
-        }
+    async save() {
+      const res = await ucenter.updateUserInfo(this.userInfo);
+      if (res.data.code === 20000) {
+        console.log(this.userInfo);
+        this.$store.commit("initUserInfo", this.userInfo);
+        this.flagdialog = "1";
+        this.userInfo = {};
+      }
     }
+  },
+  mounted() {
+    this.getOwnPage();
   },
   created() {
     this.userInfo = this.$store.state.userInfo;
-    this.getOwnPage()
-
   }
 };
 </script>

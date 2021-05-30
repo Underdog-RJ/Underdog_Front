@@ -21,7 +21,6 @@
         </el-menu>
       </el-col>
       <el-col :span="20">
-<<<<<<< HEAD
         <div v-if="flagdialog === '1'">
           <div class="item">
             <article class="comm-course-list" v-if="data.total > 0">
@@ -39,65 +38,28 @@
                           :href="'/course/' + item.id"
                           title="开始学习"
                           class="comm-btn c-btn-1"
-=======
-        <div v-if="flagdialog === '1'">              
-    <div id="aCoursesList">
-      <!-- 网校课程 开始 -->
-        <section class="container">
-
-          <div>
-            <article class="comm-course-list">
-              <ul class="of" id="bna">
-                <li v-for="course in eduList" :key="course.id">
-                  <div class="cc-l-wrap">
-                    <section class="course-img">
-                      <img
-                        :src="course.cover"
-                       
-                        class="img-responsive"
-                        :alt="course.title"
-                      />
-                      <div class="cc-mask">
-                        <a :href="'/course/'+course.id" title="开始学习" class="comm-btn c-btn-1"
->>>>>>> 16ed877176d0f7b47501a7911713935c6e5890fa
                           >开始学习</a
                         >
                       </div>
                     </section>
                     <h3 class="hLh30 txtOf mt10">
                       <a
-<<<<<<< HEAD
                         :href="'/course/' + item.id"
                         :title="item.title"
                         class="course-title fsize18 c-333"
                         >{{ item.title }}</a
-=======
-                        :href="'/course/'+course.id"
-                        :title="course.title"
-                        class="course-title fsize18 c-333"
-                        >{{ course.title }}</a
->>>>>>> 16ed877176d0f7b47501a7911713935c6e5890fa
                       >
                     </h3>
                     <section class="mt10 hLh20 of">
                       <span
-<<<<<<< HEAD
                         v-if="Number(item.price) === 0"
                         class="fr jgTag bg-green"
-=======
-                        class="fr jgTag bg-green"
-                        v-if="Number(course.price) === 0"
->>>>>>> 16ed877176d0f7b47501a7911713935c6e5890fa
+
                       >
                         <i class="c-fff fsize12 f-fA">免费</i>
                       </span>
                       <span class="fl jgAttr c-ccc f-fA">
-<<<<<<< HEAD
                         <i class="c-999 f-fA">{{ item.viewCount }}人学习</i>
-=======
-                        <i class="c-999 f-fA">9634人学习</i>
->>>>>>> 16ed877176d0f7b47501a7911713935c6e5890fa
-                        |
                         <i class="c-999 f-fA">9634评论</i>
                       </span>
                     </section>
@@ -107,7 +69,6 @@
               <div class="clear"></div>
             </article>
           </div>
-<<<<<<< HEAD
           <div>
             <div class="paging">
               <!-- undisable这个class是否存在，取决于数据属性hasPrevious -->
@@ -151,17 +112,104 @@
                 @click.prevent="gotoPage(data.pages)"
                 >末</a
               >
-              <div class="clear" />
+             <div class="clear" />
             </div>
-          </div>
-=======
-        </section>
-      </div>
-      <!-- /网校课程 结束 -->
->>>>>>> 16ed877176d0f7b47501a7911713935c6e5890fa
+          </div> 
         </div>
         <div v-if="flagdialog === '2'">
-          <div class="item"></div>
+              <div class="item">
+            <article class="comm-course-list" v-if="data1.total > 0">
+              <ul class="of" id="bna">
+                <li v-for="item in data1.items" :key="item.id">
+                  <div class="cc-l-wrap">
+                    <section class="course-img">
+                      <img
+                        :src="item.cover"
+                        class="img-responsive"
+                        :alt="item.title"
+                      />
+                      <div class="cc-mask">
+                        <a
+                          :href="'/course/' + item.id"
+                          title="开始学习"
+                          class="comm-btn c-btn-1"
+                          >开始学习</a
+                        >
+                      </div>
+                    </section>
+                    <h3 class="hLh30 txtOf mt10">
+                      <a
+                        :href="'/course/' + item.id"
+                        :title="item.title"
+                        class="course-title fsize18 c-333"
+                        >{{ item.title }}</a
+                      >
+                    </h3>
+                    <section class="mt10 hLh20 of">
+                      <span
+                        v-if="Number(item.price) === 0"
+                        class="fr jgTag bg-green"
+
+                      >
+                        <i class="c-fff fsize12 f-fA">免费</i>
+                      </span>
+                      <span class="fl jgAttr c-ccc f-fA">
+                        <i class="c-999 f-fA">{{ item.viewCount }}人学习</i>
+                        <i class="c-999 f-fA">9634评论</i>
+                      </span>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+              <div class="clear"></div>
+            </article>
+          </div>
+          <div>
+            <div class="paging">
+              <!-- undisable这个class是否存在，取决于数据属性hasPrevious -->
+              <a
+                :class="{ undisable: !data1.hasPrevious }"
+                href="#"
+                title="首页"
+                @click.prevent="gotoPage1(1)"
+                >首</a
+              >
+              <a
+                :class="{ undisable: !data1.hasPrevious }"
+                href="#"
+                title="前一页"
+                @click.prevent="gotoPage1(data1.current - 1)"
+                >&lt;</a
+              >
+              <a
+                v-for="page in data1.pages"
+                :key="page"
+                :class="{
+                  current: data.current == page,
+                  undisable: data.current == page,
+                }"
+                :title="'第' + page + '页'"
+                href="#"
+                @click.prevent="gotoPage1(page)"
+                >{{ page }}</a
+              >
+              <a
+                :class="{ undisable: !data1.hasNext }"
+                href="#"
+                title="后一页"
+                @click.prevent="gotoPage1(data1.current + 1)"
+                >&gt;</a
+              >
+              <a
+                :class="{ undisable: !data1.hasNext }"
+                href="#"
+                title="末页"
+                @click.prevent="gotoPage1(data1.pages)"
+                >末</a
+              >
+             <div class="clear" />
+            </div>
+          </div> 
         </div>
       </el-col>
     </el-row>
@@ -170,22 +218,22 @@
 
 <script>
 import kecheng from "@/api/ucenterkecheng";
-// import Tinymce from "@/components/Tinymce/index";
 export default {
-  // components: { Tinymce }, //声明组件
   layout: "ucenterLayout",
   name: "",
   data() {
     return {
       flagdialog: "1",
       data: {}, //课程列表
+      data1:{},//课程支付列表
       page: "", //当前页
       limit: 8,
       key: "",
+
     };
   },
   created() {
-    this.getkecheng(1, 10);
+    this.getkecheng(1);
   },
   methods: {
     getkecheng(page) {
@@ -196,11 +244,30 @@ export default {
     },
     handleSelect(index) {
       this.flagdialog = index;
+      if (index==="1") {
+        this.getkecheng(1);
+      } else if(index==="2"){
+        this.getPayKecheng(1);
+        console.log("我到第二页了");
+      }
     }, 
+    getPayKecheng(page) {
+      kecheng.getPayKecheng(page, this.limit).then((response) => {
+        this.data1 = response.data.data;
+        console.log(this.data1.total);
+        console.log(this.data1.items);
+      });
+    },
     gotoPage(page) {
     kecheng.getkecheng(page, this.limit).then((response) => {
       this.data = response.data.data;
       console.log(this.data.total);
+    });
+  },
+  gotoPage1(page) {
+    kecheng.getPayKecheng(page, this.limit).then((response) => {
+      this.data1 = response.data.data;
+      console.log(this.data1.total);
     });
   },
   },

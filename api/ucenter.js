@@ -36,6 +36,13 @@ export default {
       url: '/educenter/member/getOwnPage/',
       method: 'get'
     })
+  },
+
+  getUserCountInfo(){
+    return request({
+      url: '/educenter/member/getUserCountInfo/',
+      method: 'get'
+    })
   }
 
 }
