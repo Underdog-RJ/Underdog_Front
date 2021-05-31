@@ -1,6 +1,12 @@
 import request from '@/utils/request'
 export default {
 
+  setOwnMobile(mobile,code){
+    return request({
+      url: `/educenter/member/setMobile/${mobile}/${code}`,
+      method: 'get'
+    })
+  },
   getLoginUserInfo() {
     return request({
       url: '/educenter/member/getMemberInfo',
@@ -27,6 +33,13 @@ export default {
   setMail(mail){
     return request({
       url: '/educenter/member/setOwnMail/'+mail,
+      method: 'get'
+    })
+  },
+
+  validateMail(mail,code){
+    return request({
+      url: `/educenter/member/valideOwnMail/${mail}/${code}`,
       method: 'get'
     })
   },

@@ -29,7 +29,7 @@
           <div class="item">
             <ul class="item_zh">
               <li class="item_1">
-                <span v-if="userInfo.email !== '' ">
+                <span v-if="userInfo.email !== ''">
                   <i class="el-icon-check"></i>
                 </span>
                 <span v-else>
@@ -69,7 +69,7 @@
                 >
               </li>
             </ul>
-             <ul class="item_zh">
+            <ul class="item_zh">
               <li class="item_1">
                 <span v-if="userInfo.mobile !== ''">
                   <i class="el-icon-check"></i>
@@ -79,7 +79,7 @@
                 </span>
               </li>
               <li class="item_c">绑定手机</li>
-              <li class="item_c">{{userInfo.mobile}}</li>
+              <li class="item_c">{{ userInfo.mobile }}</li>
               <li class="item_c">
                 <el-button
                   @click="mobiledialogVisible = true"
@@ -139,7 +139,7 @@
                 <el-form-item label="年龄">
                   <el-input v-model="userInfo.age" />
                 </el-form-item>
-                <el-form-item style="text-align:center">
+                <el-form-item style="text-align: center">
                   <el-button type="warning" @click="save">保存</el-button>
                 </el-form-item>
               </el-form>
@@ -156,38 +156,81 @@
         </div>
       </el-col>
     </el-row>
-    <el-dialog 
-    @close="editDialogClosed"
-    :visible.sync="EmaildialogVisible" 
-    width="30%">
-      <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">
+
+    <!-- 邮箱弹框 -->
+    <el-dialog
+      @close="editDialogClosed"
+      :visible.sync="EmaildialogVisible"
+      width="30%"
+    >
+      <el-form
+        :model="editForm"
+        :rules="editFormRules"
+        ref="editFormRef"
+        label-width="70px"
+      >
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="editForm.email"></el-input>
         </el-form-item>
       </el-form>
+
+      <div style="display: flex">
+        <div style="margin-left: 70px; width: 200px">
+          <el-input type="text" placeholder="验证码" v-model="codeMail" />
+        </div>
+        <div style="margin-left: auto">
+          <el-button
+            type="primary"
+            size="medium"
+            :value="codeTest1"
+            @click="getCodeFun1()"
+            >{{ codeTest1 }}</el-button
+          >
+        </div>
+      </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="EmaildialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="setMail">确 定</el-button>
+        <el-button type="warning" @click="setMail">立即验证</el-button>
       </span>
     </el-dialog>
-    
 
-   <el-dialog 
-  @close="editDialogClosed"
-    :visible.sync="mobiledialogVisible" 
-    width="30%">
-      <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">
+    <!-- 电话弹框 -->
+    <el-dialog
+      @close="editDialogClosed"
+      :visible.sync="mobiledialogVisible"
+      width="30%"
+    >
+      <el-form
+        :model="mobileForm"
+        :rules="editFormRules"
+        ref="editFormRef"
+        label-width="70px"
+      >
         <el-form-item label="手机" prop="mobile">
-          <el-input v-model="editForm.mobile"></el-input>
+          <el-input v-model="mobileForm.mobile"></el-input>
         </el-form-item>
       </el-form>
+
+      <div style="display: flex">
+        <div style="margin-left: 70px; width: 200px">
+          <el-input type="text" placeholder="验证码" v-model="code" />
+        </div>
+        <div style="margin-left: auto">
+          <el-button
+            type="primary"
+            size="medium"
+            :value="codeTest"
+            @click="getCodeFun()"
+            >{{ codeTest }}</el-button
+          >
+        </div>
+      </div>
+
       <span slot="footer" class="dialog-footer">
-        <el-button @click="mobiledialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="setMobile">确 定</el-button>
+        <el-button type="warning" @click="setMobile">立即验证</el-button>
       </span>
     </el-dialog>
-    
 
+    <!-- 密码弹框 -->
     <el-dialog :visible.sync="PassworddialogVisible" width="30%">
       <el-input v-model="password" placeholder="请您输入密码"></el-input>
       <span slot="footer" class="dialog-footer">
@@ -203,13 +246,14 @@
 <script>
 import ucenter from "@/api/ucenter";
 import Tinymce from "@/components/Tinymce/index";
+import registerApi from "@/api/register";
 export default {
   watch: {
-    flagdialog: function(newVal) {
+    flagdialog: function (newVal) {
       if (newVal == "2") {
         this.getUserInfo();
       }
-    }
+    },
   },
   components: { Tinymce },
   layout: "ucenterLayout",
@@ -242,15 +286,15 @@ export default {
     return {
       flagdialog: "1",
       EmaildialogVisible: false,
-      editForm:{
-         email: "",
+      editForm: {
+        email: "",
       },
-      mobiledialogVisible:false,
+      mobiledialogVisible: false,
       PassworddialogVisible: false,
       password: "",
       userInfo: {},
       zhuye: {
-        content: "这家伙很懒，什么也没留下"
+        content: "这家伙很懒，什么也没留下",
       },
       tempContent: "这家伙很懒，什么也没留下",
       // 修改表单的验证规则
@@ -258,36 +302,94 @@ export default {
         //验证的名字需要和表单的名字相同
         email: [
           { required: true, message: "请输入邮箱", trigger: "blur" },
-          { validator: checkmgEmail, trigger: "blur" }
+          { validator: checkmgEmail, trigger: "blur" },
         ],
         mobile: [
           { required: true, message: "请输入你的手机号", trigger: "blur" },
-          { validator: checkmgMobile, trigger: "blur" }
-        ]
+          { validator: checkmgMobile, trigger: "blur" },
+        ],
       },
       userSex: [
         {
           value: 1,
-          label: "男"
+          label: "男",
         },
         {
           value: 2,
-          label: "女"
-        }
+          label: "女",
+        },
       ],
-      BASE_API: "http://localhost:8222" // 接口API地址
+      BASE_API: "http://localhost:8222", // 接口API地址
+      mobileForm: {
+        mobile: "",
+      },
+      code: "",
+      sending: true, //是否发送验证码
+      second: 60, //倒计时间
+      codeTest: "获取验证码",
+      sending1: true, //是否发送验证码
+      second1: 60, //倒计时间
+      codeTest1: "获取验证码",
+      codeMail:""
     };
   },
   methods: {
-    //设置手机号
-    setMobile(){
-      this.mobiledialogVisible=false
-      
+    //通过输入手机号发送验证码
+    getCodeFun() {
+      this.$refs.editFormRef.validate(async (valid) => {
+        if (!valid) return;
+        if (this.userInfo.mobile == this.mobileForm.mobile) {
+          this.$message.error("手机号未修改");
+          this.mobiledialogVisible = false;
+          return;
+        }
+        registerApi.sendCode(this.mobileForm.mobile).then((response) => {
+          this.sending = false;
+          //调用倒计时的方法
+          this.timeDown();
+        });
+      });
     },
-      // 监听修改用户对话框的关闭事件
+    timeDown() {
+      let result = setInterval(() => {
+        --this.second;
+        this.codeTest = this.second;
+        if (this.second < 1) {
+          clearInterval(result);
+          this.sending = true;
+          this.second = 60;
+          this.codeTest = "获取验证码";
+        }
+      }, 1000);
+    },
+      timeDown1() {
+      let result = setInterval(() => {
+        --this.second1;
+        this.codeTest1 = this.second1;
+        if (this.second1 < 1) {
+          clearInterval(result);
+          this.sending1 = true;
+          this.second1 = 60;
+          this.codeTest1 = "获取验证码";
+        }
+      }, 1000);
+    },
+    //设置手机号
+    async setMobile() {
+      const res = await ucenter.setOwnMobile(this.mobileForm.mobile, this.code);
+      if (res.data.code == 20000) {
+        this.$message.success(res.data.message);
+        this.userInfo.mobile = this.mobileForm.mobile;
+        this.code = "";
+      } else {
+        this.$message.error(res.data.message);
+      }
+      this.mobiledialogVisible = false;
+    },
+    // 监听修改用户对话框的关闭事件
     editDialogClosed() {
-      console.log(this.$refs.editFormRef)
-      this.$refs.editFormRef.resetFields()
+      console.log(this.$refs.editFormRef);
+      this.$refs.editFormRef.resetFields();
     },
     async getOwnPage() {
       const res = await ucenter.getOwnPage();
@@ -298,20 +400,35 @@ export default {
         this.zhuye = res.data.data.ucenterMemberZhuye;
       }
     },
-    async setMail() {
-      this.$refs.editFormRef.validate(async valid => {
+    async getCodeFun1() {
+      this.$refs.editFormRef.validate(async (valid) => {
         if (!valid) return;
+        if(this.userInfo.mail==this.editForm.email){
+          this.$message.error("邮箱没有更改")
+          this.EmaildialogVisible=false;
+          return;
+        }
         const res = await ucenter.setMail(this.editForm.email);
-        if (res.data.code === 20000) {
-          this.userInfo = res.data.data.ucenterMember;
-          //提示
-          this.$message({
-            type: "success",
-            message: "绑定成功"
-          });
-          this.EmaildialogVisible = false;
+        if(res.data.code===20000){
+          this.$message.success(res.data.message)
+            this.sending = false;
+          //调用倒计时的方法
+          this.timeDown();
+        }else{
+           this.$message.error(res.data.message)
         }
       });
+    },
+    async setMail(){
+      const res=await ucenter.validateMail(this.editForm.email,this.codeMail)
+      if(res.data.code==20000){
+        this.$message.success(res.data.message)
+        this.userInfo.mail=this.editForm.email
+        this.codeMail=""
+      }else{
+        this.$message.error(res.data.message)
+      }
+      this.EmaildialogVisible=false
     },
     async handleSubmitZhuye() {
       //this.ucenterMemberZhuye.content=this.tempContent
@@ -354,14 +471,14 @@ export default {
         this.flagdialog = "1";
         this.userInfo = {};
       }
-    }
+    },
   },
   mounted() {
     this.getOwnPage();
   },
   created() {
     this.userInfo = this.$store.state.userInfo;
-  }
+  },
 };
 </script>
 
