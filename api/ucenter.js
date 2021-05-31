@@ -56,6 +56,19 @@ export default {
       url: '/educenter/member/getUserCountInfo/',
       method: 'get'
     })
+  },
+  updateUserPassword(password){
+    return request({
+      url: '/educenter/member/updateUserPassword/'+password,
+      method: 'get'
+    })
+  },
+  resetPassword(RetPasswordVo){
+    return request({
+      url: '/educenter/member/resetPassword/',
+      method: 'post',
+      data:RetPasswordVo
+    })
   }
 
 }

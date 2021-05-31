@@ -29,7 +29,7 @@
           <div class="item">
             <ul class="item_zh">
               <li class="item_1">
-                <span v-if="userInfo.email !== ''">
+                <span v-if="userInfo.mail != ''&&userInfo.mail!=null">
                   <i class="el-icon-check"></i>
                 </span>
                 <span v-else>
@@ -50,7 +50,7 @@
             </ul>
             <ul class="item_zh">
               <li class="item_1">
-                <span v-if="password !== ''">
+                <span v-if="userInfo.password !== ''">
                   <i class="el-icon-check"></i>
                 </span>
                 <span v-else>
@@ -58,7 +58,9 @@
                 </span>
               </li>
               <li class="item_c">登录密码</li>
-              <li class="item_c" type="password">1213123</li>
+              <li class="item_c">
+                <input type="password" style="border: 0;outline: none; background-color: rgba(0, 0, 0, 0);" v-model="userInfo.password" disabled>
+                </li>
               <li class="item_c">
                 <el-button
                   @click="PassworddialogVisible = true"
@@ -224,18 +226,36 @@
           >
         </div>
       </div>
-
       <span slot="footer" class="dialog-footer">
         <el-button type="warning" @click="setMobile">立即验证</el-button>
       </span>
     </el-dialog>
 
     <!-- 密码弹框 -->
-    <el-dialog :visible.sync="PassworddialogVisible" width="30%">
-      <el-input v-model="password" placeholder="请您输入密码"></el-input>
+    <el-dialog :visible.sync="PassworddialogVisible" 
+     @close="PasswordformRefClosed"
+    width="30%">
+       <el-form
+        ref="PasswordformRef"
+        :model="passwordForm"
+        :rules="passwordFormRules"
+        label-width="0px"
+       
+      >
+        <!--密码-->
+        <el-form-item prop="password">
+          <el-input
+            v-model="passwordForm.password"
+            prefix-icon="iconfont icon-3702mima"
+            type="password"
+            placeholder="请输入您的密码"
+          ></el-input>
+        </el-form-item>
+    
+      </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="PassworddialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="PassworddialogVisible = false"
+        <el-button type="primary" @click="updatePassword"
           >确 定</el-button
         >
       </span>
@@ -289,6 +309,9 @@ export default {
       editForm: {
         email: "",
       },
+      passwordForm:{
+        password:""
+      },
       mobiledialogVisible: false,
       PassworddialogVisible: false,
       password: "",
@@ -308,6 +331,12 @@ export default {
           { required: true, message: "请输入你的手机号", trigger: "blur" },
           { validator: checkmgMobile, trigger: "blur" },
         ],
+      },
+      passwordFormRules:{
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 6, max: 15, message: '长度在 6 到 15 个字符', trigger: 'blur' }
+        ]
       },
       userSex: [
         {
@@ -334,6 +363,24 @@ export default {
     };
   },
   methods: {
+    //更改用户密码
+    updatePassword(){
+          this.$refs.PasswordformRef.validate(async (valid) => {
+        if (!valid) return;
+        const res=await ucenter.updateUserPassword(this.passwordForm.password)
+        if(res.data.code==20000){
+          this.userInfo=res.data.data.ucenterMember;
+          this.$message.success("更新成功")
+          this.PassworddialogVisible=false
+        }else{
+          this.$message.error("更新失败")
+           this.PassworddialogVisible=false
+        }
+      });
+    },
+    PasswordformRefClosed(){
+      this.$refs.PasswordformRef.resetFields()
+    },
     //通过输入手机号发送验证码
     getCodeFun() {
       this.$refs.editFormRef.validate(async (valid) => {
