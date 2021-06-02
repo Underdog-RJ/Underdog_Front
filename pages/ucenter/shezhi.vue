@@ -50,7 +50,7 @@
             </ul>
             <ul class="item_zh">
               <li class="item_1">
-                <span v-if="userInfo.password !== ''">
+                <span v-if="userInfo.password !== ''&&userInfo.password!=null">
                   <i class="el-icon-check"></i>
                 </span>
                 <span v-else>

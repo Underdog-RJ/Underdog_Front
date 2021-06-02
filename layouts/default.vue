@@ -22,8 +22,8 @@
             <router-link to="/blog" tag="li" active-class="current">
               <a>文章</a>
             </router-link>
-            <router-link to="/qa" tag="li" active-class="current">
-              <a>问答</a>
+            <router-link to="/living" tag="li" active-class="current">
+              <a>直播</a>
             </router-link>
           </ul>
            <!-- / nav -->
@@ -168,7 +168,8 @@ export default {
         mobile: "",
         nickname: "",
         sex: ""
-      }
+      },
+      code:""
     };
   },
   methods:{
@@ -182,9 +183,23 @@ export default {
        this.loginInfo=JSON.parse(userStr)
       }
     },
+    async thirdLogin(code){
+       //把token值放到cookie里面
+      //debugger
+      cookie.set('underdogedu_token',this.token,{domain:'www.feifu.top'})
+      cookie.set('underdogedu_ucenter','',{domain:'www.feifu.top'})
+      const res = await loginApi.thirdLogin(code)
+      if(res.data.code===20000){
+       this.loginInfo=res.data.data.member
+       this.token=res.data.data.token
+       console.log(this.loginInfo)
+       cookie.set('underdogedu_token',this.token,{domain:'www.feifu.top'})
+       cookie.set('underdogedu_ucenter',this.loginInfo,{domain:'www.feifu.top'})
+     }
+    },
     logout(){
-      cookie.set('underdogedu_token','',{domain:'localhost'})
-      cookie.set('underdogedu_ucenter','',{domain:'localhost'})
+      cookie.set('underdogedu_token','',{domain:'www.feifu.top'})
+      cookie.set('underdogedu_ucenter','',{domain:'www.feifu.top'})
       window.location.href="/"
     },
     //微信登录显示的方法
@@ -208,10 +223,18 @@ export default {
     
   },
   created() {
-    this.token=this.$route.query.token
-    if(this.token){//判断路径中是否有token值
-      this.wxLogin()
+    this.code=this.$route.query.code
+    
+    if(this.code!=null&&this.code!=''&&this.code!=undefined)
+    {
+      this.thirdLogin(this.code)
     }
+
+    // this.token=this.$route.query.token
+
+    // if(this.token){//判断路径中是否有token值
+    //   this.wxLogin()
+    // }
     this.showInfo()
    
   }

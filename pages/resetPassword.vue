@@ -88,19 +88,33 @@
       <!-- 更多注册方式 -->
       <div class="more-sign">
         <h6>社交帐号直接注册</h6>
-        <ul>
+         <ul>
           <li>
             <a
               id="weixin"
               class="weixin"
               target="_blank"
-              href="http://localhost:8150/api/ucenter/wx/login"
+              href="http://open.51094.com/user/hezuo/10.html?appid=160b73c95dca0e&amp;token=75a5396197b78e4166f8c578c3ffc705"
               ><i class="iconfont icon-weixin"
             /></a>
           </li>
           <li>
-            <a id="qq" class="qq" target="_blank" href="#"
+            <a
+              id="qq"
+              class="qq"
+              target="_blank"
+              href="http://open.51094.com/user/hezuo/1.html?appid=160b73c95dca0e&amp;token=75a5396197b78e4166f8c578c3ffc705"
               ><i class="iconfont icon-qq"
+            /></a>
+          </li>
+          <li>
+            <a
+              id="weibo"
+              style="margin-left:40px;margin-top:10px"
+              class="weibo"
+              target="_blank"
+              href="http://open.51094.com/user/hezuo/2.html?appid=160b73c95dca0e&amp;token=75a5396197b78e4166f8c578c3ffc705"
+              ><img width="30px" src="../assets/img/weibo.png" alt=""
             /></a>
           </li>
         </ul>

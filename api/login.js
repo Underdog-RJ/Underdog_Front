@@ -14,5 +14,12 @@ export default {
       method: 'get'
     })
   },
+  thirdLogin(code) {
+    return request({
+      url: '/educenter/member/thirdLogin/'+code,
+      method: 'get'
+    })
+  },
+
 
 }
