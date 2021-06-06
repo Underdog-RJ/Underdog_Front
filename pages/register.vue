@@ -97,13 +97,13 @@
           />
         </div>
         <p class="sign-up-msg">
-          点击 “注册” 即表示您同意并愿意遵守简书
+          点击 “注册” 即表示您同意并愿意遵守Underdog
           <br />
-          <a target="_blank" href="http://www.jianshu.com/p/c44d171298ce"
+          <a target="_blank" href="http://www.feifu.top/blog/1401537270615404546"
             >用户协议</a
           >
           和
-          <a target="_blank" href="http://www.jianshu.com/p/2ov8x3">隐私政策</a>
+          <a target="_blank" href="http://www.feifu.top/blog/1401539037214306306">隐私政策</a>
           。
         </p>
       </el-form>

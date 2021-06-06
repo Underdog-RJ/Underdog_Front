@@ -154,47 +154,62 @@
 
     <nuxt />
 
-    <!-- 公共底引入 -->
-    <footer id="footer" class="footer_i">
+   <!-- 公共底引入 -->
+    <footer id="footer">
       <section class="container">
-        <div class>
-          <h4 class="hLh30">
-            <span class="fsize18 f-fM c-999">友情链接</span>
-          </h4>
-          <ul class="of flink-list">
-            <li>
-              <a href="http://www.atguigu.com/" title="尚硅谷" target="_blank"
-                >UnderDog学院</a
-              >
-            </li>
-          </ul>
-          <div class="clear"></div>
-        </div>
         <div class="b-foot">
-          <section class="fl col-7">
-            <section class="mr20">
-              <section class="b-f-link">
-                <a href="#" title="关于我们" target="_blank">关于我们</a>|
-                <a href="#" title="联系我们" target="_blank">联系我们</a>|
-                <a href="#" title="帮助中心" target="_blank">帮助中心</a>|
-                <a href="#" title="资源下载" target="_blank">资源下载</a>|
-                <span>服务热线：010-56253825(北京) 0755-85293825(深圳)</span>
-                <span>Email：info@underdog.com</span>
-              </section>
-              <section class="b-f-link mt10">
-                <span>©2018课程版权均归UnderDog学院所有 京ICP备17055252号</span>
-              </section>
-            </section>
-          </section>
-          <aside class="fl col-3 tac mt15">
+          <div class="footer-bottom">
+            <a
+              style="color:#eee"
+              href="http://www.feifu.top/blog/1401547655095545857"
+              >关于我们</a
+            >
+            <a
+              style="color:#eee"
+              href="http://www.feifu.top/blog/1401549152113946625"
+              >加入我们</a
+            >
+            <a
+              style="color:#eee"
+              href="http://www.feifu.top/blog/1401549759927316481"
+              >联系我们</a
+            >
+            <a
+              style="color:#eee"
+              href="http://www.feifu.top/blog/1401549152113946625"
+              >帮助中心</a
+            >
+          </div>
+          <div class="footer-show2">
+            Copyright © 上海Underdog网络科技有限公司 豫ICP备2021015032号
+          </div>
+          <aside class="footer-show3">
             <section class="gf-tx">
               <span>
-                <img src="~/assets/img/wx-icon.png" alt />
+                  <el-popover
+    placement="top-start"
+    width="200"
+    trigger="hover"
+  >
+     <img src="
+https://underdogedu.oss-cn-beijing.aliyuncs.com/%E7%B4%A0%E6%9D%90/qrcode_for_gh_6ecad3479e5f_258.jpg" alt="" style="height:200px">
+    <el-button slot="reference">微信</el-button>
+  </el-popover>
               </span>
             </section>
             <section class="gf-tx">
               <span>
-                <img src="~/assets/img/wb-icon.png" alt />
+                 <el-popover
+    placement="top-start"
+    width="200"
+
+    trigger="hover"
+   >
+   <img src="
+
+https://underdogedu.oss-cn-beijing.aliyuncs.com/%E7%B4%A0%E6%9D%90/2c6cb9ba7cc69cfb242b973b742e1ca.jpg" alt="" style="height:200px">
+    <el-button slot="reference">B站</el-button>
+  </el-popover>
               </span>
             </section>
           </aside>
@@ -297,6 +312,16 @@ export default {
 };
 </script>
 <style scoped>
+.footer-bottom {
+  display: flex;
+  justify-content: space-around;
+}
+.footer-show2 {
+  margin: 10px 360px;
+}
+.footer-show3 {
+  margin: 10px 480px;
+}
 .footer_i{
   margin-top: 30px;
 }

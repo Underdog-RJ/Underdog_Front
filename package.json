@@ -15,6 +15,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "element-ui": "^2.0.11",
+    "jquery": "^3.6.0",
     "js-cookie": "^2.2.1",
     "live2d-widget": "^3.1.4",
     "nuxt": "^2.0.0",
