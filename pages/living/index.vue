@@ -1,4 +1,5 @@
 <template>
+
   <div id="aBlogsList" class="bg-fa of">
     <!-- /课程列表 开始 -->
     <section class="container">
@@ -191,3 +192,4 @@ export default {
   background: greenyellow;
 }
 </style>
+

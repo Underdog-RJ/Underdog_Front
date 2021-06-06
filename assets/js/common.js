@@ -242,7 +242,7 @@ function goPageAjax(pageNum){
 /*
  * 公共点赞
  * targetId 点赞的目标id
- * type 点赞类型 1问答点赞 2问答评论点赞
+ * type 点赞类型 1直播点赞 2直播评论点赞
  * obj 当前标签对象
  */
 function addPraise(targetId,type,obj){

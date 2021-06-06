@@ -22,7 +22,8 @@
             <router-link to="/blog" tag="li" active-class="current">
               <a>文章</a>
             </router-link>
-               <router-link to="/living" tag="li" active-class="current">
+            <router-link to="/living" tag="li" active-class="current">
+
               <a>直播</a>
             </router-link>
           </ul>
