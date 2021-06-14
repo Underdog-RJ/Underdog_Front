@@ -14,7 +14,7 @@
       />
       <!-- 定义播放器dom -->
       <div class="living">
-        <el-avatar shape="square" :size="120"></el-avatar>
+        <el-avatar :src="teacherInfo.avatar" shape="square" :size="120"></el-avatar>
         <div class="livingInfo">
           <div style="font-size:20px;font-weight:bold">
             {{ livingInfo.livingName }}
@@ -118,9 +118,12 @@ export default {
     },
     //获取讲师信息
     async getTeacherInfo() {
-      const res = teacherAPi.getTeacherInfo(this.teacherId);
+      const res = await teacherAPi.getTeacherInfo(this.teacherId);
+   
       if (res.data.code === 20000) {
+        console.log( res.data.data.teacher)
         this.teacherInfo = res.data.data.teacher;
+        console.log(this.teacherInfo)
       }
     },
     sendDanmu() {

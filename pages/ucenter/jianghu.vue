@@ -208,7 +208,7 @@ export default {
       subjectTwoList: [], //二级分类
       blogList: [],
       enjoyList: [],
-      BASE_API: 'http://localhost:8222' // 接口API地址
+      BASE_API: 'http://natapp.feifu.top' // 接口API地址
     };
   },
   methods: {

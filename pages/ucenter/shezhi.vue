@@ -448,8 +448,7 @@ export default {
       }
     },
     async getCodeFun1() {
-      this.$refs.editFormRef.validate(async (valid) => {
-        if (!valid) return;
+    
         if(this.userInfo.mail==this.editForm.email){
           this.$message.error("邮箱没有更改")
           this.EmaildialogVisible=false;
@@ -458,13 +457,13 @@ export default {
         const res = await ucenter.setMail(this.editForm.email);
         if(res.data.code===20000){
           this.$message.success(res.data.message)
-            this.sending = false;
+            this.sending1 = false;
           //调用倒计时的方法
           this.timeDown();
         }else{
            this.$message.error(res.data.message)
         }
-      });
+   
     },
     async setMail(){
       const res=await ucenter.validateMail(this.editForm.email,this.codeMail)

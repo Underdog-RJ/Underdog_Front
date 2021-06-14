@@ -1,6 +1,7 @@
 module.exports = {
   server:{
-    port:80
+    port:80,
+    host:'0.0.0.0'
   },
   plugins: [
     { src: '~/plugins/nuxt-swiper-plugin.js', ssr: false },
@@ -12,11 +13,7 @@ module.exports = {
     {
       src: '~plugins/tinymce',
       ssr: false,
-    },
-    {
-      src: '~plugins/live2d',
-      ssr: false,
-    },
+    }
   ],
 
   css: [
@@ -51,6 +48,7 @@ module.exports = {
   build: {
     
     babel: {
+      compact:false,
       plugins: [
         [
           'prismjs',
