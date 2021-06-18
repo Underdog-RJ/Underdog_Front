@@ -3,175 +3,150 @@
     "name": "blog",
     "path": "/blog",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\blog\\\\index.vue",
-    "chunkName": "pages/blog/index",
-    "_name": "_78bb6e71"
+    "chunkName": "pages/blog/index"
   },
   {
     "name": "course",
     "path": "/course",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\course\\\\index.vue",
-    "chunkName": "pages/course/index",
-    "_name": "_8a051bd0"
+    "chunkName": "pages/course/index"
   },
   {
     "name": "living",
     "path": "/living",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\living\\\\index.vue",
-    "chunkName": "pages/living/index",
-    "_name": "_176e8aca"
+    "chunkName": "pages/living/index"
   },
   {
     "name": "login",
     "path": "/login",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\login.vue",
-    "chunkName": "pages/login",
-    "_name": "_3befd8aa"
+    "chunkName": "pages/login"
   },
   {
     "name": "register",
     "path": "/register",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\register.vue",
-    "chunkName": "pages/register",
-    "_name": "_ab00f01c"
+    "chunkName": "pages/register"
   },
   {
     "name": "resetPassword",
     "path": "/resetPassword",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\resetPassword.vue",
-    "chunkName": "pages/resetPassword",
-    "_name": "_6dd674cb"
+    "chunkName": "pages/resetPassword"
   },
   {
     "name": "teacher",
     "path": "/teacher",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\teacher\\\\index.vue",
-    "chunkName": "pages/teacher/index",
-    "_name": "_0d94c4bf"
+    "chunkName": "pages/teacher/index"
   },
   {
     "name": "ucenter",
     "path": "/ucenter",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\ucenter\\\\index.vue",
-    "chunkName": "pages/ucenter/index",
-    "_name": "_29ed6697"
+    "chunkName": "pages/ucenter/index"
   },
   {
     "name": "ucenter-banwo",
     "path": "/ucenter/banwo",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\ucenter\\\\banwo.vue",
-    "chunkName": "pages/ucenter/banwo",
-    "_name": "_04d5ce6c"
+    "chunkName": "pages/ucenter/banwo"
   },
   {
     "name": "ucenter-fenxi",
     "path": "/ucenter/fenxi",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\ucenter\\\\fenxi.vue",
-    "chunkName": "pages/ucenter/fenxi",
-    "_name": "_1266ecf6"
+    "chunkName": "pages/ucenter/fenxi"
   },
   {
     "name": "ucenter-guanzhu",
     "path": "/ucenter/guanzhu",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\ucenter\\\\guanzhu.vue",
-    "chunkName": "pages/ucenter/guanzhu",
-    "_name": "_c1c8ddde"
+    "chunkName": "pages/ucenter/guanzhu"
   },
   {
     "name": "ucenter-index_ucenter",
     "path": "/ucenter/index_ucenter",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\ucenter\\\\index_ucenter.vue",
-    "chunkName": "pages/ucenter/index_ucenter",
-    "_name": "_ab7cbc3c"
+    "chunkName": "pages/ucenter/index_ucenter"
   },
   {
     "name": "ucenter-jianghu",
     "path": "/ucenter/jianghu",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\ucenter\\\\jianghu.vue",
-    "chunkName": "pages/ucenter/jianghu",
-    "_name": "_057c13e6"
+    "chunkName": "pages/ucenter/jianghu"
   },
   {
     "name": "ucenter-kecheng",
     "path": "/ucenter/kecheng",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\ucenter\\\\kecheng.vue",
-    "chunkName": "pages/ucenter/kecheng",
-    "_name": "_19ee0944"
+    "chunkName": "pages/ucenter/kecheng"
   },
   {
     "name": "ucenter-shezhi",
     "path": "/ucenter/shezhi",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\ucenter\\\\shezhi.vue",
-    "chunkName": "pages/ucenter/shezhi",
-    "_name": "_68cf1a54"
+    "chunkName": "pages/ucenter/shezhi"
   },
   {
     "name": "ucenter-shuoshuo",
     "path": "/ucenter/shuoshuo",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\ucenter\\\\shuoshuo.vue",
-    "chunkName": "pages/ucenter/shuoshuo",
-    "_name": "_314ce7ae"
+    "chunkName": "pages/ucenter/shuoshuo"
   },
   {
     "name": "blog-id",
     "path": "/blog/:id",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\blog\\\\_id.vue",
-    "chunkName": "pages/blog/_id",
-    "_name": "_58845919"
+    "chunkName": "pages/blog/_id"
   },
   {
     "name": "course-id",
     "path": "/course/:id",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\course\\\\_id.vue",
-    "chunkName": "pages/course/_id",
-    "_name": "_fa1dcb00"
+    "chunkName": "pages/course/_id"
   },
   {
     "name": "living-id",
     "path": "/living/:id",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\living\\\\_id.vue",
-    "chunkName": "pages/living/_id",
-    "_name": "_09d4b7b2"
+    "chunkName": "pages/living/_id"
   },
   {
     "name": "orders-oid",
     "path": "/orders/:oid?",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\orders\\\\_oid.vue",
-    "chunkName": "pages/orders/_oid",
-    "_name": "_7661ba02"
+    "chunkName": "pages/orders/_oid"
   },
   {
     "name": "other-id",
     "path": "/other/:id?",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\other\\\\_id.vue",
-    "chunkName": "pages/other/_id",
-    "_name": "_05cbad39"
+    "chunkName": "pages/other/_id"
   },
   {
     "name": "pay-pid",
     "path": "/pay/:pid?",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\pay\\\\_pid.vue",
-    "chunkName": "pages/pay/_pid",
-    "_name": "_1bc12e35"
+    "chunkName": "pages/pay/_pid"
   },
   {
     "name": "player-vid",
     "path": "/player/:vid?",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\player\\\\_vid.vue",
-    "chunkName": "pages/player/_vid",
-    "_name": "_01412ec2"
+    "chunkName": "pages/player/_vid"
   },
   {
     "name": "teacher-id",
     "path": "/teacher/:id",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\teacher\\\\_id.vue",
-    "chunkName": "pages/teacher/_id",
-    "_name": "_20baeae7"
+    "chunkName": "pages/teacher/_id"
   },
   {
     "name": "index",
     "path": "/",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\index.vue",
-    "chunkName": "pages/index",
-    "_name": "_72483593"
+    "chunkName": "pages/index"
   }
 ]

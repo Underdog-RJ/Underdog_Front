@@ -212,6 +212,9 @@ export default {
     };
   },
   created() {
+    
+  },
+  mounted () {
     this.getbannerList();
     this.getHotCourseTeacher();
   },
