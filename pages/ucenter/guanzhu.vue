@@ -226,6 +226,8 @@ export default {
   },
   mounted() {
     this.init();
+      this.findFriendReqByUserid();
+    this.getAllFriendByUserId();
     this.getUnReadMessageList();
     this.socket.onmessage = res => {
       console.log("收到服务器内容：" + res.data);
@@ -358,8 +360,7 @@ export default {
     }
   },
   created() {
-    this.findFriendReqByUserid();
-    this.getAllFriendByUserId();
+  
     this.userInfo = this.$store.state.userInfo;
     this.userId = this.userInfo.id;
     this.userAvatar = this.userInfo.avatar;

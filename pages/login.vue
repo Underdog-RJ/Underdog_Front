@@ -122,7 +122,7 @@ export default {
         loginApi.getLoginUserInfo().then(response => {
           this.loginInfo = response.data.data.userInfo;
           //获取返回用户信息，放到cookie里面
-          cookie.set("underdogedu_ucenter", this.loginInfo, {
+          cookie.set("underdogedu_ucenter", JSON.stringify(this.loginInfo), {
             domain: "www.feifu.top"
           });
 

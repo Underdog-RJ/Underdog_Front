@@ -31,6 +31,7 @@ service.interceptors.response.use(
         window.location.href="/login"
         return
     }else{
+      console.log(response)
       if (response.data.code !== 20000) {
         //25000：订单支付中，不做任何提示
         if(response.data.code != 25000) {

@@ -275,10 +275,17 @@ export default {
       const res = await loginApi.thirdLogin(code)
       if(res.data.code===20000){
        this.loginInfo=res.data.data.member
+        this.$store.commit('initUserInfo',this.loginInfo)
        this.token=res.data.data.token
        console.log(this.loginInfo)
-       cookie.set('underdogedu_token',this.token,{domain:'www.feifu.top'})
-       cookie.set('underdogedu_ucenter',this.loginInfo,{domain:'www.feifu.top'})
+       cookie.set("underdogedu_token", JSON.stringify(this.token), {
+          domain: "www.feifu.top"
+        });
+
+        cookie.set("underdogedu_ucenter",  JSON.stringify(this.loginInfo), {
+          domain: "www.feifu.top"
+        });
+    
      }
     },
     logout(){
@@ -307,8 +314,9 @@ export default {
     {
       this.thirdLogin(this.code)
     }
-    this.showInfo();
-    this.$store.commit('initUserInfo',this.loginInfo)
+  },
+  mounted(){
+    this.showInfo()
   }
 };
 </script>

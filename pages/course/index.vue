@@ -221,12 +221,16 @@ export default {
     };
   },
   created() {
-    //课程第一次查询
+    
+  },
+  mounted(){
+//课程第一次查询
     this.initCourseFirst();
     //一级分类额显示
     this.initSubject();
   },
   methods: {
+    
     //1.查询第一页数据
     initCourseFirst() {
       courseApi.getCourseList(1, 8, this.searchObj).then(response => {

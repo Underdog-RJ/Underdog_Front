@@ -254,12 +254,13 @@ export default {
     };
   },
   created() {
-    this.initCourseInfo();
-    this.initComment();
-    this.initEnjoy()
+    
   },
   mounted(){
     Prism.highlightAll();
+    this.initCourseInfo();
+    this.initComment();
+    this.initEnjoy()
   },
   methods: {
     //初始化收藏

@@ -351,10 +351,13 @@ export default {
       this.enjoyList = res.data.data.list;
     }
   },
-  created() {
-    this.getOneSubject();
+  mounted(){
+this.getOneSubject();
     this.getBlogByUserId();
     this.EnjoyBlogList();
+  },
+  created() {
+    
   }
 };
 </script>

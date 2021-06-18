@@ -153,7 +153,7 @@ module.exports = ___CSS_LOADER_EXPORT___;
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/_vue-loader@15.9.7@vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/_vue-loader@15.9.7@vue-loader/lib??vue-loader-options!./pages/login.vue?vue&type=template&id=4e0bb7bf&
+// CONCATENATED MODULE: ./node_modules/_vue-loader@15.9.7@vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/_vue-loader@15.9.7@vue-loader/lib??vue-loader-options!./pages/login.vue?vue&type=template&id=7c751ad2&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"main"},[_vm._ssrNode("<script type=\"text/javascript\" src=\"http://open.51094.com/user/myscript/160b73c95dca0e.html\"></script> <div class=\"title\"><a href=\"/login\" class=\"active\">登录</a> <span>·</span> <a href=\"/register\">注册</a> <span>·</span> <a href=\"/resetPassword\">重置</a></div> "),_vm._ssrNode("<div class=\"sign-up-container\">","</div>",[_c('el-form',{ref:"userForm",attrs:{"model":_vm.user}},[_c('el-form-item',{staticClass:"input-prepend restyle",attrs:{"prop":"mobile","rules":[
           { required: true, message: '请输入手机号码', trigger: 'blur' },
           { validator: _vm.checkPhone, trigger: 'blur' }
@@ -161,7 +161,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./pages/login.vue?vue&type=template&id=4e0bb7bf&
+// CONCATENATED MODULE: ./pages/login.vue?vue&type=template&id=7c751ad2&
 
 // EXTERNAL MODULE: ./assets/css/sign.css
 var sign = __webpack_require__(133);
@@ -297,7 +297,7 @@ var login = __webpack_require__(6);
         login["a" /* default */].getLoginUserInfo().then(response => {
           this.loginInfo = response.data.data.userInfo; //获取返回用户信息，放到cookie里面
 
-          external_js_cookie_default.a.set("underdogedu_ucenter", this.loginInfo, {
+          external_js_cookie_default.a.set("underdogedu_ucenter", JSON.stringify(this.loginInfo), {
             domain: "www.feifu.top"
           }); //跳转页面
 

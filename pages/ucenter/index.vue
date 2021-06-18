@@ -15,8 +15,11 @@ export default {
       IndexButton: true
     };
   },
+  mounted(){
+  this.getUserInfo();
+  },
   created() {
-    this.getUserInfo();
+   
     this.$router.push({
       path:'/ucenter/index_ucenter'
     })

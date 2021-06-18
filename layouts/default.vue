@@ -216,7 +216,7 @@ export default {
         cookie.set("underdogedu_token", this.token, {
           domain: "www.feifu.top"
         });
-        cookie.set("underdogedu_ucenter", this.loginInfo, {
+        cookie.set("underdogedu_ucenter",  JSON.stringify(this.loginInfo), {
           domain: "www.feifu.top"
         });
       }
@@ -253,13 +253,9 @@ export default {
     if (this.code != null && this.code != "" && this.code != undefined) {
       this.thirdLogin(this.code);
     }
-
-    // this.token=this.$route.query.token
-
-    // if(this.token){//判断路径中是否有token值
-    //   this.wxLogin()
-    // }
-    this.showInfo();
+  },
+  mounted(){
+this.showInfo();
   }
 };
 </script>

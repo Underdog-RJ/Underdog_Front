@@ -173,7 +173,10 @@ export default {
     };
   },
   created() {
-    //博客第一次查询
+   
+  },
+  mounted(){
+ //博客第一次查询
     this.initBlogFirst();
     //一级分类额显示
     this.initSubject();

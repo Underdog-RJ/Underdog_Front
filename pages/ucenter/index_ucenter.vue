@@ -79,11 +79,12 @@ export default {
     };
   },
   mounted(){
-      this.getUserCountInfo()
+     
   },
   created(){
     this.userInfo=this.$store.state.userInfo;
     console.log(this.userInfo)
+     this.getUserCountInfo()
     this.getOwnPage()
   },
   methods:{

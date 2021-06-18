@@ -71,8 +71,11 @@ export default {
   },
   created() {
     this.id=this.$store.state.userInfo.id;
-    this.initshuoshuo();
+   
 
+  },
+  mounted(){
+ this.initshuoshuo();
   },
   methods: {
     //初始化说说

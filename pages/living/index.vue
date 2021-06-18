@@ -181,9 +181,12 @@ export default {
       this.searchObj.subjectId = subjectId;
     }
   },
-  created() {
-    this.getAllLivingList();
+  mounted(){
+  this.getAllLivingList();
     this.initSubject();
+  },
+  created() {
+  
   }
 };
 </script>

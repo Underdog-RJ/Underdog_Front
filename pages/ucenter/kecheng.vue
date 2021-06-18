@@ -233,7 +233,10 @@ export default {
     };
   },
   created() {
-    this.getkecheng(1);
+   
+  },
+  mounted(){
+ this.getkecheng(1);
   },
   methods: {
     getkecheng(page) {

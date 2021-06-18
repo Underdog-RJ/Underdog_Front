@@ -1,4 +1,5 @@
 <template>
+ 
   <div id="aCoursesList" class="bg-fa of">
     <!-- /课程详情 开始 -->
     <section class="container">
@@ -347,6 +348,7 @@
 
     <!-- /课程详情 结束 -->
   </div>
+
 </template>
 
 <script>
@@ -378,11 +380,18 @@ export default {
     };
   },
   created() {
-    this.userId=this.$store.state.userInfo.id;
+    console.log("created")
+  },
+  mounted(){
+   this.userId=this.$store.state.userInfo.id;
     this.initComment();
     this.initCourseInfo();
     this.isCollect();
-
+    console.log("mounted")
+  },
+  updated(){
+    
+    console.log("updated")
   },
   methods: {
     //查询课程详情信息
