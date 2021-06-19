@@ -100,6 +100,7 @@ export default {
   },
   initAgoRecord() {
     var strToken = cookie.get("underdogedu_token");
+    console.log(strToken)
     if (strToken != "" && strToken != null && strToken != undefined) {
       living.getAllLivingRecord(this.livingInfo.id).then(res=>{
         this.messageList=res.data.data.messageList;
