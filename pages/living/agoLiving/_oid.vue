@@ -98,7 +98,9 @@ export default {
     console.log(this.livingInfo);
     this.teacherId = this.livingInfo.teacherId;
   },
-  initAgoRecord() {
+
+  methods: {
+      initAgoRecord() {
     var strToken = cookie.get("underdogedu_token");
     console.log(strToken)
     if (strToken != "" && strToken != null && strToken != undefined) {
@@ -109,7 +111,6 @@ export default {
      
     }
   },
-  methods: {
     //初始化websocket
     // init: function() {
     //   if (typeof WebSocket === "undefined") {
