@@ -20,6 +20,7 @@ const _057c13e6 = () => interopDefault(import('..\\pages\\ucenter\\jianghu.vue' 
 const _19ee0944 = () => interopDefault(import('..\\pages\\ucenter\\kecheng.vue' /* webpackChunkName: "pages/ucenter/kecheng" */))
 const _68cf1a54 = () => interopDefault(import('..\\pages\\ucenter\\shezhi.vue' /* webpackChunkName: "pages/ucenter/shezhi" */))
 const _314ce7ae = () => interopDefault(import('..\\pages\\ucenter\\shuoshuo.vue' /* webpackChunkName: "pages/ucenter/shuoshuo" */))
+const _212546d6 = () => interopDefault(import('..\\pages\\living\\agoLiving\\_oid.vue' /* webpackChunkName: "pages/living/agoLiving/_oid" */))
 const _58845919 = () => interopDefault(import('..\\pages\\blog\\_id.vue' /* webpackChunkName: "pages/blog/_id" */))
 const _fa1dcb00 = () => interopDefault(import('..\\pages\\course\\_id.vue' /* webpackChunkName: "pages/course/_id" */))
 const _09d4b7b2 = () => interopDefault(import('..\\pages\\living\\_id.vue' /* webpackChunkName: "pages/living/_id" */))
@@ -105,6 +106,10 @@ export const routerOptions = {
     path: "/ucenter/shuoshuo",
     component: _314ce7ae,
     name: "ucenter-shuoshuo"
+  }, {
+    path: "/living/agoLiving/:oid?",
+    component: _212546d6,
+    name: "living-agoLiving-oid"
   }, {
     path: "/blog/:id",
     component: _58845919,

@@ -96,6 +96,12 @@
     "chunkName": "pages/ucenter/shuoshuo"
   },
   {
+    "name": "living-agoLiving-oid",
+    "path": "/living/agoLiving/:oid?",
+    "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\living\\\\agoLiving\\\\_oid.vue",
+    "chunkName": "pages/living/agoLiving/_oid"
+  },
+  {
     "name": "blog-id",
     "path": "/blog/:id",
     "component": "F:\\\\projects\\\\VUE-FRONT-1010\\\\pages\\\\blog\\\\_id.vue",

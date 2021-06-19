@@ -12,5 +12,23 @@ export default {
       url: '/live/aliyunLive/getLiveById/'+id,
       method: 'get'
     })
+  },
+  getLivingByIdAgo(id){
+    return request({
+      url: '/live/aliyunLive/getLiveByIdAgo/'+id,
+      method: 'get'
+    })
+  },
+  getAgoLivingList(){
+    return request({
+      url: '/live/aliyunLive/getAllLivingAge/',
+      method: 'get'
+    })
+  },
+  getAllLivingRecord(id){
+    return request({
+      url: '/live/aliyunLive/getAllRecordById/'+id,
+      method: 'get'
+    })
   }
 }

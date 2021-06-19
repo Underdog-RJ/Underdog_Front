@@ -5,7 +5,10 @@
     <section class="container">
       <header class="comm-title">
         <h2 class="fl tac">
-          <span class="c-333">全部直播</span>
+          <span class="c-333" @click="handleLiving">正在直播</span>
+        </h2>
+          <h2 class="fl tac" style="float:right">
+          <span class="c-333" @click="handleAge">往期直播</span>
         </h2>
       </header>
       <section class="c-sort-box">
@@ -69,7 +72,7 @@
         <!-- /无数据提示 结束-->
 
         <!-- /无数据提示 结束-->
-          <article class="comm-course-list" v-if="livingList.length > 0">
+          <article v-show="flagLiving==0" class="comm-course-list" v-if="livingList.length > 0">
             <ul class="of" id="bna">
               <li v-for="item in livingList" :key="item.id">
                 <div class="cc-l-wrap">
@@ -82,6 +85,46 @@
                     <div class="cc-mask">
                       <a
                         :href="'/living/' + item.teacherId"
+                        title="开始学习"
+                        class="comm-btn c-btn-1"
+                        >立即观看</a
+                      >
+                    </div>
+                  </section>
+                  <h3 class="hLh30 txtOf mt10">
+                    <a
+                      :href="'/living/' + item.teacherId"
+                      :title="item.livingName"
+                      class="course-title fsize18 c-333"
+                      >{{ item.livingName }}</a
+                    >
+                  </h3>
+                  <section class="mt10 hLh20 of">
+                  
+                    <span class="fl jgAttr c-ccc f-fA">
+                      <i class="c-999 f-fA">讲师:{{ item.teacherName }}</i>
+                      |
+                      <i class="c-999 f-fA">{{item.gmtCreate}}</i>
+                    </span>
+                  </section>
+                </div>
+              </li>
+            </ul>
+            <div class="clear"></div>
+          </article>
+           <article v-show="flagLiving==1" class="comm-course-list" v-if="agoLivingList.length > 0">
+            <ul class="of" id="bna">
+              <li v-for="item in agoLivingList" :key="item.id">
+                <div class="cc-l-wrap">
+                  <section class="course-img">
+                    <img
+                      :src="item.livingCover"
+                      class="img-responsive"
+                      :alt="item.livingName"
+                    />
+                    <div class="cc-mask">
+                      <a
+                        :href="'/living/agoLiving/' + item.id"
                         title="开始学习"
                         class="comm-btn c-btn-1"
                         >立即观看</a
@@ -129,10 +172,22 @@ export default {
       page: 1, //当前页
       oneIndex: -1,
       twoIndex: -1,
-      searchObj: {} // 查询表单对象
+      searchObj: {}, // 查询表单对象
+      flagLiving:0,
+      agoLivingList:[]
     };
   },
   methods: {
+    handleLiving(){
+      this.getAllLivingList();
+      this.flagLiving=0;
+    },
+    async handleAge(){
+      this.flagLiving=1
+      const res = await living.getAgoLivingList()
+      console.log(res.data.eduLivingList)
+      this.agoLivingList=res.data.data.eduLivingList
+    },
     //2查询所有的分类
     initSubject() {
       blogApi.getAllSubject().then(response => {

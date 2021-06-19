@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[17],{533:function(n,t,e){"use strict";e.r(t);var c={layout:"ucenterLayout",name:"",data:function(){return{}}},r=e(11),component=Object(r.a)(c,(function(){var n=this,t=n.$createElement;return(n._self._c||t)("div",{staticClass:"container"},[n._v("\n    待开发，敬请期待\n")])}),[],!1,null,"de8710ac",null);t.default=component.exports}}]);
