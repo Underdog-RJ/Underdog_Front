@@ -98,7 +98,7 @@ export default {
     console.log(this.livingInfo);
     this.teacherId = this.livingInfo.teacherId;
   },
-  mounted() {
+  initAgoRecord() {
     var strToken = cookie.get("underdogedu_token");
     if (strToken != "" && strToken != null && strToken != undefined) {
       living.getAllLivingRecord(this.livingInfo.id).then(res=>{
@@ -164,6 +164,7 @@ export default {
   },
   mounted() {
     this.getTeacherInfo();
+    this.initAgoRecord()
     //this.init();
     //页面渲染之后
     this.player = new Aliplayer(
