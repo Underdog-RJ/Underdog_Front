@@ -187,6 +187,7 @@
 import subject from "@/api/subject";
 import blog from "@/api/blog";
 import Tinymce from '@/components/Tinymce/index'
+import cookie from "js-cookie";
 export default {
   components: { Tinymce }, //声明组件
   layout: "ucenterLayout",

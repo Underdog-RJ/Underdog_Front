@@ -5,6 +5,7 @@
 </template>
 <script>
 import ucenterApi from "@/api/ucenter";
+import cookie from "js-cookie";
 export default {
   layout: "ucenterLayout", //应用video布局
   data() {

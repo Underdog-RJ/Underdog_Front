@@ -63,6 +63,7 @@
 
 <script>
 import shuoshuo from "@/api/ucentershuoshuo";
+import cookie from "js-cookie";
 export default {
   layout: "ucenterLayout",
   name: "",
@@ -81,7 +82,16 @@ export default {
   },
   mounted() {
     this.initshuoshuo();
-this.id = this.$store.state.userInfo.id;
+    
+      //从cookie获取用户信息
+      var userStr = cookie.get("underdogedu_ucenter");
+      //console.log(userStr)
+      //把字符串转换成json对象(js对象)
+      if (userStr) {
+        this.userInfo = JSON.parse(userStr);
+      }
+
+      this.id = this.userInfo.id;
   },
   methods: {
     //初始化说说

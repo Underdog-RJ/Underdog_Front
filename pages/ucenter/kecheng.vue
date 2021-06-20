@@ -218,6 +218,7 @@
 
 <script>
 import kecheng from "@/api/ucenterkecheng";
+import cookie from "js-cookie";
 export default {
   layout: "ucenterLayout",
   name: "",

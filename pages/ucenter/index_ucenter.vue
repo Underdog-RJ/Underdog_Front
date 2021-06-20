@@ -63,6 +63,7 @@
 
 <script>
 import ucenter from "@/api/ucenter";
+import cookie from "js-cookie";
 export default {
   layout: "ucenterLayout",
   name: "",
@@ -76,7 +77,14 @@ export default {
     };
   },
   mounted() {
-    this.userInfo = this.$store.state.userInfo;
+    //this.userInfo = this.$store.state.userInfo;
+      //从cookie获取用户信息
+      var userStr = cookie.get("underdogedu_ucenter");
+      //console.log(userStr)
+      //把字符串转换成json对象(js对象)
+      if (userStr) {
+        this.userInfo = JSON.parse(userStr);
+      }
     console.log(this.userInfo);
     this.getUserCountInfo();
     this.getOwnPage();

@@ -267,6 +267,7 @@
 import ucenter from "@/api/ucenter";
 import Tinymce from "@/components/Tinymce/index";
 import registerApi from "@/api/register";
+import cookie from "js-cookie";
 export default {
   watch: {
     flagdialog: function (newVal) {
@@ -485,7 +486,14 @@ export default {
       }
     },
     getUserInfo() {
-      this.userInfo = this.$store.state.userInfo;
+      //this.userInfo = this.$store.state.userInfo;
+        //从cookie获取用户信息
+      var userStr = cookie.get("underdogedu_ucenter");
+      //console.log(userStr)
+      //把字符串转换成json对象(js对象)
+      if (userStr) {
+        this.userInfo = JSON.parse(userStr);
+      }
       console.log(this.userInfo);
     },
     handleSelect(index) {
@@ -521,7 +529,16 @@ export default {
   },
   mounted() {
     this.getOwnPage();
-    this.userInfo = this.$store.state.userInfo;
+    //this.userInfo = this.$store.state.userInfo;
+     //从cookie获取用户信息
+      var userStr = cookie.get("underdogedu_ucenter");
+      //console.log(userStr)
+      //把字符串转换成json对象(js对象)
+      if (userStr) {
+        this.userInfo = JSON.parse(userStr);
+      }
+
+    
   },
   created() {
     
