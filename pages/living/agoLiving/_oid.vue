@@ -104,10 +104,9 @@ export default {
     var strToken = cookie.get("underdogedu_token");
     console.log(strToken)
     if (strToken != "" && strToken != null && strToken != undefined) {
-      console.log("fsafa"+this.livingInfo.id)
       living.getAllLivingRecord(this.livingInfo.id).then(res=>{
         this.messageList=res.data.data.messageList;
-         flagIndex = 1;
+         this.flagIndex = 1;
       })
      
     }
