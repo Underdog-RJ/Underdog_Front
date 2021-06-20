@@ -323,7 +323,11 @@ export default {
 <style scoped>
 .footer-bottom {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  margin-left: 80px;
+}
+.footer-bottom a{
+  margin-right: 100px;
 }
 .footer-show2 {
   margin: 10px 360px;
