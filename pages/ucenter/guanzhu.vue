@@ -237,7 +237,7 @@ export default {
     this.userId = this.userInfo.id;
     this.userAvatar = this.userInfo.avatar;
     this.init();
-      this.findFriendReqByUserid();
+    this.findFriendReqByUserid();
     this.getAllFriendByUserId();
     this.getUnReadMessageList();
     this.socket.onmessage = res => {
