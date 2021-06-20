@@ -521,9 +521,10 @@ export default {
   },
   mounted() {
     this.getOwnPage();
+    this.userInfo = this.$store.state.userInfo;
   },
   created() {
-    this.userInfo = this.$store.state.userInfo;
+    
   },
 };
 </script>

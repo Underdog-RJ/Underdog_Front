@@ -2,61 +2,60 @@
   <div class="container u_index">
     <!-- 左边 -->
     <div class="show_left">
-     <div v-html="zhuye.content" class="contentHtml">
-       {{zhuye.content}}
-     </div>
+      <div v-html="zhuye.content" class="contentHtml">
+        {{ zhuye.content }}
+      </div>
     </div>
     <!-- 右边 -->
     <div class="show_right">
       <div class="show_column1">
-        <div  class="button1">
-         <el-button type="warning" size="medium">开通VIP 享更多特权</el-button>
+        <div class="button1">
+          <el-button type="warning" size="medium">开通VIP 享更多特权</el-button>
         </div>
       </div>
 
       <div class="show_column2">
-
         <div class="show_column2_item">
-          <span>{{countInfo.blog}}</span>
+          <span>{{ countInfo.blog }}</span>
           <span>文章数</span>
         </div>
 
         <div class="show_column2_item">
-          <span>{{countInfo.kecheng}}</span>
+          <span>{{ countInfo.kecheng }}</span>
           <span>课程数</span>
         </div>
 
         <div class="show_column2_item">
-          <span>{{countInfo.shuoshuo}}</span>
+          <span>{{ countInfo.shuoshuo }}</span>
           <span>说说数</span>
         </div>
       </div>
       <div class="show_column3">
-          <div class="show_column3_item1">
-              账号信息
+        <div class="show_column3_item1">
+          账号信息
+        </div>
+        <div class="show_column3_item2">
+          <div>
+            <span>用户ID: </span>
+            <span>{{ userInfo.id }}</span>
           </div>
-          <div class="show_column3_item2">
-              <div>
-                <span>用户ID: </span>
-                <span>{{userInfo.id}}</span>
-              </div>
-              <div>
-                <span>昵称: </span>
-                <span>{{userInfo.nickname}}</span>
-              </div>
-              <div>
-                <span>等级: </span>
-                <span>Lv1</span>
-              </div>
-              <div>
-                <span>U币: </span>
-                <span>52</span>
-              </div>
-              <div>
-                <span>注册时间: </span>
-                <span>{{userInfo.gmtCreate}}</span>
-              </div>
+          <div>
+            <span>昵称: </span>
+            <span>{{ userInfo.nickname }}</span>
           </div>
+          <div>
+            <span>等级: </span>
+            <span>Lv1</span>
+          </div>
+          <div>
+            <span>U币: </span>
+            <span>52</span>
+          </div>
+          <div>
+            <span>注册时间: </span>
+            <span>{{ userInfo.gmtCreate }}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -69,45 +68,43 @@ export default {
   name: "",
   data() {
     return {
-      userInfo:{},
-     zhuye:{
-        content:"这家伙很懒，什么也没留下"
+      userInfo: {},
+      zhuye: {
+        content: "这家伙很懒，什么也没留下"
       },
-      countInfo:{
-
-      }
+      countInfo: {}
     };
   },
-  mounted(){
-     
+  mounted() {
+    this.userInfo = this.$store.state.userInfo;
+    console.log(this.userInfo);
+    this.getUserCountInfo();
+    this.getOwnPage();
   },
-  created(){
-    this.userInfo=this.$store.state.userInfo;
-    console.log(this.userInfo)
-     this.getUserCountInfo()
-    this.getOwnPage()
-  },
-  methods:{
-    async getUserCountInfo(){
-      const res= await ucenter.getUserCountInfo()
-     this.countInfo=res.data.data.countInfo
+  created() {},
+  methods: {
+    async getUserCountInfo() {
+      const res = await ucenter.getUserCountInfo();
+      this.countInfo = res.data.data.countInfo;
     },
-     async getOwnPage(){
-        const res= await ucenter.getOwnPage()
-        if(res.data.data.ucenterMemberZhuye!=null&&res.data.data.ucenterMemberZhuye!=''){
-            this.zhuye=res.data.data.ucenterMemberZhuye;
-        }
+    async getOwnPage() {
+      const res = await ucenter.getOwnPage();
+      if (
+        res.data.data.ucenterMemberZhuye != null &&
+        res.data.data.ucenterMemberZhuye != ""
+      ) {
+        this.zhuye = res.data.data.ucenterMemberZhuye;
       }
+    }
   }
 };
 </script>
 
 <style scoped>
-
-.contentHtml>>>img{
-        width: 100%;
-    }
-.in-wrap{
+.contentHtml >>> img {
+  width: 100%;
+}
+.in-wrap {
   background-color: #fff !important;
 }
 .show_column2 div {
@@ -117,8 +114,7 @@ export default {
   align-items: center;
 }
 .show_column2 div span:first-child {
- 
- font-size: 30px;
+  font-size: 30px;
   font-weight: bold;
 }
 .u_index {
@@ -138,7 +134,7 @@ export default {
   flex-direction: column;
 }
 .button1 {
-    line-height: 70px;
+  line-height: 70px;
   text-align: center;
 }
 .show_column1 {
@@ -162,14 +158,14 @@ export default {
   background-color: #fff;
   max-height: 300px;
 }
-.show_column3_item1{
+.show_column3_item1 {
   font-size: 30px;
   margin: 10px;
 }
-.show_column3_item2{
+.show_column3_item2 {
   margin: 10px;
 }
-.show_column3_item2 div{
+.show_column3_item2 div {
   margin-bottom: 10px;
 }
 </style>

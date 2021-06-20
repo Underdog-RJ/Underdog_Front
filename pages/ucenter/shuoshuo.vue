@@ -14,42 +14,51 @@
           >
         </el-row>
       </div>
-    <section class="flex">
+      <section class="flex">
         <section class="lh-bj-list flex">
           <ul class="pr10 flex">
             <li v-for="(comment, index) in data.items" v-bind:key="index">
               <div class="noter-txt mt5">
-                <p>{{ comment.shuoshuo }}</p>  
-
-              </div>  
-                <span class="fleft">  
-                <font class="fsize12 c-999 ml5">{{
-                    comment.gmtCreate
-                  }}</font>
-                </span>
-                <span class="fright"> 
-                  <a v-if="comment.isHide" @click="setShuoshuohide(comment.id,0)" style="cursor:pointer">设为隐私</a>
-                  <a v-else @click="setShuoshuohide(comment.id,1)" style="cursor:pointer" >取消隐私</a>
-                  <el-divider direction="vertical"></el-divider>
-                  <a @click="removeUcenterShuoshuo(comment.id)" style="cursor:pointer">删除</a>
-                </span>
+                <p>{{ comment.shuoshuo }}</p>
+              </div>
+              <span class="fleft">
+                <font class="fsize12 c-999 ml5">{{ comment.gmtCreate }}</font>
+              </span>
+              <span class="fright">
+                <a
+                  v-if="comment.isHide"
+                  @click="setShuoshuohide(comment.id, 0)"
+                  style="cursor:pointer"
+                  >设为隐私</a
+                >
+                <a
+                  v-else
+                  @click="setShuoshuohide(comment.id, 1)"
+                  style="cursor:pointer"
+                  >取消隐私</a
+                >
+                <el-divider direction="vertical"></el-divider>
+                <a
+                  @click="removeUcenterShuoshuo(comment.id)"
+                  style="cursor:pointer"
+                  >删除</a
+                >
+              </span>
             </li>
           </ul>
-        </section>   
-        
-
+        </section>
       </section>
-
-      </div> 
-  <div class="bottom1">
-        <el-pagination 
+    </div>
+    <div class="bottom1">
+      <el-pagination
         @current-change="gotoPage"
         background
         layout="prev, pager, next"
-        :total= "data.pages*10">
-        </el-pagination>
+        :total="data.pages * 10"
+      >
+      </el-pagination>
     </div>
-  </div>    
+  </div>
 </template>
 
 <script>
@@ -62,54 +71,49 @@ export default {
       input: "",
       page: "", //当前页
       limit: 10,
-      data: {
-
-      },
+      data: {},
       ucenterShuoshuo: {},
-      id:"1"
+      id: "1"
     };
   },
   created() {
-    this.id=this.$store.state.userInfo.id;
-   
-
+    
   },
-  mounted(){
- this.initshuoshuo();
+  mounted() {
+    this.initshuoshuo();
+this.id = this.$store.state.userInfo.id;
   },
   methods: {
     //初始化说说
     initshuoshuo() {
-      shuoshuo.getPageList(1, this.limit,this.id).then((response) => {
-        console.log("id是"+this.id);
+      shuoshuo.getPageList(1, this.limit, this.id).then(response => {
+        console.log("id是" + this.id);
         this.data = response.data.data;
-        console.log("pages"+this.data.pages);
+        console.log("pages" + this.data.pages);
       });
     },
-    gotoPage(page) {     
-      shuoshuo.getPageList(page,this.limit,this.id).then((response) => {
+    gotoPage(page) {
+      shuoshuo.getPageList(page, this.limit, this.id).then(response => {
         this.data = response.data.data;
       });
     },
     addUcenterShuoshuo() {
-      shuoshuo.addShuoshuo(this.ucenterShuoshuo).then((response) => {
-      this.initshuoshuo();
-      this.ucenterShuoshuo = {};
-      });;
-
+      shuoshuo.addShuoshuo(this.ucenterShuoshuo).then(response => {
+        this.initshuoshuo();
+        this.ucenterShuoshuo = {};
+      });
     },
-    removeUcenterShuoshuo(id){
+    removeUcenterShuoshuo(id) {
       shuoshuo.removeShuoshuo(id).then(() => {
         this.initshuoshuo();
-      });;
+      });
     },
-    setShuoshuohide(id,isHide){
-      shuoshuo.setHide(id,isHide).then(() => {
+    setShuoshuohide(id, isHide) {
+      shuoshuo.setHide(id, isHide).then(() => {
         this.initshuoshuo();
-      });;
-
-    },
-  },
+      });
+    }
+  }
 };
 </script>
 
@@ -128,36 +132,36 @@ export default {
   min-height: 500px;
 }
 .fleft {
-position: relative;
-left: -0.5%;
+  position: relative;
+  left: -0.5%;
 }
-.fright{
+.fright {
   position: relative;
   right: -75%;
 }
 .u_index {
   min-height: 500px;
   margin-bottom: 10px;
-  margin:1 ;
+  margin: 1;
 }
 
 .textarea_1 {
   position: relative;
   width: 90%;
   /* margin: auto; */
-  margin-top:30px;
+  margin-top: 30px;
   height: 10%;
   left: 5%;
   border: solid 1px rgb(20, 20, 20);
   /* outline-color: rgb(1, 1, 235); */
 }
-.flex{ 
-position: relative; 
+.flex {
+  position: relative;
 }
 textarea:hover {
   border: solid 1px rgb(13, 147, 180);
 }
-font:hover{
+font:hover {
   color: rgb(57, 45, 219);
 }
 
@@ -167,15 +171,15 @@ font:hover{
   left: 80%;
   text-align: center;
 }
-.hidex{
-  display:inline;
+.hidex {
+  display: inline;
 }
-.fshuoshuo{
-  position: flex; 
+.fshuoshuo {
+  position: flex;
   margin: 5%;
 }
-.hidey{
-display:  none;
+.hidey {
+  display: none;
 }
 .el-input {
   margin-right: 300px;
@@ -184,11 +188,11 @@ display:  none;
   text-align: center;
 }
 .bottom1 {
-   /* position: absolute; */ 
-    margin:auto;
-    text-align: center;
-    /* top:20%; */
-    /* left: 50%;
+  /* position: absolute; */
+  margin: auto;
+  text-align: center;
+  /* top:20%; */
+  /* left: 50%;
      bottom: 0;   */
 }
 </style>

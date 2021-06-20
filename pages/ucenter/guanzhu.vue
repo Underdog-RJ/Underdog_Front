@@ -225,6 +225,9 @@ export default {
     };
   },
   mounted() {
+        this.userInfo = this.$store.state.userInfo;
+    this.userId = this.userInfo.id;
+    this.userAvatar = this.userInfo.avatar;
     this.init();
       this.findFriendReqByUserid();
     this.getAllFriendByUserId();
@@ -361,9 +364,7 @@ export default {
   },
   created() {
   
-    this.userInfo = this.$store.state.userInfo;
-    this.userId = this.userInfo.id;
-    this.userAvatar = this.userInfo.avatar;
+
   }
 };
 </script>
