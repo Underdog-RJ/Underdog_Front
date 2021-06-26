@@ -86,7 +86,7 @@ export default {
     return {
       player: {},
       flagIndex: -1,
-      path: "http://living.feifu.top/living",
+      path: "ws://living.feifu.top/living/",
       teacherInfo: {},
       message: {},
       userInfo: {},

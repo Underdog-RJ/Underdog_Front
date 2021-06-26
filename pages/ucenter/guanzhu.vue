@@ -209,7 +209,7 @@ export default {
       messageList: [],
       userAvatar: "",
       friendAvatar: "",
-      path: "ws://127.0.0.1:110001/ws",
+      path: "ws://living.feifu.top/ws/",
       socket: {},
       message: {
         type: 0,
