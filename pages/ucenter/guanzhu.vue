@@ -209,7 +209,7 @@ export default {
       messageList: [],
       userAvatar: "",
       friendAvatar: "",
-      path: "ws://living.feifu.top/ws/",
+      path: "ws://natapp.feifu.top/ws/",
       socket: {},
       message: {
         type: 0,
