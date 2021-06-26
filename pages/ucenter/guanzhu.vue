@@ -233,6 +233,7 @@ export default {
       //把字符串转换成json对象(js对象)
       if (userStr) {
         this.userInfo = JSON.parse(userStr);
+        console.log("mounted")
       }
     this.userId = this.userInfo.id;
     this.userAvatar = this.userInfo.avatar;
@@ -271,7 +272,7 @@ export default {
     },
     //全部的未读消息
     async getUnReadMessageList() {
-      console.log("safsafasas"+this.userId);
+      
       const res = await ganzhu.getRecordByUserId(this.userId);
       this.unReadMessageList = res.data.data.list;
       console.log("未读消息" + this.unReadMessageList);
