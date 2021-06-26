@@ -86,7 +86,7 @@ export default {
     return {
       player: {},
       flagIndex: -1,
-      path: "ws://natapp.feifu.top/living/",
+      path: "ws://natapp.feifu.top/websocket/living/",
       teacherInfo: {},
       message: {},
       userInfo: {},
