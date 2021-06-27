@@ -170,8 +170,8 @@ export default {
         rePlay: false, // 循环播放
         preload: true,
         controlBarVisibility: "hover", // 控制条的显示方式：鼠标悬停
-        useH5Prism: false, // 播放器类型：html5
-        useFlashPrism: true, //指定使用Flash播放器
+        useH5Prism: true, // 播放器类型：html5
+        useFlashPrism: false, //指定使用Flash播放器
         rtmpBufferTime: 0,
         showBuffer: 0,
         stashInitialSizeForFlv: 30, //H5播放flv时，初始缓存大小，只在直播下起作用。
