@@ -11,14 +11,16 @@
                   <a name="c-i" class="current" title="博客详情">博客详情</a>
                 </section>
               </div>
-              <div class="comm-title" >
+              <div class="comm-title">
                 <div>
-                  <img src="" alt="">
+                  <img src="" alt="" />
                 </div>
-                <div><i class="el-icon-s-custom"></i>{{blogInfo.authorNickname}}</div>
-                <div><i class="el-icon-view"></i>{{blogInfo.viewCount}}</div>
-                <div>评论数: {{blogInfo.viewCount}}</div>
-                <div>最后修改于：{{blogInfo.gmtModified}}</div>
+                <div>
+                  <i class="el-icon-s-custom"></i>{{ blogInfo.authorNickname }}
+                </div>
+                <div><i class="el-icon-view"></i>{{ blogInfo.viewCount }}</div>
+                <div>评论数: {{ blogInfo.viewCount }}</div>
+                <div>最后修改于：{{ blogInfo.gmtModified }}</div>
               </div>
               <h1 style="text-align:center ">{{ blogInfo.title }}</h1>
               <article class="ml10 mr10 pt20 typo typo-selection ">
@@ -36,7 +38,7 @@
               <article class="ml10 mr10 pt20 typo typo-selection ">
                 <div>
                   <h6 class="c-i-content c-infor-title">
-                    <span>博客内容</span> 
+                    <span>博客内容</span>
                   </h6>
                   <div class="course-txt-body-wrap">
                     <section class="course-txt-body">
@@ -49,12 +51,12 @@
 
                 <div class="ml10 mr10 pt20  zsTitle">
                   <div>
-                      版权声明：本文为博主原创文章，遵循CC 4.0 BY-SA版权协议,转载请附上原文出处链接和本声明，UnderdogEdu！
+                    版权声明：本文为博主原创文章，遵循CC 4.0
+                    BY-SA版权协议,转载请附上原文出处链接和本声明，UnderdogEdu！
                   </div>
                   <div>
                     <span>本文链接：</span>
-                    <a href="#">
-                      www.underdogedu.com</a>
+                    <a href="#"> www.underdogedu.com</a>
                   </div>
                 </div>
 
@@ -67,20 +69,24 @@
                     title="打赏"
                     width="200"
                     trigger="click"
-                   
                   >
-                  <img :src="blogInfo.zsPicture" alt="" style="height:75px">
+                    <img :src="blogInfo.zsPicture" alt="" style="height:75px" />
                     <el-button type="primary" slot="reference">赞赏</el-button>
                   </el-popover>
-                 
-                     <el-button v-if="flagEnjoy==true" type="warning" @click="handleEnjoy">收藏</el-button>
-                  
-                     <el-button v-else type="warning" @click="handleRemoveEnjoy">取消收藏</el-button>
-              
-                 
+
+                  <el-button
+                    v-if="flagEnjoy == true"
+                    type="warning"
+                    @click="handleEnjoy"
+                    >收藏</el-button
+                  >
+
+                  <el-button v-else type="warning" @click="handleRemoveEnjoy"
+                    >取消收藏</el-button
+                  >
                 </div>
 
-               <!-- /博客大纲 -->
+                <!-- /博客大纲 -->
                 <div class="mt50 commentHtml">
                   <div>
                     <h6 class="c-c-content c-infor-title" id="i-art-comment">
@@ -231,7 +237,7 @@
 <script>
 import blogApi from "@/api/blog";
 import comment from "@/api/blogcomment";
-import Prism from 'prismjs';
+import Prism from "prismjs";
 
 export default {
   //和页面异步开始的
@@ -242,7 +248,7 @@ export default {
     return {
       data: {},
       page: 1,
-      flagEnjoy:true,
+      flagEnjoy: true,
       limit: 4,
       total: 10,
       blogInfo: {},
@@ -250,31 +256,37 @@ export default {
       comment: {
         content: "",
         blogId: ""
-      },
+      }
     };
   },
-  created() {
-    
+  created() {},
+  beforeMount() {
+    console.log(Prism);
   },
-  mounted(){
-    Prism.highlightAll();
+
+  mounted() {
+   
     this.initCourseInfo();
     this.initComment();
-    this.initEnjoy()
+    this.initEnjoy();
+  },
+  updated(){
+         process.browser&&document.querySelectorAll("pre code").forEach(block => Prism.highlightElement(block));
   },
   methods: {
     //初始化收藏
-   async initEnjoy(){
-        const res=await blogApi.IsEnjoyBlog(this.blogId)
-        if(res.data.code=='20000'){
-          this.flagEnjoy=false;
-        }
+    async initEnjoy() {
+      const res = await blogApi.IsEnjoyBlog(this.blogId);
+      console.log(res);
+      if (res.data.code == "20000") {
+        this.flagEnjoy = false;
+      }
     },
-   async handleRemoveEnjoy(){
-       const res=await blogApi.RemoveEnjoyBlog(this.blogId)
-       if(res.data.code=='20000'){
-          this.flagEnjoy=true;
-        }
+    async handleRemoveEnjoy() {
+      const res = await blogApi.RemoveEnjoyBlog(this.blogId);
+      if (res.data.code == "20000") {
+        this.flagEnjoy = true;
+      }
     },
     //初始化评论
     initComment() {
@@ -305,23 +317,25 @@ export default {
       console.log(this.blogId);
       blogApi.getBlogInfo(this.blogId).then(response => {
         this.blogInfo = response.data.data.eduBlog;
+        process.browser&&document.querySelectorAll("pre code").forEach(block => Prism.highlightElement(block));
+
         console.log(this.blogInfo);
       });
     },
-    async handleEnjoy(){
-       const res=await blogApi.enjoyBlog(this.blogId)
-        if(res.data.code=='20000'){
-          this.flagEnjoy=false;
-        }
-    },
+    async handleEnjoy() {
+      const res = await blogApi.enjoyBlog(this.blogId);
+      if (res.data.code == "20000") {
+        this.flagEnjoy = false;
+      }
+    }
   }
 };
 </script>
 <style scoped>
-.blog_img{
+.blog_img {
   text-align: center;
 }
-.zsTitle{
+.zsTitle {
   background-color: #cce5ff;
   border-radius: 10px;
   height: 70px;
@@ -329,27 +343,26 @@ export default {
   flex-direction: column;
   margin-bottom: 10px;
 }
-.zsTitle div{
+.zsTitle div {
   margin-left: 10px;
 }
-a{
+a {
   text-decoration: none;
 }
-.comm-title{
+.comm-title {
   display: flex;
-  
 }
-.comm-title div{
-  margin: 5px ;
+.comm-title div {
+  margin: 5px;
 }
-.comm-title div:last-child{
+.comm-title div:last-child {
   /* 最后一个元素靠右浮动 */
   margin-left: auto;
 }
-.comm-title div i{
-  margin: 5px ;
+.comm-title div i {
+  margin: 5px;
 }
-.item_bottom{
+.item_bottom {
   height: 100px;
   margin: 0 auto !important;
 }

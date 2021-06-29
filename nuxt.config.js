@@ -53,6 +53,8 @@ module.exports = {
         [
           'prismjs',
           {
+            theme: 'coy',
+            css: true,
               languages: [
                   'html',
                   'css',
@@ -69,12 +71,10 @@ module.exports = {
                   'java'
               ],
               plugins: [
-                  'line-numbers',
                   'show-language',
                   'copy-to-clipboard'
               ],
-              theme: 'coy',
-              css: true
+            
           }
       ]
       ]
