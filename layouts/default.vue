@@ -44,8 +44,8 @@
               </a>
               <q class="red-point" style="display: none">&nbsp;</q>
             </li>
-            <li v-if="loginInfo.id" id="is-login-two" class="h-r-user">
-              <a href="/ucenter" title>
+            <li v-if="loginInfo.id" id="is-login-two" class="h-r-user liPop">
+              <!-- <a href="/ucenter" title>
                 <img
                   :src="loginInfo.avatar"
                   width="30"
@@ -63,7 +63,22 @@
                 @click="logout()"
                 class="ml5"
                 >退出</a
-              >
+              > -->
+
+              <el-popover class="popLogin" placement="bottom" width="200" trigger="click">
+                <div slot="reference">
+                  <div class="loginPop">
+                    <div>
+                      <el-avatar :size="30" :src="loginInfo.avatar"></el-avatar>
+                    </div>
+                    <span id="userName" style="margin-left:5px">{{
+                      loginInfo.nickname
+                    }}</span>
+                  </div>
+                </div>
+
+                <div class="popShow">testt</div>
+              </el-popover>
             </li>
             <!-- /未登录显示第1 li；登录后显示第2，3 li -->
           </ul>
@@ -124,32 +139,31 @@
           </div>
           <aside class="footer-show3">
             <section class="gf-tx">
-              <span>
-                  <el-popover
-    placement="top-start"
-    width="200"
-    trigger="hover"
-  >
-     <img src="
-https://underdogedu.oss-cn-beijing.aliyuncs.com/%E7%B4%A0%E6%9D%90/qrcode_for_gh_6ecad3479e5f_258.jpg" alt="" style="height:200px">
-    <el-button slot="reference">微信</el-button>
-  </el-popover>
-              </span>
+              <!-- <span>
+                <el-popover placement="top-start" width="200" trigger="click">
+                  <img
+                    src="
+https://underdogedu.oss-cn-beijing.aliyuncs.com/%E7%B4%A0%E6%9D%90/qrcode_for_gh_6ecad3479e5f_258.jpg"
+                    alt=""
+                    style="height:200px"
+                  />
+                  <el-button slot="reference">微信</el-button>
+                </el-popover>
+              </span> -->
             </section>
             <section class="gf-tx">
-              <span>
-                 <el-popover
-    placement="top-start"
-    width="200"
+              <!-- <span>
+                <el-popover placement="top-start" width="200" trigger="hover">
+                  <img
+                    src="
 
-    trigger="hover"
-   >
-   <img src="
-
-https://underdogedu.oss-cn-beijing.aliyuncs.com/%E7%B4%A0%E6%9D%90/2c6cb9ba7cc69cfb242b973b742e1ca.jpg" alt="" style="height:200px">
-    <el-button slot="reference">B站</el-button>
-  </el-popover>
-              </span>
+https://underdogedu.oss-cn-beijing.aliyuncs.com/%E7%B4%A0%E6%9D%90/2c6cb9ba7cc69cfb242b973b742e1ca.jpg"
+                    alt=""
+                    style="height:200px"
+                  />
+                  <el-button slot="reference">B站</el-button>
+                </el-popover>
+              </span> -->
             </section>
           </aside>
           <div class="clear"></div>
@@ -216,7 +230,7 @@ export default {
         cookie.set("underdogedu_token", this.token, {
           domain: "www.feifu.top"
         });
-        cookie.set("underdogedu_ucenter",  JSON.stringify(this.loginInfo), {
+        cookie.set("underdogedu_ucenter", JSON.stringify(this.loginInfo), {
           domain: "www.feifu.top"
         });
       }
@@ -254,18 +268,33 @@ export default {
       this.thirdLogin(this.code);
     }
   },
-  mounted(){
-this.showInfo();
+  mounted() {
+    this.showInfo();
   }
 };
 </script>
-<style scoped>
+<style>
+.el-popper .popper__arrow {
+  display: none !important;
+}
+.el-popover {
+  margin-top: 0px !important;
+  position: absolute !important;
+  top: 50px !important;
+}
+.popShow {
+}
+.loginPop {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
 .footer-bottom {
   display: flex;
   justify-content: center;
   margin-left: 80px;
 }
-.footer-bottom a{
+.footer-bottom a {
   margin-right: 100px;
 }
 .footer-show2 {
