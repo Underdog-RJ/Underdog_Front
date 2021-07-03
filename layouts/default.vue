@@ -65,7 +65,12 @@
                 >退出</a
               > -->
 
-              <el-popover class="popLogin" placement="bottom" width="200" trigger="click">
+              <el-popover
+                class="popLogin"
+                placement="bottom"
+                width="200"
+                trigger="click"
+              >
                 <div slot="reference">
                   <div class="loginPop">
                     <div>
@@ -74,10 +79,111 @@
                     <span id="userName" style="margin-left:5px">{{
                       loginInfo.nickname
                     }}</span>
+                    <i class="el-icon-caret-bottom" style="margin-left:5px"></i>
                   </div>
                 </div>
+                <div class="popShow">
+                  <div class="popHeader">
+                    <div class="headerHover" @click="goUserCenter">
+                      <i class="el-icon-s-home" :size="50"></i>
+                      <div style="font-size:12px;margin-left:5px">
+                        进入主页
+                      </div>
+                    </div>
 
-                <div class="popShow">testt</div>
+                    <div class="popUser">
+                      <div>
+                        <el-avatar
+                          :size="30"
+                          :src="loginInfo.avatar"
+                        ></el-avatar>
+                      </div>
+                      <span id="userName" style="margin-left:5px">{{
+                        loginInfo.nickname
+                      }}</span>
+                      <i
+                        class="el-icon-caret-bottom"
+                        style="margin-left:5px"
+                      ></i>
+                    </div>
+                  </div>
+                  <div class="popContent">
+                    <div class="popContentItem">
+                      <div>1</div>
+                      <div>文章</div>
+                    </div>
+                    <div class="popContentItem">
+                      <div>1</div>
+                      <div>关注</div>
+                    </div>
+                    <div class="popContentItem">
+                      <div>1</div>
+                      <div>粉丝</div>
+                    </div>
+                  </div>
+                  <div style="text-align:center">
+                    <el-button
+                      v-if="userSignFlag == false"
+                      icon="el-icon-s-promotion"
+                      size="small"
+                      class="qdStyle"
+                      @click="goSign"
+                      >签到</el-button
+                    >
+                    <el-button
+                      v-else
+                      icon="el-icon-s-promotion"
+                      size="small"
+                      style="border-radius:10px"
+                      type="primary"
+                      >已签到</el-button
+                    >
+                  </div>
+                  <hr style="margin-top:20px" />
+                  <div class="popUserInfo">
+                    <div class="popUserInfoItem" @click="goUserCenter">
+                      <div class="popUserInfoItemPro">
+                        <i class="el-icon-s-home popIcon"></i>个人中心
+                      </div>
+                      <div class="popUserInfoItemText">普通用户</div>
+                    </div>
+                    <div class="popUserInfoItem">
+                      <div class="popUserInfoItemPro">
+                        <i class="el-icon-user-solid popIcon"></i>账号
+                      </div>
+                      <div class="popUserInfoItemText">95881</div>
+                    </div>
+                    <div class="popUserInfoItem">
+                      <div class="popUserInfoItemPro">
+                        <i class="el-icon-s-flag popIcon"></i>等级
+                      </div>
+                      <div class="popUserInfoItemText">Lv1</div>
+                    </div>
+                    <div class="popUserInfoItem">
+                      <div class="popUserInfoItemPro">
+                        <i class="el-icon-coin popIcon"></i>U币
+                      </div>
+                      <div class="popUserInfoItemText">100币</div>
+                    </div>
+                    <div class="popUserInfoItem">
+                      <div class="popUserInfoItemPro">
+                        <i class="el-icon-s-tools popIcon"></i>个人设置
+                      </div>
+                    </div>
+                  </div>
+                  <hr style="margin-top:20px" />
+                  <div class="popUserInfo">
+                    <div class="popUserInfoItem" @click="logout()">
+                      <div class="popUserInfoItemPro">
+                        <i
+                          class="el-icon-apple"
+                          style="font-size:25px;margin-right:5px"
+                        ></i
+                        >退出登录
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </el-popover>
             </li>
             <!-- /未登录显示第1 li；登录后显示第2，3 li -->
@@ -190,6 +296,7 @@ import "~/assets/lib/prism/prism.css";
 
 import cookie from "js-cookie";
 import loginApi from "@/api/login";
+import ucenterApi from "@/api/ucenter";
 
 export default {
   data() {
@@ -203,19 +310,40 @@ export default {
         nickname: "",
         sex: ""
       },
-      code: ""
+      code: "",
+      userSignFlag: false
     };
   },
   methods: {
+    async goSign() {
+      const res = await ucenterApi.userSign();
+      if (res.data.code == 20000) {
+        this.userSignFlag = res.data.data.flag;
+        console.log(this.userSignFlag);
+      }
+    },
+    goUserCenter() {
+      this.$router.push("/ucenter");
+    },
     //创建方法,从cookie获取用户信息
     showInfo() {
-      //从cookie获取用户信息
+      setTimeout( async()=>{
+ //从cookie获取用户信息
       var userStr = cookie.get("underdogedu_ucenter");
+     
       //console.log(userStr)
       //把字符串转换成json对象(js对象)
       if (userStr) {
+
         this.loginInfo = JSON.parse(userStr);
+        const res = await ucenterApi.checkSign();
+        if (res.data.code == 20000) {
+          this.userSignFlag = res.data.data.flag;
+          console.log(this.userSignFlag)
+        }
       }
+      },1000)
+
     },
     async thirdLogin(code) {
       //把token值放到cookie里面
@@ -274,13 +402,74 @@ export default {
 };
 </script>
 <style>
+.popUserInfoItem:hover {
+  background-color: #eee;
+  color: black;
+}
+.popUserInfoItemPro {
+}
+.popIcon {
+  font-size: 20px;
+  margin-right: 5px;
+}
+.popUserInfoItemText {
+  margin-left: auto;
+}
+.popUserInfoItem {
+  display: flex;
+  padding: 10px 10px;
+  align-items: center;
+}
+.popUserInfo {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.qdStyle {
+  border-radius: 15px;
+}
+.popContent {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.popContentItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 20px;
+}
+.popContentItem:hover {
+  background-color: #eee;
+}
+.headerHover {
+  display: flex;
+  align-items: center;
+}
+.headerHover:hover {
+  color: #34495e !important;
+}
+.popHeader {
+  display: flex;
+  align-items: center;
+}
+.popUser {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 10px;
+}
 .el-popper .popper__arrow {
   display: none !important;
 }
 .el-popover {
   margin-top: 0px !important;
   position: absolute !important;
-  top: 50px !important;
+  top: 45px !important;
+  left: 1000px !important;
+  width: 320px !important;
+  border-radius: 10px !important;
 }
 .popShow {
 }

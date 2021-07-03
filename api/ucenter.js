@@ -1,6 +1,20 @@
 import request from '@/utils/request'
 export default {
 
+  userSign(){
+    return request({
+      url: `/educenter/member/userSign`,
+      method: 'get'
+    })
+  },
+
+  checkSign(){
+    return request({
+      url: `/educenter/member/checkSign`,
+      method: 'get'
+    })
+  },
+
   setOwnMobile(mobile,code){
     return request({
       url: `/educenter/member/setMobile/${mobile}/${code}`,
