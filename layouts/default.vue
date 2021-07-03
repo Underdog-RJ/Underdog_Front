@@ -109,16 +109,16 @@
                   </div>
                   <div class="popContent">
                     <div class="popContentItem">
-                      <div>1</div>
+                      <div>{{ countInfo.blog }}</div>
                       <div>文章</div>
                     </div>
                     <div class="popContentItem">
-                      <div>1</div>
-                      <div>关注</div>
+                      <div>{{ countInfo.kecheng }}</div>
+                      <div>课程</div>
                     </div>
                     <div class="popContentItem">
-                      <div>1</div>
-                      <div>粉丝</div>
+                      <div>{{ countInfo.shuoshuo }}</div>
+                      <div>说说</div>
                     </div>
                   </div>
                   <div style="text-align:center">
@@ -151,7 +151,7 @@
                       <div class="popUserInfoItemPro">
                         <i class="el-icon-user-solid popIcon"></i>账号
                       </div>
-                      <div class="popUserInfoItemText">95881</div>
+                      <div class="popUserInfoItemText">{{loginInfo.id}}</div>
                     </div>
                     <div class="popUserInfoItem">
                       <div class="popUserInfoItemPro">
@@ -163,9 +163,9 @@
                       <div class="popUserInfoItemPro">
                         <i class="el-icon-coin popIcon"></i>U币
                       </div>
-                      <div class="popUserInfoItemText">100币</div>
+                      <div class="popUserInfoItemText">{{loginInfo.ucoin}}币</div>
                     </div>
-                    <div class="popUserInfoItem">
+                    <div class="popUserInfoItem" @click="goSetting">
                       <div class="popUserInfoItemPro">
                         <i class="el-icon-s-tools popIcon"></i>个人设置
                       </div>
@@ -311,10 +311,19 @@ export default {
         sex: ""
       },
       code: "",
-      userSignFlag: false
+      userSignFlag: false,
+       countInfo: {}
     };
   },
   methods: {
+      async getUserCountInfo() {
+      const res = await ucenterApi.getUserCountInfo();
+      this.countInfo = res.data.data.countInfo;
+      console.log(this.countInfo)
+    },
+    goSetting(){
+      this.$router.push("/ucenter/shezhi")
+    },
     async goSign() {
       const res = await ucenterApi.userSign();
       if (res.data.code == 20000) {
@@ -334,12 +343,13 @@ export default {
       //console.log(userStr)
       //把字符串转换成json对象(js对象)
       if (userStr) {
-
+        this.getUserCountInfo();
         this.loginInfo = JSON.parse(userStr);
+        console.log(this.loginInfo)
         const res = await ucenterApi.checkSign();
         if (res.data.code == 20000) {
           this.userSignFlag = res.data.data.flag;
-          console.log(this.userSignFlag)
+         
         }
       }
       },1000)
@@ -398,6 +408,7 @@ export default {
   },
   mounted() {
     this.showInfo();
+  
   }
 };
 </script>
@@ -467,8 +478,8 @@ export default {
   margin-top: 0px !important;
   position: absolute !important;
   top: 45px !important;
-  left: 1000px !important;
-  width: 320px !important;
+  left: 1020px !important;
+  width: 300px !important;
   border-radius: 10px !important;
 }
 .popShow {

@@ -49,7 +49,7 @@
           </div>
           <div>
             <span>U币: </span>
-            <span>52</span>
+            <span>{{ userInfo.ucoin }}币</span>
           </div>
           <div>
             <span>注册时间: </span>

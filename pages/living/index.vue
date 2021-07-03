@@ -61,7 +61,7 @@
           <div class="clear"></div>
         </section>
       </section>
-      <div class="mt40">
+      <div class="mt40 minHeight">
         <!-- /无数据提示 开始-->
         <section class="no-data-wrap" v-if="livingList.length == 0&&flagLiving==0">
           <em class="icon30 no-data-ico">&nbsp;</em>
@@ -253,6 +253,9 @@ export default {
 };
 </script>
 <style scoped>
+.minHeight{
+  min-height: 700px;
+}
 .active {
   background: greenyellow;
 }
