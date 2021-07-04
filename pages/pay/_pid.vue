@@ -16,9 +16,9 @@
         <div class="clearfix"></div>
       </div>
       <div class="checkout-steps">
-        <div class="fl weixin">微信支付</div>
+        <div class="fl weixin">Underdog支付</div>
         <div class="fl sao">
-          <p class="red">请使用微信扫一扫。</p>
+          <p class="red">请使用Underdog扫一扫。</p>
           <div class="fl code">
             <!-- <img id="qrious" src="~/assets/img/erweima.png" alt=""> -->
             <!-- <qriously value="weixin://wxpay/bizpayurl?pr=R7tnDpZ" :size="338"/> -->

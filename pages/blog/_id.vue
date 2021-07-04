@@ -251,7 +251,9 @@ export default {
       flagEnjoy: true,
       limit: 4,
       total: 10,
-      blogInfo: {},
+      blogInfo: {
+        type:1,
+      },
       blogId: "",
       comment: {
         content: "",
