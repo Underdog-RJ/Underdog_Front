@@ -53,7 +53,6 @@
                         </a>
                         <span> 浏览: {{ item.viewCount }} </span>
                         <span>时间: {{ item.gmtCreate }}</span>
-  
                       </div>
                     </div>
                   </section>
@@ -186,7 +185,7 @@
 <script>
 import subject from "@/api/subject";
 import blog from "@/api/blog";
-import Tinymce from '@/components/Tinymce/index'
+import Tinymce from "@/components/Tinymce/index";
 import cookie from "js-cookie";
 export default {
   components: { Tinymce }, //声明组件
@@ -209,7 +208,9 @@ export default {
       subjectTwoList: [], //二级分类
       blogList: [],
       enjoyList: [],
-      BASE_API: 'http://natapp.feifu.top' // 接口API地址
+      BASE_API: "http://natapp.feifu.top", // 接口API地址
+      uCoin: 0,
+      loginInfo:{}
     };
   },
   methods: {
@@ -269,7 +270,7 @@ export default {
     getOneSubject() {
       subject.getSubjectList().then(response => {
         this.subjectOneList = response.data.data.list;
-        console.log(this.subjectOneList);
+        
       });
     },
     saveOrUpdate() {
@@ -284,9 +285,14 @@ export default {
     //添加博客
     addblog() {
       blog.addBlogInfo(this.blogInfo).then(response => {
+
         this.$message({
           type: "success",
           message: "添加博客信息成功!"
+        });
+         this.loginInfo=response.data.data.userInfo;
+            cookie.set("underdogedu_ucenter", JSON.stringify(this.loginInfo), {
+          domain: "www.feifu.top"
         });
         location.reload();
       });
@@ -325,7 +331,6 @@ export default {
     //修该博客
     updateblog() {
       blog.updateblogInfoId(this.blogInfo).then(response => {
-        //
         this.$message({
           type: "success",
           message: "修该博客信息成功!"
@@ -352,14 +357,12 @@ export default {
       this.enjoyList = res.data.data.list;
     }
   },
-  mounted(){
-this.getOneSubject();
+  mounted() {
+    this.getOneSubject();
     this.getBlogByUserId();
     this.EnjoyBlogList();
   },
-  created() {
-    
-  }
+  created() {}
 };
 </script>
 

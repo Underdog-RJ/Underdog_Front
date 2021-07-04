@@ -328,6 +328,10 @@ export default {
       const res = await ucenterApi.userSign();
       if (res.data.code == 20000) {
         this.userSignFlag = res.data.data.flag;
+        this.loginInfo=res.data.data.userInfo;
+            cookie.set("underdogedu_ucenter", JSON.stringify(this.loginInfo), {
+          domain: "www.feifu.top"
+        });
         console.log(this.userSignFlag);
       }
     },
@@ -349,7 +353,7 @@ export default {
         const res = await ucenterApi.checkSign();
         if (res.data.code == 20000) {
           this.userSignFlag = res.data.data.flag;
-         
+          
         }
       }
       },1000)

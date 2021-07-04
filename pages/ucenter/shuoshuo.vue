@@ -74,24 +74,21 @@ export default {
       limit: 10,
       data: {},
       ucenterShuoshuo: {},
-      id: "1"
+      id: "1",
+      loginInfo:{}
     };
   },
-  created() {
-    
-  },
+  created() {},
   mounted() {
+    //从cookie获取用户信息
+    var userStr = cookie.get("underdogedu_ucenter");
+    //console.log(userStr)
+    //把字符串转换成json对象(js对象)
+    if (userStr) {
+      this.userInfo = JSON.parse(userStr);
+    }
+    this.id = this.userInfo.id;
     this.initshuoshuo();
-    
-      //从cookie获取用户信息
-      var userStr = cookie.get("underdogedu_ucenter");
-      //console.log(userStr)
-      //把字符串转换成json对象(js对象)
-      if (userStr) {
-        this.userInfo = JSON.parse(userStr);
-      }
-
-      this.id = this.userInfo.id;
   },
   methods: {
     //初始化说说
@@ -110,6 +107,10 @@ export default {
     addUcenterShuoshuo() {
       shuoshuo.addShuoshuo(this.ucenterShuoshuo).then(response => {
         this.initshuoshuo();
+          this.loginInfo=response.data.data.userInfo;
+            cookie.set("underdogedu_ucenter", JSON.stringify(this.loginInfo), {
+          domain: "www.feifu.top"
+        });
         this.ucenterShuoshuo = {};
       });
     },

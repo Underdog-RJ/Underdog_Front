@@ -355,6 +355,7 @@
 import courseApi from "@/api/course";
 import comment from "@/api/commonedu";
 import ordersApi from "@/api/orders";
+import cookie from "js-cookie";
 export default {
   //和页面异步开始的
   asyncData({ params, error }) {
@@ -376,7 +377,8 @@ export default {
       chapterVideoList: [],
       isBuy: false,
       courseWebVo: {},
-      courseId: ""
+      courseId: "",
+      loginInfo:{}
     };
   },
   created() {
@@ -390,8 +392,7 @@ export default {
     console.log("mounted")
   },
   updated(){
-    
-    console.log("updated")
+
   },
   methods: {
     //查询课程详情信息
@@ -417,6 +418,11 @@ export default {
         if (response.data.success) {
           this.comment.content = "";
           this.initComment();
+             this.loginInfo=response.data.data.userInfo;
+            cookie.set("underdogedu_ucenter", JSON.stringify(this.loginInfo), {
+          domain: "www.feifu.top"
+        });
+        location.reload();
         }
       });
     },

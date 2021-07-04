@@ -25,11 +25,19 @@
         </el-menu>
       </el-col>
       <el-col :span="20">
+        <div :class="titleFlag? 'title':'titleYc'">
+          <div class="titleText"> 绑定任意一个都加100U币哟~
+            </div> 
+         
+          <div class="titleIcon" @click="handleYC">
+            <i class="el-icon-close" ></i>
+          </div>
+        </div>
         <div v-if="flagdialog === '1'">
           <div class="item">
             <ul class="item_zh">
               <li class="item_1">
-                <span v-if="userInfo.mail != ''&&userInfo.mail!=null">
+                <span v-if="userInfo.mail != '' && userInfo.mail != null">
                   <i class="el-icon-check"></i>
                 </span>
                 <span v-else>
@@ -50,7 +58,9 @@
             </ul>
             <ul class="item_zh">
               <li class="item_1">
-                <span v-if="userInfo.password !== ''&&userInfo.password!=null">
+                <span
+                  v-if="userInfo.password !== '' && userInfo.password != null"
+                >
                   <i class="el-icon-check"></i>
                 </span>
                 <span v-else>
@@ -59,8 +69,13 @@
               </li>
               <li class="item_c">登录密码</li>
               <li class="item_c">
-                <input type="password" style="border: 0;outline: none; background-color: rgba(0, 0, 0, 0);" v-model="userInfo.password" disabled>
-                </li>
+                <input
+                  type="password"
+                  style="border: 0;outline: none; background-color: rgba(0, 0, 0, 0);"
+                  v-model="userInfo.password"
+                  disabled
+                />
+              </li>
               <li class="item_c">
                 <el-button
                   @click="PassworddialogVisible = true"
@@ -73,7 +88,7 @@
             </ul>
             <ul class="item_zh">
               <li class="item_1">
-                <span v-if="userInfo.mobile !== ''">
+                <span v-if="userInfo.mobile !== '' && userInfo.mobile != null">
                   <i class="el-icon-check"></i>
                 </span>
                 <span v-else>
@@ -232,15 +247,16 @@
     </el-dialog>
 
     <!-- 密码弹框 -->
-    <el-dialog :visible.sync="PassworddialogVisible" 
-     @close="PasswordformRefClosed"
-    width="30%">
-       <el-form
+    <el-dialog
+      :visible.sync="PassworddialogVisible"
+      @close="PasswordformRefClosed"
+      width="30%"
+    >
+      <el-form
         ref="PasswordformRef"
         :model="passwordForm"
         :rules="passwordFormRules"
         label-width="0px"
-       
       >
         <!--密码-->
         <el-form-item prop="password">
@@ -251,13 +267,10 @@
             placeholder="请输入您的密码"
           ></el-input>
         </el-form-item>
-    
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="PassworddialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="updatePassword"
-          >确 定</el-button
-        >
+        <el-button type="primary" @click="updatePassword">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -270,11 +283,11 @@ import registerApi from "@/api/register";
 import cookie from "js-cookie";
 export default {
   watch: {
-    flagdialog: function (newVal) {
+    flagdialog: function(newVal) {
       if (newVal == "2") {
         this.getUserInfo();
       }
-    },
+    }
   },
   components: { Tinymce },
   layout: "ucenterLayout",
@@ -308,17 +321,17 @@ export default {
       flagdialog: "1",
       EmaildialogVisible: false,
       editForm: {
-        email: "",
+        email: ""
       },
-      passwordForm:{
-        password:""
+      passwordForm: {
+        password: ""
       },
       mobiledialogVisible: false,
       PassworddialogVisible: false,
       password: "",
       userInfo: {},
       zhuye: {
-        content: "这家伙很懒，什么也没留下",
+        content: "这家伙很懒，什么也没留下"
       },
       tempContent: "这家伙很懒，什么也没留下",
       // 修改表单的验证规则
@@ -326,32 +339,32 @@ export default {
         //验证的名字需要和表单的名字相同
         email: [
           { required: true, message: "请输入邮箱", trigger: "blur" },
-          { validator: checkmgEmail, trigger: "blur" },
+          { validator: checkmgEmail, trigger: "blur" }
         ],
         mobile: [
           { required: true, message: "请输入你的手机号", trigger: "blur" },
-          { validator: checkmgMobile, trigger: "blur" },
-        ],
+          { validator: checkmgMobile, trigger: "blur" }
+        ]
       },
-      passwordFormRules:{
+      passwordFormRules: {
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 6, max: 15, message: '长度在 6 到 15 个字符', trigger: 'blur' }
+          { required: true, message: "请输入密码", trigger: "blur" },
+          { min: 6, max: 15, message: "长度在 6 到 15 个字符", trigger: "blur" }
         ]
       },
       userSex: [
         {
           value: 1,
-          label: "男",
+          label: "男"
         },
         {
           value: 2,
-          label: "女",
-        },
+          label: "女"
+        }
       ],
       BASE_API: "http://localhost:8222", // 接口API地址
       mobileForm: {
-        mobile: "",
+        mobile: ""
       },
       code: "",
       sending: true, //是否发送验证码
@@ -360,38 +373,41 @@ export default {
       sending1: true, //是否发送验证码
       second1: 60, //倒计时间
       codeTest1: "获取验证码",
-      codeMail:""
+      codeMail: "",
+      titleFlag:true
     };
   },
   methods: {
     //更改用户密码
-    updatePassword(){
-          this.$refs.PasswordformRef.validate(async (valid) => {
+    updatePassword() {
+      this.$refs.PasswordformRef.validate(async valid => {
         if (!valid) return;
-        const res=await ucenter.updateUserPassword(this.passwordForm.password)
-        if(res.data.code==20000){
-          this.userInfo=res.data.data.ucenterMember;
-          this.$message.success("更新成功")
-          this.PassworddialogVisible=false
-        }else{
-          this.$message.error("更新失败")
-           this.PassworddialogVisible=false
+        const res = await ucenter.updateUserPassword(
+          this.passwordForm.password
+        );
+        if (res.data.code == 20000) {
+          this.userInfo = res.data.data.ucenterMember;
+          this.$message.success("更新成功");
+          this.PassworddialogVisible = false;
+        } else {
+          this.$message.error("更新失败");
+          this.PassworddialogVisible = false;
         }
       });
     },
-    PasswordformRefClosed(){
-      this.$refs.PasswordformRef.resetFields()
+    PasswordformRefClosed() {
+      this.$refs.PasswordformRef.resetFields();
     },
     //通过输入手机号发送验证码
     getCodeFun() {
-      this.$refs.editFormRef.validate(async (valid) => {
+      this.$refs.editFormRef.validate(async valid => {
         if (!valid) return;
         if (this.userInfo.mobile == this.mobileForm.mobile) {
           this.$message.error("手机号未修改");
           this.mobiledialogVisible = false;
           return;
         }
-        registerApi.sendCode(this.mobileForm.mobile).then((response) => {
+        registerApi.sendCode(this.mobileForm.mobile).then(response => {
           this.sending = false;
           //调用倒计时的方法
           this.timeDown();
@@ -410,7 +426,7 @@ export default {
         }
       }, 1000);
     },
-      timeDown1() {
+    timeDown1() {
       let result = setInterval(() => {
         --this.second1;
         this.codeTest1 = this.second1;
@@ -449,33 +465,34 @@ export default {
       }
     },
     async getCodeFun1() {
-    
-        if(this.userInfo.mail==this.editForm.email){
-          this.$message.error("邮箱没有更改")
-          this.EmaildialogVisible=false;
-          return;
-        }
-        const res = await ucenter.setMail(this.editForm.email);
-        if(res.data.code===20000){
-          this.$message.success(res.data.message)
-            this.sending1 = false;
-          //调用倒计时的方法
-          this.timeDown();
-        }else{
-           this.$message.error(res.data.message)
-        }
-   
-    },
-    async setMail(){
-      const res=await ucenter.validateMail(this.editForm.email,this.codeMail)
-      if(res.data.code==20000){
-        this.$message.success(res.data.message)
-        this.userInfo.mail=this.editForm.email
-        this.codeMail=""
-      }else{
-        this.$message.error(res.data.message)
+      if (this.userInfo.mail == this.editForm.email) {
+        this.$message.error("邮箱没有更改");
+        this.EmaildialogVisible = false;
+        return;
       }
-      this.EmaildialogVisible=false
+      const res = await ucenter.setMail(this.editForm.email);
+      if (res.data.code === 20000) {
+        this.$message.success(res.data.message);
+        this.sending1 = false;
+        //调用倒计时的方法
+        this.timeDown();
+      } else {
+        this.$message.error(res.data.message);
+      }
+    },
+    async setMail() {
+      const res = await ucenter.validateMail(
+        this.editForm.email,
+        this.codeMail
+      );
+      if (res.data.code == 20000) {
+        this.$message.success(res.data.message);
+        this.userInfo.mail = this.editForm.email;
+        this.codeMail = "";
+      } else {
+        this.$message.error(res.data.message);
+      }
+      this.EmaildialogVisible = false;
     },
     async handleSubmitZhuye() {
       //this.ucenterMemberZhuye.content=this.tempContent
@@ -487,7 +504,7 @@ export default {
     },
     getUserInfo() {
       //this.userInfo = this.$store.state.userInfo;
-        //从cookie获取用户信息
+      //从cookie获取用户信息
       var userStr = cookie.get("underdogedu_ucenter");
       //console.log(userStr)
       //把字符串转换成json对象(js对象)
@@ -526,27 +543,47 @@ export default {
         this.userInfo = {};
       }
     },
+    handleYC(){
+      this.titleFlag=false
+    }
   },
   mounted() {
     this.getOwnPage();
     //this.userInfo = this.$store.state.userInfo;
-     //从cookie获取用户信息
-      var userStr = cookie.get("underdogedu_ucenter");
-      //console.log(userStr)
-      //把字符串转换成json对象(js对象)
-      if (userStr) {
-        this.userInfo = JSON.parse(userStr);
-      }
-
-    
+    //从cookie获取用户信息
+    var userStr = cookie.get("underdogedu_ucenter");
+    //console.log(userStr)
+    //把字符串转换成json对象(js对象)
+    if (userStr) {
+      this.userInfo = JSON.parse(userStr);
+    }
   },
-  created() {
-    
-  },
+  created() {}
 };
 </script>
 
 <style scoped>
+.titleYc{
+  display: none !important;
+}
+.titleText{
+  margin-left: 350px;
+}
+.title{
+  width: 95%;
+  height: 44px;
+  border-radius:20px;
+  margin:20px;
+  background-color: #cce5ff;
+  text-align: center;
+  line-height: 44px;
+  display: flex;
+  
+}
+.titleIcon{
+  margin-left: auto;
+  margin-right: 30px;
+}
 .show_1 {
   display: flex;
 }

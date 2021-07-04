@@ -238,7 +238,7 @@
 import blogApi from "@/api/blog";
 import comment from "@/api/blogcomment";
 import Prism from "prismjs";
-
+import cookie from "js-cookie";
 export default {
   //和页面异步开始的
   asyncData({ params, error }) {
@@ -256,7 +256,8 @@ export default {
       comment: {
         content: "",
         blogId: ""
-      }
+      },
+      loginInfo: {}
     };
   },
   created() {},
@@ -265,13 +266,15 @@ export default {
   },
 
   mounted() {
-   
     this.initCourseInfo();
     this.initComment();
     this.initEnjoy();
   },
-  updated(){
-         process.browser&&document.querySelectorAll("pre code").forEach(block => Prism.highlightElement(block));
+  updated() {
+    process.browser &&
+      document
+        .querySelectorAll("pre code")
+        .forEach(block => Prism.highlightElement(block));
   },
   methods: {
     //初始化收藏
@@ -302,6 +305,11 @@ export default {
         if (response.data.success) {
           this.comment.content = "";
           this.initComment();
+          this.loginInfo = response.data.data.userInfo;
+          cookie.set("underdogedu_ucenter", JSON.stringify(this.loginInfo), {
+            domain: "www.feifu.top"
+          });
+         location.reload();
         }
       });
     },
@@ -317,7 +325,10 @@ export default {
       console.log(this.blogId);
       blogApi.getBlogInfo(this.blogId).then(response => {
         this.blogInfo = response.data.data.eduBlog;
-        process.browser&&document.querySelectorAll("pre code").forEach(block => Prism.highlightElement(block));
+        process.browser &&
+          document
+            .querySelectorAll("pre code")
+            .forEach(block => Prism.highlightElement(block));
 
         console.log(this.blogInfo);
       });

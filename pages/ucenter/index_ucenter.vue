@@ -9,8 +9,9 @@
     <!-- 右边 -->
     <div class="show_right">
       <div class="show_column1">
-        <div class="button1">
-          <el-button type="warning" size="medium">开通VIP 享更多特权</el-button>
+        <div class="signStyle">
+          <div>本月签到次数:{{userSignCountInfo.countMonth}}</div>
+          <div>本月连续签到次数:{{userSignCountInfo.countCountinuous}}</div>
         </div>
       </div>
 
@@ -73,7 +74,8 @@ export default {
       zhuye: {
         content: "这家伙很懒，什么也没留下"
       },
-      countInfo: {}
+      countInfo: {},
+      userSignCountInfo:{}
     };
   },
   mounted() {
@@ -88,9 +90,16 @@ export default {
     console.log(this.userInfo);
     this.getUserCountInfo();
     this.getOwnPage();
+    this.userSignCountInfoMethod()
   },
   created() {},
   methods: {
+    async userSignCountInfoMethod() {
+      const res = await ucenter.userSignCountInfo();
+      this.userSignCountInfo.countMonth = res.data.data.countMonth;
+      this.userSignCountInfo.countCountinuous = res.data.data.countCountinuous;
+      console.log(this.userSignCountInfo)
+    },
     async getUserCountInfo() {
       const res = await ucenter.getUserCountInfo();
       this.countInfo = res.data.data.countInfo;
@@ -141,9 +150,11 @@ export default {
   display: flex;
   flex-direction: column;
 }
-.button1 {
-  line-height: 70px;
-  text-align: center;
+.signStyle {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin:10px 40px;
 }
 .show_column1 {
   height: 70px;

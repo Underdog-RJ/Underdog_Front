@@ -1,6 +1,15 @@
 import request from '@/utils/request'
 export default {
 
+
+  userSignCountInfo(){
+    return request({
+      url: `/educenter/member/userSignCountInfo`,
+      method: 'get'
+    })
+  },
+
+
   userSign(){
     return request({
       url: `/educenter/member/userSign`,
