@@ -2,7 +2,7 @@ import axios from 'axios'
 import cookie from 'js-cookie'
 //创建axios实例
 const service = axios.create({
-    baseURL:'http://natapp.feifu.top',
+    baseURL:'39.101.196.37:8848',
     timeout:20000
 })
 

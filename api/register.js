@@ -3,7 +3,7 @@ export default {
 
   sendCode(phone) {
     return request({
-      url: '/edumsm/msm/send/'+phone,
+      url: '/educenter/edumsm/msm/send/'+phone,
       method: 'get'
     })
   },
