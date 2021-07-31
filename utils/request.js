@@ -2,15 +2,15 @@ import axios from 'axios'
 import cookie from 'js-cookie'
 //创建axios实例
 const service = axios.create({
-    baseURL:'39.101.196.37:8222',
-    timeout:20000
+    baseURL:'http://39.101.196.37:8222/',
+    timeout:30000
 })
 
 
 // http request 拦截器
 service.interceptors.request.use(
     config => {
-    //debugger
+    debugger
     if (cookie.get('underdogedu_token')) {
       config.headers['token'] = cookie.get('underdogedu_token');
     }
