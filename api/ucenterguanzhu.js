@@ -46,7 +46,7 @@ export default {
   //获取全部聊天记录
   getAllMessage(userId,friendId) {
     return request({
-      url:`/chat/chatRecord/findByUserIdAndFriendId/${userId}/${friendId}`,
+      url:`/educenter/chat/chatRecord/findByUserIdAndFriendId/${userId}/${friendId}`,
       method: 'get'
     })
   },
@@ -54,7 +54,7 @@ export default {
   //获取全部用户的未读消息
   getRecordByUserId(userId) {
     return request({
-      url:`/chat/chatRecord/getRecordByUserId/${userId}`,
+      url:`/educenter/chat/chatRecord/getRecordByUserId/${userId}`,
       method: 'get'
     })
   },

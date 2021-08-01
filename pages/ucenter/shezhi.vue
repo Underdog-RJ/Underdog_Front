@@ -128,7 +128,7 @@
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess"
                     :before-upload="beforeAvatarUpload"
-                    :action="BASE_API + '/eduoss/fileoss'"
+                    :action="BASE_API + '/eduvod/eduoss/fileoss'"
                     class="avatar-uploader"
                   >
                     <img :src="userInfo.avatar" />
