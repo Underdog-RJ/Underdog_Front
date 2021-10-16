@@ -86,7 +86,7 @@ export default {
     return {
       player: {},
       flagIndex: -1,
-      path: "39.101.196.37:1100",
+      path: "39.101.196.37:11000",
       teacherInfo: {},
       message: {},
       userInfo: {},
