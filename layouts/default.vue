@@ -4,7 +4,7 @@
     <header id="header">
       <section class="container">
         <h1 id="logo">
-          <a href="#" title="UnderDog学院">
+          <a href="/" title="UnderDog学院">
             <img src="~/assets/img/logo.png" width="100%" alt="UnderDog学院" />
           </a>
         </h1>
