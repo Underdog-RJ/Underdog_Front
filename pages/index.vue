@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 幻灯片 开始 -->
-    <div v-swiper:mySwiper="swiperOption" style="height:348px">
+    <!-- <div v-swiper:mySwiper="swiperOption" style="height:348px">
       <div class="swiper-wrapper">
         <div
           v-for="banner in bannerList"
@@ -23,159 +23,211 @@
         class="swiper-button-next swiper-button-white"
         slot="button-next"
       ></div>
-    </div>
+    </div> -->
     <!-- 幻灯片 结束 -->
   
     <div id="aCoursesList">
-      <!-- 网校课程 开始 -->
-      <div>
-        <section class="container">
-          <header class="comm-title">
-            <h2 class="tac">
-              <span class="c-333">热门课程</span>
-            </h2>
-          </header>
-          <div>
-            <article class="comm-course-list">
-              <ul class="of" id="bna">
-                <li v-for="course in eduList" :key="course.id">
-                  <div class="cc-l-wrap">
-                    <section class="course-img">
-                      <img
-                        :src="course.cover"
-                       
-                        class="img-responsive"
-                        :alt="course.title"
-                      />
-                      <div class="cc-mask">
-                        <a :href="'/course/'+course.id" title="开始学习" class="comm-btn c-btn-1"
-                          >开始学习</a
-                        >
-                      </div>
+      <el-row>
+        <!-- 左边首页内容 -->
+        <el-col :span="20">
+          <el-tabs tab-position="left" style="margin-left: 8%; margin-right: 12%;" type="border-card">
+            <el-tab-pane label="热门课程">
+              <!-- 网校课程 开始 -->
+              <div>
+                <!-- <section class="container"> -->
+                <section >
+                  <!-- <header class="comm-title">
+                    <h2 class="tac">
+                      <span class="c-333">热门课程</span>
+                    </h2>
+                  </header> -->
+                  <div>
+                    <article class="comm-course-list">
+                      <ul class="of" id="bna">
+                        <li v-for="course in eduList" :key="course.id">
+                          <div class="cc-l-wrap">
+                            <section class="course-img">
+                              <img
+                                :src="course.cover"
+                              
+                                class="img-responsive"
+                                :alt="course.title"
+                              />
+                              <div class="cc-mask">
+                                <a :href="'/course/'+course.id" title="开始学习" class="comm-btn c-btn-1"
+                                  >开始学习</a
+                                >
+                              </div>
+                            </section>
+                            <h3 class="hLh30 txtOf mt10">
+                              <a
+                                :href="'/course/'+course.id"
+                                :title="course.title"
+                                class="course-title fsize18 c-333"
+                                >{{ course.title }}</a
+                              >
+                            </h3>
+                            <section class="mt10 hLh20 of">
+                              <span
+                                class="fr jgTag bg-green"
+                                v-if="Number(course.price) === 0"
+                              >
+                                <i class="c-fff fsize12 f-fA">免费</i>
+                              </span>
+                              <span class="fl jgAttr c-ccc f-fA">
+                                <i class="c-999 f-fA">9634人学习</i>
+                                |
+                                <i class="c-999 f-fA">9634评论</i>
+                              </span>
+                            </section>
+                          </div>
+                        </li>
+                      </ul>
+                      <div class="clear"></div>
+                    </article>
+                    <section class="tac pt20">
+                      <a href="/course" title="全部课程" class="comm-btn c-btn-2">全部课程</a>
                     </section>
-                    <h3 class="hLh30 txtOf mt10">
-                      <a
-                        :href="'/course/'+course.id"
-                        :title="course.title"
-                        class="course-title fsize18 c-333"
-                        >{{ course.title }}</a
-                      >
-                    </h3>
-                    <section class="mt10 hLh20 of">
-                      <span
-                        class="fr jgTag bg-green"
-                        v-if="Number(course.price) === 0"
-                      >
-                        <i class="c-fff fsize12 f-fA">免费</i>
-                      </span>
-                      <span class="fl jgAttr c-ccc f-fA">
-                        <i class="c-999 f-fA">9634人学习</i>
-                        |
-                        <i class="c-999 f-fA">9634评论</i>
-                      </span>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-              <div class="clear"></div>
-            </article>
-            <section class="tac pt20">
-              <a href="/course" title="全部课程" class="comm-btn c-btn-2">全部课程</a>
-            </section>
-          </div>
-        </section>
-      </div>
-      <!-- /网校课程 结束 -->
-      <!-- 网校名师 开始 -->
-      <div>
-        <section class="container">
-          <header class="comm-title">
-            <h2 class="tac">
-              <span class="c-333">名师大咖</span>
-            </h2>
-          </header>
-          <div>
-            <article class="i-teacher-list">
-              <ul class="of">
-                <li v-for="teacher in teacherList" :key="teacher.id">
-                  <section class="i-teach-wrap">
-                    <div class="i-teach-pic">
-                      <a :href="'/teacher/'+teacher.id" :title="teacher.name">
-                        <img
-                          :alt="teacher.name"
-                          :src="teacher.avatar"
-                        />
-                      </a>
-                    </div>
-                    <div class="mt10 hLh30 txtOf tac">
-                      <a :href="'/teacher/'+teacher.id" :title="teacher.name" class="fsize18 c-666"
-                        >{{teacher.name}}</a
-                      >
-                    </div>
-                    <div class="hLh30 txtOf tac">
-                      <span class="fsize14 c-999"
-                        >{{teacher.career}}</span
-                      >
-                    </div>
-                    <div class="mt15 i-q-txt">
-                      <p class="c-999 f-fA">
-                        {{teacher.intro}}
-                      </p>
-                    </div>
-                  </section>
-                </li>
-              
-              </ul>
-              <div class="clear"></div>
-            </article>
-            <section class="tac pt20">
-              <a href="/teacher" title="全部讲师" class="comm-btn c-btn-2">全部讲师</a>
-            </section>
-          </div>
-        </section>
-      </div>
-      <!-- /网校名师 结束 -->
-
-      <!-- 博客开始 -->
-      <div class="container blogStyle">
-        <header class="comm-title">
-            <h2 class="tac">
-              <span class="c-333">热门博客</span>
-            </h2>
-          </header>
-           <ul class="show" id="">
-              <li v-for="item in blogList" :key="item.id" class="show_item">
-                <section class="blog-img">
-                  <div class="img-float">
-                    <img :src="item.firstPicture" class="" :alt="item.title" />
-                  </div>
-                  <div class="show_left">
-
-                    <div class="title_bolg">
-                      <a :href="'/blog/' + item.id" :title="item.title">{{
-                        item.title
-                      }}</a>
-                    </div>
-                    <div class="item_center">
-                      <span>{{item.descption}}</span>
-                    </div>
-
-                    <div class="item_bottom">
-                      <a href="">
-                         <span> 作者: {{ item.authorNickname }} </span>
-                      </a>
-                      <span> 浏览: {{ item.viewCount }} </span>
-                      <span>时间: {{ item.gmtCreate }}</span>
-                    </div>
                   </div>
                 </section>
-              </li>
-            </ul>
-              <section class="tac pt20">
-              <a href="/blog" title="全部博客" class="comm-btn c-btn-2">全部博客</a>
-            </section>
-      </div>
-      <!-- 博客结束 -->
+              </div>
+              <!-- /网校课程 结束 -->
+            </el-tab-pane>
+            <el-tab-pane label="热门讲师">
+              <!-- 网校名师 开始 -->
+              <div>
+                <!-- <section class="container"> -->
+                <section >
+                  <!-- <header class="comm-title">
+                    <h2 class="tac">
+                      <span class="c-333">名师大咖</span>
+                    </h2>
+                  </header> -->
+                  <div>
+                    <article class="i-teacher-list">
+                      <ul class="of">
+                        <li v-for="teacher in teacherList" :key="teacher.id">
+                          <section class="i-teach-wrap">
+                            <div class="i-teach-pic">
+                              <a :href="'/teacher/'+teacher.id" :title="teacher.name">
+                                <img
+                                  :alt="teacher.name"
+                                  :src="teacher.avatar"
+                                />
+                              </a>
+                            </div>
+                            <div class="mt10 hLh30 txtOf tac">
+                              <a :href="'/teacher/'+teacher.id" :title="teacher.name" class="fsize18 c-666"
+                                >{{teacher.name}}</a
+                              >
+                            </div>
+                            <div class="hLh30 txtOf tac">
+                              <span class="fsize14 c-999"
+                                >{{teacher.career}}</span
+                              >
+                            </div>
+                            <div class="mt15 i-q-txt">
+                              <p class="c-999 f-fA">
+                                {{teacher.intro}}
+                              </p>
+                            </div>
+                          </section>
+                        </li>
+                      
+                      </ul>
+                      <div class="clear"></div>
+                    </article>
+                    <section class="tac pt20">
+                      <a href="/teacher" title="全部讲师" class="comm-btn c-btn-2">全部讲师</a>
+                    </section>
+                  </div>
+                </section>
+              </div>
+              <!-- /网校名师 结束 -->
+            </el-tab-pane>
+            <el-tab-pane label="热门文章">
+              <!-- 博客开始 -->
+              <!-- <div class="container blogStyle"> -->
+              <div>
+                  <!-- <header class="comm-title">
+                    <h2 class="tac">
+                      <span class="c-333">热门博客</span>
+                    </h2>
+                  </header> -->
+                  <ul class="show" id="">
+                      <li v-for="item in blogList" :key="item.id" class="show_item">
+                        <section class="blog-img">
+                          <div class="img-float">
+                            <img :src="item.firstPicture" class="" :alt="item.title" />
+                          </div>
+                          <div class="show_left">
+
+                            <div class="title_bolg">
+                              <a :href="'/blog/' + item.id" :title="item.title">{{
+                                item.title
+                              }}</a>
+                            </div>
+                            <div class="item_center">
+                              <span>{{item.descption}}</span>
+                            </div>
+
+                            <div class="item_bottom">
+                              <a href="">
+                                <span> 作者: {{ item.authorNickname }} </span>
+                              </a>
+                              <span> 浏览: {{ item.viewCount }} </span>
+                              <span>时间: {{ item.gmtCreate }}</span>
+                            </div>
+                          </div>
+                        </section>
+                      </li>
+                    </ul>
+                      <section class="tac pt20">
+                      <a href="/blog" title="全部博客" class="comm-btn c-btn-2">全部博客</a>
+                    </section>
+              </div>
+              <!-- 博客结束 -->
+            </el-tab-pane>
+            <el-tab-pane class="container" label="热门直播">
+              <!-- TODO -->
+              <!-- /无数据提示 开始-->
+              <section class="no-data-wrap">
+                <em class="icon30 no-data-ico">&nbsp;</em>
+                <span class="c-666 fsize14 ml10 vam"
+                  >没有相关数据，小编正在努力整理中...</span
+                >
+              </section>
+              <!-- /无数据提示 结束-->
+            </el-tab-pane>
+          </el-tabs>
+        </el-col>
+        <!-- 左边结束 -->
+        <!-- 右边推荐内容 -->
+        <el-col :span="4">
+          <el-card class="box-card" style="margin-left: -55%; margin-right: 45%;" >
+            <div slot="header" class="clearfix">
+              <span style="color: #606266;">猜你喜欢</span>
+              <el-button style="float: right; color: #909399; padding: 3px 0" icon="el-icon-refresh" type="text">换一换</el-button>
+            </div>
+            <li v-for="course in eduList" :key="course.id">
+              <a
+                :href="'/course/'+course.id"
+                :title="course.title"
+                class="course-title fsize18 c-333"
+                >🔥 {{ course.title }}</a
+              >
+            </li>
+            <!-- <div v-for="o in 4" :key="o" style="margin-bottom: 10px" class="text item">
+              <a href="/course" title="全部课程" >🔥 全部课程</a>
+            </div> -->
+          </el-card>
+        </el-col>
+        <!-- 右边结束 -->
+      </el-row>
+      
+      
+
+      
     </div>
      <div class="m-fixed m-right-bottom m-padding">
       <el-backtop></el-backtop>
@@ -240,6 +292,12 @@ export default {
 };
 </script>
 <style scoped>
+.el-card__header {
+    padding: 10px 20px;
+    border-bottom: 1px solid #EBEEF5;
+    box-sizing: border-box;
+}
+
 .blogStyle{
   margin-top: 20px;
 }

@@ -35,7 +35,7 @@ module.exports = {
       { hid: 'description', name: 'description', content: '{{escape description }}' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }
     ]
   },
   /*
