@@ -10,6 +10,46 @@ a.red {color: #ff4a56;}
 a.red:hover {color: #950b11;}
 .color81, .color81 a {color:#818181;}
 
+/* 日历 */
+.el-calendar__body {
+  padding: 0px !important;
+}
+.el-calendar-table .el-calendar-day {
+  text-align: center;
+  padding: 0px !important;
+  line-height: 35px !important;
+  height: 35px !important;
+  width: 35px !important;
+  border-radius:35px;
+}
+.current .is-selected .is-today{
+  text-align: center;
+  padding: 0px !important;
+  line-height: 35px !important;
+  height: 35px !important;
+  width: 35px !important;
+  border-radius:35px;
+}
+.el-calendar-table__row .prev{
+  color: #fff !important;
+}
+.el-calendar-table__row .next{
+  color: #fff !important;
+}
+.el-calendar-table td {
+  border-bottom: 0px;
+  border-right: 0px;
+}
+.el-calendar__button-group .el-button{
+  border: none;
+}
+.el-calendar-table thead th{
+  padding: 0px;
+  text-align: center;
+}
+.el-calendar__header {
+  border: none;
+}
 textarea {resize: none;}
 /* other */
 input.iw60 {width: 60px;}

@@ -279,6 +279,7 @@ export default {
         .forEach(block => Prism.highlightElement(block));
   },
   methods: {
+    
     //初始化收藏
     async initEnjoy() {
       const res = await blogApi.IsEnjoyBlog(this.blogId);
@@ -324,6 +325,7 @@ export default {
     },
     //查询博客详情信息
     initCourseInfo() {
+
       console.log(this.blogId);
       blogApi.getBlogInfo(this.blogId).then(response => {
         this.blogInfo = response.data.data.eduBlog;

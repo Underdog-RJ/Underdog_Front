@@ -9,10 +9,19 @@
     <!-- 右边 -->
     <div class="show_right">
       <div class="show_column1">
-        <div class="signStyle">
+        <!-- <div class="signStyle">
           <div>本月签到次数:{{userSignCountInfo.countMonth}}</div>
           <div>本月连续签到次数:{{userSignCountInfo.countCountinuous}}</div>
-        </div>
+        </div> -->
+
+        <el-calendar>
+          <template slot="dateCell" slot-scope="{ date, data }">
+             <div class="calendar-day">
+               {{ data.day.split('-').slice(2).join('-') }}
+               <div class="relateRed" v-if="handleDay(data)"></div>
+            </div>
+          </template>
+        </el-calendar>
       </div>
 
       <div class="show_column2">
@@ -75,30 +84,44 @@ export default {
         content: "这家伙很懒，什么也没留下"
       },
       countInfo: {},
-      userSignCountInfo:{}
+      userSignCountInfo: {},
+      calendaer: "",
+      day:new Date().getDay()
     };
   },
   mounted() {
     //this.userInfo = this.$store.state.userInfo;
-      //从cookie获取用户信息
-      var userStr = cookie.get("underdogedu_ucenter");
-      //console.log(userStr)
-      //把字符串转换成json对象(js对象)
-      if (userStr) {
-        this.userInfo = JSON.parse(userStr);
-      }
+    //从cookie获取用户信息
+    var userStr = cookie.get("underdogedu_ucenter");
+    //console.log(userStr)
+    //把字符串转换成json对象(js对象)
+    if (userStr) {
+      this.userInfo = JSON.parse(userStr);
+    }
     console.log(this.userInfo);
     this.getUserCountInfo();
     this.getOwnPage();
-    this.userSignCountInfoMethod()
+    this.userSignCountInfoMethod();
   },
   created() {},
   methods: {
+    handleDay(data) {
+    if(data.type=='prev-month')
+      return false;
+    if(data.type=='next-month')
+      return false;
+    let current = data.day.split('-')[2]   
+    let dayTime = new Date().getDate()
+    if(Number(current)<=Number(dayTime)){
+      return true;
+    }
+    return false;  
+    },
     async userSignCountInfoMethod() {
       const res = await ucenter.userSignCountInfo();
       this.userSignCountInfo.countMonth = res.data.data.countMonth;
       this.userSignCountInfo.countCountinuous = res.data.data.countCountinuous;
-      console.log(this.userSignCountInfo)
+      console.log(this.userSignCountInfo);
     },
     async getUserCountInfo() {
       const res = await ucenter.getUserCountInfo();
@@ -118,6 +141,14 @@ export default {
 </script>
 
 <style scoped>
+.relateRed{
+  position: relative;
+  left: 15px;
+  top:-7px;
+  width: 5px;
+  height: 5px;
+  background-color: red;
+}
 .contentHtml >>> img {
   width: 100%;
 }
@@ -142,7 +173,7 @@ export default {
   flex: 70%;
   background-color: #fff;
   margin-right: 30px;
-  min-height: 500px;
+  min-height: 700px;
   max-width: 70%;
 }
 .show_right {
@@ -154,12 +185,13 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100%;
-  margin:10px 40px;
+  margin: 10px 40px;
 }
 .show_column1 {
-  height: 70px;
+  height: 300px;
   margin-bottom: 20px;
   background-color: #fff;
+  /* border-radius: 20px; */
 }
 .show_column2 {
   height: 130px;
