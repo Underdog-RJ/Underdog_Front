@@ -1,8 +1,8 @@
 module.exports = {
-  // server:{
-  //   port:80,
-  //   host:'0.0.0.0'
-  // },
+  server:{
+    port:80,
+    host:'0.0.0.0'
+  },
   plugins: [
     { src: '~/plugins/nuxt-swiper-plugin.js', ssr: false },
     {
