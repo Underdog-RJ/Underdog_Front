@@ -371,7 +371,7 @@
     "COMPUTERNAME": "JEFF-XU",
     "ComSpec": "C:\\WINDOWS\\system32\\cmd.exe",
     "configsetroot": "C:\\WINDOWS\\ConfigSetRoot",
-    "DOCKER_HOST": "tcp://39.101.196.37:2375",
+    "DOCKER_HOST": "tcp://10.1.1.137:2375",
     "dp0": "F:\\H5\\vue-front-1010\\node_modules\\.bin\\",
     "DriverData": "C:\\Windows\\System32\\Drivers\\DriverData",
     "ERLANG_HOME": "D:\\erl10.5",
