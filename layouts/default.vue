@@ -189,19 +189,19 @@
             <!-- /未登录显示第1 li；登录后显示第2，3 li -->
           </ul>
           <aside class="h-r-search">
-            <form action="#" method="post">
               <label class="h-r-s-box">
-                <input
+                <el-input
                   type="text"
-                  placeholder="输入你想学的课程"
-                  name="queryCourse.courseName"
+                  placeholder="课程，文章,直播..."
+                  v-model="searchValue"
                   value
-                />
-                <button type="submit" class="s-btn">
+                   @keyup.enter.native="toSearch"
+                ></el-input>
+                <button type="submit" class="s-btn" @click="toSearch">
                   <em class="icon18">&nbsp;</em>
                 </button>
               </label>
-            </form>
+          
           </aside>
         </div>
         <aside class="mw-nav-btn">
@@ -301,6 +301,7 @@ import ucenterApi from "@/api/ucenter";
 export default {
   data() {
     return {
+      searchValue:"",
       token: "",
       loginInfo: {
         id: "",
@@ -316,6 +317,9 @@ export default {
     };
   },
   methods: {
+    toSearch(){
+        this.$router.push("/search?keyword="+this.searchValue)
+    },
       async getUserCountInfo() {
       const res = await ucenterApi.getUserCountInfo();
       this.countInfo = res.data.data.countInfo;

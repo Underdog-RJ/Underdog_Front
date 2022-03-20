@@ -2,8 +2,8 @@ import axios from 'axios'
 import cookie from 'js-cookie'
 //创建axios实例
 const service = axios.create({
-    baseURL:'http://10.1.1.137:8222/',
-    // baseURL:'http://127.0.0.1:8222/',
+    // baseURL:'http://101.35.143.19:9000/',
+    baseURL:'http://127.0.0.1:8222/',
     timeout:30000
 })
 
