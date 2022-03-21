@@ -318,7 +318,7 @@ export default {
   },
   methods: {
     toSearch(){
-        this.$router.push("/search?keyword="+this.searchValue)
+        this.$router.push("/search/"+this.searchValue)
     },
       async getUserCountInfo() {
       const res = await ucenterApi.getUserCountInfo();
