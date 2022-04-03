@@ -61,6 +61,8 @@
               <div class="clear"></div>
             </article>
           </div>
+          <el-pagination background layout="prev, pager, next" :page-size="size" :total="total1" @current-change="handleChangeBlog">
+          </el-pagination>
         </div>
         <div v-if="flagdialog === '2'">
           <div class="item">
@@ -133,7 +135,7 @@
                   <img :src="blogInfo.zsPicture" />
                 </el-upload>
               </el-form-item>
-              <el-form-item style="text-align:center">
+              <el-form-item style="text-align: center">
                 <el-button type="warning" @click="saveOrUpdate">保存</el-button>
               </el-form-item>
             </el-form>
@@ -176,6 +178,8 @@
               <div class="clear"></div>
             </article>
           </div>
+          <el-pagination background layout="prev, pager, next" :page-size="size" :total="total2" @current-change="handleChangeEnjoy">
+          </el-pagination>
         </div>
       </el-col>
     </el-row>
@@ -202,7 +206,7 @@ export default {
         firstPicture:
           "https://underdogedu.oss-cn-beijing.aliyuncs.com/%E7%B4%A0%E6%9D%90/1525939573202.jpg",
         zsPicture:
-          "https://underdogedu.oss-cn-beijing.aliyuncs.com/%E7%B4%A0%E6%9D%90/88abf95a1dc9325bcb6c3de8001e2e2.jpg"
+          "https://underdogedu.oss-cn-beijing.aliyuncs.com/%E7%B4%A0%E6%9D%90/88abf95a1dc9325bcb6c3de8001e2e2.jpg",
       },
       subjectOneList: [], //一级分类
       subjectTwoList: [], //二级分类
@@ -210,7 +214,12 @@ export default {
       enjoyList: [],
       BASE_API: "10.1.1.137", // 接口API地址
       uCoin: 0,
-      loginInfo:{}
+      loginInfo: {},
+      pageNo1: 1,
+      pageNo2: 1,
+      size: 5,
+      total1: 10,
+      total2: 10,
     };
   },
   methods: {
@@ -253,6 +262,14 @@ export default {
       }
       return isJPG && isLt2M;
     },
+    handleChangeEnjoy(e){
+        this.pageNo2 =e;
+        this.EnjoyBlogList()
+    },
+    handleChangeBlog(e){
+      this.pageNo1 = e;
+      this.getBlogByUserId()
+    },
     // 上传之前调用的方法
     beforeAvatarUploadForZS(file) {
       const isJPG = file.type === "image/jpeg";
@@ -268,9 +285,8 @@ export default {
     },
     //查询所有的一级分类
     getOneSubject() {
-      subject.getSubjectList().then(response => {
+      subject.getSubjectList().then((response) => {
         this.subjectOneList = response.data.data.list;
-        
       });
     },
     saveOrUpdate() {
@@ -284,15 +300,14 @@ export default {
     },
     //添加博客
     addblog() {
-      blog.addBlogInfo(this.blogInfo).then(response => {
-
+      blog.addBlogInfo(this.blogInfo).then((response) => {
         this.$message({
           type: "success",
-          message: "添加博客信息成功!"
+          message: "添加博客信息成功!",
         });
-         this.loginInfo=response.data.data.userInfo;
-            cookie.set("underdogedu_ucenter", JSON.stringify(this.loginInfo), {
-          domain: "www.feifu.top"
+        this.loginInfo = response.data.data.userInfo;
+        cookie.set("underdogedu_ucenter", JSON.stringify(this.loginInfo), {
+          domain: "www.feifu.top",
         });
         location.reload();
       });
@@ -301,7 +316,7 @@ export default {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(() => {
           return blog.deleteDataById(id);
@@ -309,60 +324,61 @@ export default {
         .then(() => {
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
           location.reload();
         })
-        .catch(response => {
+        .catch((response) => {
           // 失败
           if (response === "cancel") {
             this.$message({
               type: "info",
-              message: "已取消删除"
+              message: "已取消删除",
             });
           } else {
             this.$message({
               type: "error",
-              message: "删除失败"
+              message: "删除失败",
             });
           }
         });
     },
     //修该博客
     updateblog() {
-      blog.updateblogInfoId(this.blogInfo).then(response => {
+      blog.updateblogInfoId(this.blogInfo).then((response) => {
         this.$message({
           type: "success",
-          message: "修该博客信息成功!"
+          message: "修该博客信息成功!",
         });
         location.reload();
       });
     },
-    getBlogByUserId() {
-      blog.getBlogByUserId().then(response => {
-        this.blogList = response.data.data.list;
-        console.log(this.blogList);
-      });
+    async getBlogByUserId() {
+      const res = await blog.getBlogByUserId(this.pageNo1, this.size);
+      this.total1 = res.data.data.list.total;
+      console.log(this.total1)
+      this.blogList = res.data.data.list.results;
     },
     handleEdit(id) {
       this.blogInfo.id = id;
-      blog.getBlogInfo(id).then(response => {
+      blog.getBlogInfo(id).then((response) => {
         this.blogInfo = response.data.data.eduBlog;
         console.log(this.blogInfo);
       });
       this.flagdialog = "2";
     },
     async EnjoyBlogList() {
-      const res = await blog.EnjoyBlogList();
-      this.enjoyList = res.data.data.list;
-    }
+      const res = await blog.EnjoyBlogList(this.pageNo2,this.size);
+      this.enjoyList = res.data.data.list.results;
+      this.total2 = res.data.data.list.total;
+    },
   },
   mounted() {
     this.getOneSubject();
     this.getBlogByUserId();
     this.EnjoyBlogList();
   },
-  created() {}
+  created() {},
 };
 </script>
 

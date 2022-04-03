@@ -184,7 +184,7 @@
           <div class="footer-show2">
             Copyright © 上海Underdog网络科技有限公司 豫ICP备2021015032号
           </div>
-          <aside class="footer-show3">
+          <!-- <aside class="footer-show3">
             <section class="gf-tx">
               <span>
                   <el-popover
@@ -207,13 +207,12 @@ https://underdogedu.oss-cn-beijing.aliyuncs.com/%E7%B4%A0%E6%9D%90/qrcode_for_gh
     trigger="hover"
    >
    <img src="
-
 https://underdogedu.oss-cn-beijing.aliyuncs.com/%E7%B4%A0%E6%9D%90/2c6cb9ba7cc69cfb242b973b742e1ca.jpg" alt="" style="height:200px">
     <el-button slot="reference">B站</el-button>
   </el-popover>
               </span>
             </section>
-          </aside>
+          </aside> -->
           <div class="clear"></div>
         </div>
       </section>
@@ -375,7 +374,7 @@ export default {
   background-image: url(https://underdogedu.oss-cn-beijing.aliyuncs.com/%E7%B4%A0%E6%9D%90/download.jpg);
   background-repeat: no-repeat;
   background-position: center;
-  
+
   padding: 60px 30px;
 }
 </style>

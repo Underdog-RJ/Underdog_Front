@@ -116,17 +116,15 @@ export default {
     submitLogin() {
       loginApi.submitLogin(this.user).then(response => {
         cookie.set("underdogedu_token", response.data.data.token, {
-          domain: "localhost"
+          domain: "www.feifu.top"
         });
-
         //调用接口，根据token获取用户信息，为了首页面显示
         loginApi.getLoginUserInfo().then(response => {
           this.loginInfo = response.data.data.userInfo;
           //获取返回用户信息，放到cookie里面
           cookie.set("underdogedu_ucenter", JSON.stringify(this.loginInfo), {
-            domain: "localhost"
+            domain: "www.feifu.top"
           });
-
           //跳转页面
           window.location.href = "/";
         });

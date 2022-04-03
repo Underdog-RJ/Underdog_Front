@@ -36,9 +36,9 @@ export default {
       method: 'get'
     })
   },
-  EnjoyBlogList(){
+  EnjoyBlogList(page,size){
     return request({
-      url: `/eduservice/blogEnjoy/EnjoyBlogList/`,
+      url: `/eduservice/blogEnjoy/EnjoyBlogList/${page}/${size}`,
       method: 'get'
     })
   },
@@ -73,9 +73,9 @@ export default {
     })
   },
 
-  getBlogByUserId() {
+  getBlogByUserId(page,size) {
     return request({
-      url: '/eduservice/blog/getBlogByUserId',
+      url: `/eduservice/blog/getBlogByUserId/${page}/${size}`,
       method: 'post'
     })
   }
