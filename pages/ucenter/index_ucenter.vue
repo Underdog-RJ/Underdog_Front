@@ -14,11 +14,18 @@
           <div>本月连续签到次数:{{userSignCountInfo.countCountinuous}}</div>
         </div> -->
 
-        <el-calendar>
+        <el-calendar v-model="currentDay">
           <template slot="dateCell" slot-scope="{ date, data }">
-             <div class="calendar-day">
-               {{ data.day.split('-').slice(2).join('-') }}
-               <div class="relateRed" v-if="handleDay(data)"></div>
+            <div class="calendar-day">
+              <span v-if="handleSignInfo(data, date) == 0">
+                {{ data.day.split("-").slice(2).join("-") }}
+                <div class="relateRed" v-if="handleDay(data,date)"></div>
+              </span>
+              <span v-if="handleSignInfo(data, date) == 1">
+                <div style="color: green; font-size: 30px">
+                  <i class="el-icon-circle-check"></i>
+                </div>
+              </span>
             </div>
           </template>
         </el-calendar>
@@ -41,9 +48,7 @@
         </div>
       </div>
       <div class="show_column3">
-        <div class="show_column3_item1">
-          账号信息
-        </div>
+        <div class="show_column3_item1">账号信息</div>
         <div class="show_column3_item2">
           <div>
             <span>用户ID: </span>
@@ -79,15 +84,22 @@ export default {
   name: "",
   data() {
     return {
+      targetStr: [],
+      currentDay: new Date(),
       userInfo: {},
       zhuye: {
-        content: "这家伙很懒，什么也没留下"
+        content: "这家伙很懒，什么也没留下",
       },
       countInfo: {},
       userSignCountInfo: {},
       calendaer: "",
-      day:new Date().getDay()
+      day: new Date().getDay(),
     };
+  },
+  watch: {
+    currentDay(newVal) {
+      this.handleGetSignInfo(newVal.getFullYear(), newVal.getMonth() + 1);
+    },
   },
   mounted() {
     //this.userInfo = this.$store.state.userInfo;
@@ -103,19 +115,32 @@ export default {
     this.getOwnPage();
     this.userSignCountInfoMethod();
   },
-  created() {},
+  created() {
+    let date = new Date();
+    this.handleGetSignInfo(date.getFullYear(), date.getMonth() + 1);
+  },
   methods: {
-    handleDay(data) {
-    if(data.type=='prev-month')
-      return false;
-    if(data.type=='next-month')
-      return false;
-    let current = data.day.split('-')[2]   
-    let dayTime = new Date().getDate()
-    if(Number(current)<=Number(dayTime)){
-      return true;
-    }
-    return false;  
+    async handleGetSignInfo(year, month) {
+      const res = await ucenter.getUserSignInfo(year, month);
+      this.targetStr = res.data.data.signInfo;
+      // console.log(this.targetStr);
+    },
+    hanelPreDay(data, date) {
+      return new Date().getMonth() == data.getMonth();
+    },
+    handleSignInfo(data, date) {
+      let index = Number(data.day.split("-").slice(2));
+      if (this.targetStr[index - 1] == "1") {
+        return 1;
+      } else {
+        return 0;
+      }
+    },
+    handleDay(data,date) {
+      // console.log(date)
+      let target = date.getTime();
+      let now = new Date().getTime();
+      return target < now;
     },
     async userSignCountInfoMethod() {
       const res = await ucenter.userSignCountInfo();
@@ -135,16 +160,16 @@ export default {
       ) {
         this.zhuye = res.data.data.ucenterMemberZhuye;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
-.relateRed{
+.relateRed {
   position: relative;
   left: 15px;
-  top:-7px;
+  top: -7px;
   width: 5px;
   height: 5px;
   background-color: red;
