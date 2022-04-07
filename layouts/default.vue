@@ -289,6 +289,7 @@ https://underdogedu.oss-cn-beijing.aliyuncs.com/%E7%B4%A0%E6%9D%90/2c6cb9ba7cc69
   </div>
 </template>
 <script>
+import LwFirewords from "lw_firewords";
 import "~/assets/css/reset.css";
 import "~/assets/css/theme.css";
 import "~/assets/css/global.css";
@@ -326,6 +327,11 @@ export default {
     };
   },
   methods: {
+    // start fire
+    startFire() {
+      const lw_f = new LwFirewords(); //创建实例
+      lw_f.init(); //启动事件
+    },
     toSearch() {
       this.$router.push("/search/" + this.searchValue);
     },
@@ -421,6 +427,7 @@ export default {
   },
   mounted() {
     this.showInfo();
+    this.startFire();
   },
 };
 </script>
