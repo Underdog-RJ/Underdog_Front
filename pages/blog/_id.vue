@@ -1,6 +1,11 @@
 <template>
   <div id="aBlogsList" class="aBlogsList bg-fa of">
     <div class="blogBg">
+      <div>
+        <el-button @click="updateBot">测试</el-button>
+        <ol class="js-toc navStyle"></ol>
+      </div>
+
       <!-- /博客详情 开始 -->
       <section class="container">
         <div class="mt20 c-infor-box">
@@ -15,6 +20,7 @@
                     <a name="c-i" class="current" title="博客详情">博客详情</a>
                   </section>
                 </div>
+
                 <div class="comm-title">
                   <div>
                     <img src="" alt="" />
@@ -48,11 +54,12 @@
                       <span>博客内容</span>
                     </h6>
                     <div class="course-txt-body-wrap">
-                      <section class="course-txt-body">
-                        <p v-html="blogInfo.content">
-                          {{ blogInfo.content }}
-                        </p>
-                      </section>
+                      <div
+                        id="contentId"
+                        class="course-txt-body js-toc-content"
+                      >
+                        <p class="markdown-body" v-html="blogInfo.content"></p>
+                      </div>
                     </div>
                   </div>
 
@@ -253,6 +260,8 @@ import blogApi from "@/api/blog";
 import comment from "@/api/blogcomment";
 import Prism from "prismjs";
 import cookie from "js-cookie";
+import "mavon-editor/dist/css/index.css";
+import $ from "jquery";
 export default {
   //和页面异步开始的
   asyncData({ params, error }) {
@@ -274,25 +283,61 @@ export default {
         blogId: "",
       },
       loginInfo: {},
+      test: "sadasd",
     };
   },
   created() {},
-  beforeMount() {
-    console.log(Prism);
-  },
-
+  // beforeMount() {
+  //   console.log(Prism);
+  // },
   mounted() {
     this.initCourseInfo();
     this.initComment();
     this.initEnjoy();
+    this.initDir();
   },
   updated() {
-    process.browser &&
-      document
-        .querySelectorAll("pre code")
-        .forEach((block) => Prism.highlightElement(block));
+    // process.browser &&
+    //   document
+    //     .querySelectorAll("code")
+    //     .forEach((block) => Prism.highlightElement(block));
   },
+  watch: {},
   methods: {
+    updateBot() {
+      this.test1();
+      this.initDir();
+    },
+    // 初始化目录插件
+    initDir() {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: ".js-toc",
+        // Where to grab the headings to build the table of contents.
+        contentSelector: ".js-toc-content",
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: "h1, h2, h3,h4,h5",
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+        // 是否需要折叠
+        collapseDepth:100
+      });
+    },
+    test1() {
+      let target = document.getElementById("contentId");
+      this.setTargetId(target, "h1");
+      this.setTargetId(target, "h2");
+      this.setTargetId(target, "h3");
+      this.setTargetId(target, "h4");
+      this.setTargetId(target, "h5");
+    },
+    setTargetId(target, val) {
+      let h1s = target.getElementsByTagName(val);
+      for (let i = 0; i < h1s.length; i++) {
+        let a_id = h1s[i].children[0].getAttribute("id");
+        h1s[i].setAttribute("id", a_id);
+      }
+    },
     //初始化收藏
     async initEnjoy() {
       const res = await blogApi.IsEnjoyBlog(this.blogId);
@@ -336,12 +381,12 @@ export default {
       console.log(this.blogId);
       blogApi.getBlogInfo(this.blogId).then((response) => {
         this.blogInfo = response.data.data.eduBlog;
-        process.browser &&
-          document
-            .querySelectorAll("pre code")
-            .forEach((block) => Prism.highlightElement(block));
+        // process.browser &&
+        //   document
+        //     .querySelectorAll("pre code")
+        //     .forEach((block) => Prism.highlightElement(block));
 
-        console.log(this.blogInfo);
+        // console.log(this.blogInfo);
       });
     },
     async handleEnjoy() {
@@ -352,6 +397,13 @@ export default {
 };
 </script>
 <style scoped>
+.navStyle {
+  width: 500px;
+  height: 500px;
+  overflow: scroll;
+  position: fixed;
+  background: #fff;
+}
 .aBlogsList {
   height: 100%;
   z-index: -999;

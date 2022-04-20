@@ -8,6 +8,16 @@
     color: #fff !important;
     display: none;
 }
+p pre{
+	background: none !important;
+	border: none !important;
+}
+.hljs{
+	padding: 20px;
+    color: #abb2bf;
+    background: #282c34;
+    border-radius: 10px;
+}
 .el-calendar-table__row .prev {
     color: #fff !important;
 	/* 不显示但是占位置 */

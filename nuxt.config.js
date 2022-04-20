@@ -9,11 +9,23 @@ module.exports = {
       src: '~plugins/ElementUI',
       ssr: true,
     },
-
     {
       src: '~plugins/tinymce',
       ssr: false,
-    }
+    },
+     {
+      src: '~plugins/tocbot.min.js',
+      ssr: false,
+    },
+    {
+      src: '@plugins/editor',
+      ssr: false,
+    },
+    {
+      src: '@plugins/highlight',
+      ssr: false,
+    },
+   
   ],
 
   css: [
@@ -22,7 +34,8 @@ module.exports = {
     './static/tinymce4.7.5/skins/lightgray/skin.min.css',
     './static/tinymce4.7.5/skins/lightgray/content.min.css',
     './static/tinymce4.7.5/plugins/codesample/css/prism.css',
-      
+      './static/tocbot/tocbot.css',
+
   ],
   /*
   ** Headers of the page

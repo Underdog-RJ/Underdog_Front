@@ -61,7 +61,13 @@
               <div class="clear"></div>
             </article>
           </div>
-          <el-pagination background layout="prev, pager, next" :page-size="size" :total="total1" @current-change="handleChangeBlog">
+          <el-pagination
+            background
+            layout="prev, pager, next"
+            :page-size="size"
+            :total="total1"
+            @current-change="handleChangeBlog"
+          >
           </el-pagination>
         </div>
         <div v-if="flagdialog === '2'">
@@ -100,7 +106,8 @@
               </el-form-item>
               <!-- 博客内容-->
               <el-form-item label="博客内容">
-                <tinymce :height="300" v-model="blogInfo.content" />
+                <!-- <tinymce :height="300" v-model="blogInfo.content" /> -->
+                <mavon-editor v-model="markDown" @change="handleMarkDown" />
               </el-form-item>
               <el-form-item label="博客简介">
                 <el-input
@@ -178,7 +185,13 @@
               <div class="clear"></div>
             </article>
           </div>
-          <el-pagination background layout="prev, pager, next" :page-size="size" :total="total2" @current-change="handleChangeEnjoy">
+          <el-pagination
+            background
+            layout="prev, pager, next"
+            :page-size="size"
+            :total="total2"
+            @current-change="handleChangeEnjoy"
+          >
           </el-pagination>
         </div>
       </el-col>
@@ -191,12 +204,14 @@ import subject from "@/api/subject";
 import blog from "@/api/blog";
 import Tinymce from "@/components/Tinymce/index";
 import cookie from "js-cookie";
+require("mavon-editor/dist/css/index.css");
 export default {
   components: { Tinymce }, //声明组件
   layout: "ucenterLayout",
   name: "",
   data() {
     return {
+      markDown: "",
       flagdialog: "1",
       blogInfo: {
         title: "",
@@ -220,6 +235,42 @@ export default {
       size: 5,
       total1: 10,
       total2: 10,
+      markdownOption: {
+        bold: true, // 粗体
+        italic: true, // 斜体
+        header: true, // 标题
+        underline: true, // 下划线
+        strikethrough: true, // 中划线
+        mark: true, // 标记
+        superscript: true, // 上角标
+        subscript: true, // 下角标
+        quote: true, // 引用
+        ol: true, // 有序列表
+        ul: true, // 无序列表
+        link: true, // 链接
+        imagelink: true, // 图片链接
+        code: true, // code
+        table: true, // 表格
+        fullscreen: true, // 全屏编辑
+        readmodel: true, // 沉浸式阅读
+        htmlcode: true, // 展示html源码
+        help: true, // 帮助
+        /* 1.3.5 */
+        undo: true, // 上一步
+        redo: true, // 下一步
+        trash: true, // 清空
+        save: true, // 保存（触发events中的save事件）
+        /* 1.4.2 */
+        navigation: true, // 导航目录
+        /* 2.1.8 */
+        alignleft: true, // 左对齐
+        aligncenter: true, // 居中
+        alignright: true, // 右对齐
+        /* 2.2.1 */
+        subfield: true, // 单双栏模式
+        preview: true, // 预览
+      },
+      handbook: "#### how to use mavonEditor in nuxt.js",
     };
   },
   methods: {
@@ -241,6 +292,9 @@ export default {
       }
     },
 
+    handleMarkDown(value, render) {
+      this.blogInfo.content = render;
+    },
     // 上传封面成功调用的方法
     handleAvatarSuccess(res, file) {
       this.blogInfo.firstPicture = res.data.url;
@@ -262,13 +316,13 @@ export default {
       }
       return isJPG && isLt2M;
     },
-    handleChangeEnjoy(e){
-        this.pageNo2 =e;
-        this.EnjoyBlogList()
+    handleChangeEnjoy(e) {
+      this.pageNo2 = e;
+      this.EnjoyBlogList();
     },
-    handleChangeBlog(e){
+    handleChangeBlog(e) {
       this.pageNo1 = e;
-      this.getBlogByUserId()
+      this.getBlogByUserId();
     },
     // 上传之前调用的方法
     beforeAvatarUploadForZS(file) {
@@ -356,7 +410,7 @@ export default {
     async getBlogByUserId() {
       const res = await blog.getBlogByUserId(this.pageNo1, this.size);
       this.total1 = res.data.data.list.total;
-      console.log(this.total1)
+      console.log(this.total1);
       this.blogList = res.data.data.list.results;
     },
     handleEdit(id) {
@@ -368,7 +422,7 @@ export default {
       this.flagdialog = "2";
     },
     async EnjoyBlogList() {
-      const res = await blog.EnjoyBlogList(this.pageNo2,this.size);
+      const res = await blog.EnjoyBlogList(this.pageNo2, this.size);
       this.enjoyList = res.data.data.list.results;
       this.total2 = res.data.data.list.total;
     },
