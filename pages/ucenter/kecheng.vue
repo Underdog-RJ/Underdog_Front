@@ -1,5 +1,7 @@
 <template>
-  <div class="container u_blog">
+  <div>
+    <ucenterNav/>
+    <div class="container u_blog">
     <el-row>
       <el-col :span="4">
         <el-menu
@@ -214,13 +216,14 @@
       </el-col>
     </el-row>
   </div>
+  </div>
 </template>
 
 <script>
 import kecheng from "@/api/ucenterkecheng";
 import cookie from "js-cookie";
 export default {
-  layout: "ucenterLayout",
+  layout: "default",
   name: "",
   data() {
     return {

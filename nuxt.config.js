@@ -13,7 +13,12 @@ module.exports = {
     {
       src: '~plugins/tinymce',
       ssr: false,
-    }
+    },
+    
+    {
+      src: '~plugins/ucentNavPlugin',
+      ssr: false,
+    },
   ],
 
   css: [

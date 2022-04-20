@@ -274,7 +274,7 @@ export default {
       const res = await loginApi.thirdLogin(code)
       if(res.data.code===20000){
        this.loginInfo=res.data.data.member
-        this.$store.commit('initUserInfo',this.loginInfo)
+       this.$store.commit('initUserInfo',this.loginInfo)
        this.token=res.data.data.token
        console.log(this.loginInfo)
        cookie.set("underdogedu_token", JSON.stringify(this.token), {

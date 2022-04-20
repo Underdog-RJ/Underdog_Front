@@ -1,188 +1,209 @@
 <template>
-  <div class="container u_blog">
-    <el-row>
-      <el-col :span="4">
-        <el-menu
-          default-active="1"
-          class="el-menu-vertical-demo"
-          @select="handleSelect"
-          background-color="#fff"
-          text-color="black"
-          active-text-color="#00baf2"
-        >
-          <el-menu-item index="1">
-            <i class="el-icon-menu"></i>
-            <span slot="title">文章管理</span>
-          </el-menu-item>
-          <el-menu-item index="2">
-            <i class="el-icon-document"></i>
-            <span slot="title">发布文章</span>
-          </el-menu-item>
-          <el-menu-item index="3">
-            <i class="el-icon-setting"></i>
-            <span slot="title">收藏文章</span>
-          </el-menu-item>
-        </el-menu>
-      </el-col>
-      <el-col :span="20">
-        <div v-if="flagdialog === '1'">
-          <div class="item">
-            <article class="">
-              <ul class="show" id="">
-                <li v-for="item in blogList" :key="item.id" class="show_item">
-                  <section class="blog-img">
-                    <div class="img-float">
-                      <img
-                        :src="item.firstPicture"
-                        class=""
-                        :alt="item.title"
-                      />
-                    </div>
-                    <div class="show_left">
-                      <div class="title_bolg">
-                        <a :href="'/blog/' + item.id" :title="item.title">{{
-                          item.title
-                        }}</a>
+  <div>
+  <ucenterNav />
+    <div class="container u_blog">
+      <el-row>
+        <el-col :span="4">
+          <el-menu
+            default-active="1"
+            class="el-menu-vertical-demo"
+            @select="handleSelect"
+            background-color="#fff"
+            text-color="black"
+            active-text-color="#00baf2"
+          >
+            <el-menu-item index="1">
+              <i class="el-icon-menu"></i>
+              <span slot="title">文章管理</span>
+            </el-menu-item>
+            <el-menu-item index="2">
+              <i class="el-icon-document"></i>
+              <span slot="title">发布文章</span>
+            </el-menu-item>
+            <el-menu-item index="3">
+              <i class="el-icon-setting"></i>
+              <span slot="title">收藏文章</span>
+            </el-menu-item>
+          </el-menu>
+        </el-col>
+        <el-col :span="20">
+          <div v-if="flagdialog === '1'">
+            <div class="item">
+              <article class="">
+                <ul class="show" id="">
+                  <li v-for="item in blogList" :key="item.id" class="show_item">
+                    <section class="blog-img">
+                      <div class="img-float">
+                        <img
+                          :src="item.firstPicture"
+                          class=""
+                          :alt="item.title"
+                        />
                       </div>
-                      <div class="item_center">
-                        <span>{{ item.descption }}</span>
+                      <div class="show_left">
+                        <div class="title_bolg">
+                          <a :href="'/blog/' + item.id" :title="item.title">{{
+                            item.title
+                          }}</a>
+                        </div>
+                        <div class="item_center">
+                          <span>{{ item.descption }}</span>
+                        </div>
+                        <div class="item_bottom">
+                          <a href="">
+                            <span> 作者: {{ item.authorNickname }} </span>
+                          </a>
+                          <span> 浏览: {{ item.viewCount }} </span>
+                          <span>时间: {{ item.gmtCreate }}</span>
+                        </div>
                       </div>
-                      <div class="item_bottom">
-                        <a href="">
-                          <span> 作者: {{ item.authorNickname }} </span>
-                        </a>
-                        <span> 浏览: {{ item.viewCount }} </span>
-                        <span>时间: {{ item.gmtCreate }}</span>
-                      </div>
-                    </div>
-                  </section>
-                </li>
-              </ul>
-              <div class="clear"></div>
-            </article>
+                    </section>
+                  </li>
+                </ul>
+                <div class="clear"></div>
+              </article>
+            </div>
+            <el-pagination
+              background
+              layout="prev, pager, next"
+              :page-size="size"
+              :total="total1"
+              @current-change="handleChangeBlog"
+            >
+            </el-pagination>
           </div>
-          <el-pagination background layout="prev, pager, next" :page-size="size" :total="total1" @current-change="handleChangeBlog">
-          </el-pagination>
-        </div>
-        <div v-if="flagdialog === '2'">
-          <div class="item">
-            <el-form label-width="100px">
-              <el-form-item label="博客标题">
-                <el-input
-                  v-model="blogInfo.title"
-                  placeholder=" 示例：机器学习项目课：从基础到搭建项目视频博客。专业名称注意大小写"
-                />
-              </el-form-item>
-              <!-- 所属分类 TODO -->
-              <el-form-item label="博客分类">
-                <el-select
-                  @change="subjectLevelOneChanged"
-                  v-model="blogInfo.subjectParentId"
-                  placeholder="请选择"
-                >
-                  <el-option
-                    v-for="subject in subjectOneList"
-                    :key="subject.id"
-                    :label="subject.title"
-                    :value="subject.id"
+          <div v-if="flagdialog === '2'">
+            <div class="item">
+              <el-form label-width="100px">
+                <el-form-item label="博客标题">
+                  <el-input
+                    v-model="blogInfo.title"
+                    placeholder=" 示例：机器学习项目课：从基础到搭建项目视频博客。专业名称注意大小写"
                   />
-                </el-select>
+                </el-form-item>
+                <!-- 所属分类 TODO -->
+                <el-form-item label="博客分类">
+                  <el-select
+                    @change="subjectLevelOneChanged"
+                    v-model="blogInfo.subjectParentId"
+                    placeholder="请选择"
+                  >
+                    <el-option
+                      v-for="subject in subjectOneList"
+                      :key="subject.id"
+                      :label="subject.title"
+                      :value="subject.id"
+                    />
+                  </el-select>
 
-                <!-- 二级分类 -->
-                <el-select v-model="blogInfo.subjectId" placeholder="请选择">
-                  <el-option
-                    v-for="subject in subjectTwoList"
-                    :key="subject.id"
-                    :label="subject.title"
-                    :value="subject.id"
+                  <!-- 二级分类 -->
+                  <el-select v-model="blogInfo.subjectId" placeholder="请选择">
+                    <el-option
+                      v-for="subject in subjectTwoList"
+                      :key="subject.id"
+                      :label="subject.title"
+                      :value="subject.id"
+                    />
+                  </el-select>
+                </el-form-item>
+                <!-- 博客内容-->
+                <el-form-item label="博客内容">
+                  <tinymce :height="300" v-model="blogInfo.content" />
+                </el-form-item>
+                <el-form-item label="博客简介">
+                  <el-input
+                    v-model="blogInfo.descption"
+                    :rows="10"
+                    type="textarea"
+                    placeholder="用于展示在页面上的内容"
                   />
-                </el-select>
-              </el-form-item>
-              <!-- 博客内容-->
-              <el-form-item label="博客内容">
-                <tinymce :height="300" v-model="blogInfo.content" />
-              </el-form-item>
-              <el-form-item label="博客简介">
-                <el-input
-                  v-model="blogInfo.descption"
-                  :rows="10"
-                  type="textarea"
-                  placeholder="用于展示在页面上的内容"
-                />
-              </el-form-item>
+                </el-form-item>
 
-              <!-- 博客封面-->
-              <el-form-item label="博客封面">
-                <el-upload
-                  :show-file-list="false"
-                  :on-success="handleAvatarSuccess"
-                  :before-upload="beforeAvatarUpload"
-                  :action="BASE_API + '/eduvod/eduoss/fileoss'"
-                  class="avatar-uploader"
-                >
-                  <img :src="blogInfo.firstPicture" />
-                </el-upload>
-              </el-form-item>
-              <!-- 赞赏-->
-              <el-form-item label="博客赞赏">
-                <el-upload
-                  :show-file-list="false"
-                  :on-success="handleAvatarSuccessForZS"
-                  :before-upload="beforeAvatarUploadForZS"
-                  :action="BASE_API + '/eduvod/eduoss/fileoss'"
-                  class="avatar-uploader"
-                >
-                  <img :src="blogInfo.zsPicture" />
-                </el-upload>
-              </el-form-item>
-              <el-form-item style="text-align: center">
-                <el-button type="warning" @click="saveOrUpdate">保存</el-button>
-              </el-form-item>
-            </el-form>
+                <!-- 博客封面-->
+                <el-form-item label="博客封面">
+                  <el-upload
+                    :show-file-list="false"
+                    :on-success="handleAvatarSuccess"
+                    :before-upload="beforeAvatarUpload"
+                    :action="BASE_API + '/eduvod/eduoss/fileoss'"
+                    class="avatar-uploader"
+                  >
+                    <img :src="blogInfo.firstPicture" />
+                  </el-upload>
+                </el-form-item>
+                <!-- 赞赏-->
+                <el-form-item label="博客赞赏">
+                  <el-upload
+                    :show-file-list="false"
+                    :on-success="handleAvatarSuccessForZS"
+                    :before-upload="beforeAvatarUploadForZS"
+                    :action="BASE_API + '/eduvod/eduoss/fileoss'"
+                    class="avatar-uploader"
+                  >
+                    <img :src="blogInfo.zsPicture" />
+                  </el-upload>
+                </el-form-item>
+                <el-form-item style="text-align: center">
+                  <el-button type="warning" @click="saveOrUpdate"
+                    >保存</el-button
+                  >
+                </el-form-item>
+              </el-form>
+            </div>
           </div>
-        </div>
-        <div v-if="flagdialog === '3'">
-          <div class="item">
-            <article class="">
-              <ul class="show" id="">
-                <li v-for="item in enjoyList" :key="item.id" class="show_item">
-                  <section class="blog-img">
-                    <div class="img-float">
-                      <img
-                        :src="item.firstPicture"
-                        class=""
-                        :alt="item.title"
-                      />
-                    </div>
-                    <div class="show_left">
-                      <div class="title_bolg">
-                        <a :href="'/blog/' + item.id" :title="item.title">{{
-                          item.title
-                        }}</a>
+          <div v-if="flagdialog === '3'">
+            <div class="item">
+              <article class="">
+                <ul class="show" id="">
+                  <li
+                    v-for="item in enjoyList"
+                    :key="item.id"
+                    class="show_item"
+                  >
+                    <section class="blog-img">
+                      <div class="img-float">
+                        <img
+                          :src="item.firstPicture"
+                          class=""
+                          :alt="item.title"
+                        />
                       </div>
-                      <div class="item_center">
-                        <span>{{ item.descption }}</span>
-                      </div>
+                      <div class="show_left">
+                        <div class="title_bolg">
+                          <a :href="'/blog/' + item.id" :title="item.title">{{
+                            item.title
+                          }}</a>
+                        </div>
+                        <div class="item_center">
+                          <span>{{ item.descption }}</span>
+                        </div>
 
-                      <div class="item_bottom">
-                        <a href="">
-                          <span> 作者: {{ item.authorNickname }} </span>
-                        </a>
-                        <span> 浏览: {{ item.viewCount }} </span>
-                        <span>时间: {{ item.gmtCreate }}</span>
+                        <div class="item_bottom">
+                          <a href="">
+                            <span> 作者: {{ item.authorNickname }} </span>
+                          </a>
+                          <span> 浏览: {{ item.viewCount }} </span>
+                          <span>时间: {{ item.gmtCreate }}</span>
+                        </div>
                       </div>
-                    </div>
-                  </section>
-                </li>
-              </ul>
-              <div class="clear"></div>
-            </article>
+                    </section>
+                  </li>
+                </ul>
+                <div class="clear"></div>
+              </article>
+            </div>
+            <el-pagination
+              background
+              layout="prev, pager, next"
+              :page-size="size"
+              :total="total2"
+              @current-change="handleChangeEnjoy"
+            >
+            </el-pagination>
           </div>
-          <el-pagination background layout="prev, pager, next" :page-size="size" :total="total2" @current-change="handleChangeEnjoy">
-          </el-pagination>
-        </div>
-      </el-col>
-    </el-row>
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 
@@ -191,9 +212,10 @@ import subject from "@/api/subject";
 import blog from "@/api/blog";
 import Tinymce from "@/components/Tinymce/index";
 import cookie from "js-cookie";
+
 export default {
   components: { Tinymce }, //声明组件
-  layout: "ucenterLayout",
+  layout: "default",
   name: "",
   data() {
     return {
@@ -262,13 +284,13 @@ export default {
       }
       return isJPG && isLt2M;
     },
-    handleChangeEnjoy(e){
-        this.pageNo2 =e;
-        this.EnjoyBlogList()
+    handleChangeEnjoy(e) {
+      this.pageNo2 = e;
+      this.EnjoyBlogList();
     },
-    handleChangeBlog(e){
+    handleChangeBlog(e) {
       this.pageNo1 = e;
-      this.getBlogByUserId()
+      this.getBlogByUserId();
     },
     // 上传之前调用的方法
     beforeAvatarUploadForZS(file) {
@@ -356,7 +378,7 @@ export default {
     async getBlogByUserId() {
       const res = await blog.getBlogByUserId(this.pageNo1, this.size);
       this.total1 = res.data.data.list.total;
-      console.log(this.total1)
+      console.log(this.total1);
       this.blogList = res.data.data.list.results;
     },
     handleEdit(id) {
@@ -368,7 +390,7 @@ export default {
       this.flagdialog = "2";
     },
     async EnjoyBlogList() {
-      const res = await blog.EnjoyBlogList(this.pageNo2,this.size);
+      const res = await blog.EnjoyBlogList(this.pageNo2, this.size);
       this.enjoyList = res.data.data.list.results;
       this.total2 = res.data.data.list.total;
     },
