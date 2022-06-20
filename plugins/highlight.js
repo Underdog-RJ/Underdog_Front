@@ -13,6 +13,10 @@ Highlight.install = function (Vue) {
      let blocks = el.querySelectorAll('pre code');
      for (let i = 0; i < blocks.length; i++) {
          Hljs.highlightBlock(blocks[i]);
+         blocks[i].innerHTML = `<ol><li>${blocks[i].innerHTML.replace(
+          /\n/g,
+          `</li><li class="line">`
+        )}</li></ol>`;
      }
    },
    // 指令所在组件的 VNode 及其子 VNode 全部更新后调用

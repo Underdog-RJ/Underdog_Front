@@ -1,6 +1,9 @@
 <template>
- 
-  <div id="aCoursesList" class="bg-fa of">
+  <div
+    id="aCoursesList"
+    class="bg-fa of"
+    v-loading.fullscreen.lock="fullscreenLoading"
+  >
     <!-- /课程详情 开始 -->
     <section class="container">
       <section class="path-wrap txtOf hLh30">
@@ -13,7 +16,7 @@
         <span class="c-333 fsize14">{{ courseWebVo.subjectLevelTwo }}</span>
       </section>
       <div>
-        <article class="c-v-pic-wrap" style="height: 357px;">
+        <article class="c-v-pic-wrap" style="height: 357px">
           <section class="p-h-video-box" id="videoPlay">
             <img
               height="357px"
@@ -27,13 +30,13 @@
         <aside class="c-attr-wrap">
           <section class="ml20 mr15">
             <h2 class="hLh30 txtOf mt15">
-              <span class="c-fff fsize24" style="text-align: center;">{{
+              <span class="c-fff fsize24" style="text-align: center">{{
                 courseWebVo.title
               }}</span>
             </h2>
             <section class="c-attr-jg">
               <span class="c-fff">价格：</span>
-              <b class="c-yellow" style="font-size:24px;"
+              <b class="c-yellow" style="font-size: 24px"
                 >￥{{ courseWebVo.price }}</b
               >
             </section>
@@ -45,15 +48,20 @@
             <section class="c-attr-mt of">
               <span class="ml10 vam">
                 <span>
-                <em v-if="this.flag==0" class="icon18 scIcon"></em>
-                <em v-else class="icon18 sc-end"></em> 
-                </span>             
-                <a @click="setCollect" class="c-fff vam" title="收藏" href="#">收藏</a>
+                  <em v-if="this.flag == 0" class="icon18 scIcon"></em>
+                  <em v-else class="icon18 sc-end"></em>
+                </span>
+                <a @click="setCollect" class="c-fff vam" title="收藏" href="#"
+                  >收藏</a
+                >
               </span>
             </section>
-            <section class="c-attr-mt" v-if="isBuy || Number(courseWebVo.price) === 0">
+            <section
+              class="c-attr-mt"
+              v-if="isBuy || Number(courseWebVo.price) === 0"
+            >
               <a
-                :href="'/player/'+courseId"
+                :href="'/player/' + courseId"
                 title="立即观看"
                 class="comm-btn c-btn-3"
                 >立即观看</a
@@ -102,9 +110,7 @@
       </div>
       <!-- /课程封面介绍 -->
       <div class="mt20 c-infor-box">
-
         <article class="fl col-7">
-          
           <section class="mr30">
             <div class="i-box">
               <div>
@@ -149,17 +155,16 @@
                               <em class="lh-menu-i-1 icon18 mr10"></em
                               >{{ chapter.title }}
                             </a>
-                            <ol class="lh-menu-ol" style="display: block;">
+                            <ol class="lh-menu-ol" style="display: block">
                               <li
                                 class="lh-menu-second ml30"
                                 v-for="video in chapter.children"
                                 :key="video.id"
                               >
                                 <!--target="_blank"在新的页面打开-->
-                          
-                                  <em class="lh-menu-i-2 icon16 mr5">&nbsp;</em
-                                  >{{ video.title }}
-                                
+
+                                <em class="lh-menu-i-2 icon16 mr5">&nbsp;</em
+                                >{{ video.title }}
                               </li>
                             </ol>
                           </li>
@@ -174,7 +179,7 @@
                     <h6 class="c-c-content c-infor-title" id="i-art-comment">
                       <span class="commentTitle">课程评论</span>
                     </h6>
-                    <section class="lh-bj-list pr mt20 replyhtml">
+                    <!-- <section class="lh-bj-list pr mt20 replyhtml">
                       <ul>
                         <li class="unBr">
                           <aside class="noter-pic">
@@ -252,6 +257,219 @@
                           </li>
                         </ul>
                       </section>
+                    </section> -->
+
+                    <section class="lh-bj-list pr mt20 replyhtml">
+                      <ul>
+                        <li class="unBr">
+                          <aside class="noter-pic">
+                            <img
+                              width="50"
+                              height="50"
+                              class="picImg"
+                              src="~/assets/img/avatar-boy.gif"
+                            />
+                          </aside>
+                          <div class="of">
+                            <emijo-com
+                              :clearBtn="flagInfo"
+                              :parentId="''"
+                              @getDataFromSon="handleCommentFromSon"
+                            ></emijo-com>
+                          </div>
+                        </li>
+                      </ul>
+                    </section>
+                    <section class="">
+                      <section class="question-list lh-bj-list pr">
+                        <ul class="pr10">
+                          <li
+                            v-for="(comment, index) in data.items"
+                            v-bind:key="index"
+                          >
+                            <aside class="noter-pic">
+                              <img
+                                width="50"
+                                height="50"
+                                class="picImg"
+                                :src="comment.avatar"
+                              />
+                            </aside>
+                            <div class="of">
+                              <span class="fl">
+                                <font class="fsize12 c-blue">
+                                  {{ comment.nickname }}</font
+                                >
+                                <font class="fsize12 c-999 ml5"
+                                  >评论：</font
+                                ></span
+                              >
+                            </div>
+                            <div class="noter-txt mt5">
+                              <p>{{ comment.content }}</p>
+                            </div>
+                            <div class="of mt5">
+                              <el-row :gutter="20">
+                                <el-col :span="3">
+                                  <div @click="handleCommentReplay(comment)">
+                                    <i class="el-icon-chat-dot-round"></i>
+                                    <span>回复</span>
+                                  </div>
+                                </el-col>
+                                <el-col
+                                  :span="3"
+                                  v-show="userId == comment.memberId"
+                                >
+                                  <el-popconfirm
+                                    @confirm="handleDeleteId(comment)"
+                                    title="删除评论后，评论下所有回复都会被删除是否继续？"
+                                  >
+                                    <div slot="reference">
+                                      <i class="el-icon-delete"></i>
+                                      <span>删除</span>
+                                    </div>
+                                  </el-popconfirm>
+                                </el-col>
+                              </el-row>
+
+                              <span class="fr"
+                                ><font class="fsize12 c-999 ml5">{{
+                                  comment.gmtCreate
+                                }}</font></span
+                              >
+                            </div>
+                            <div>
+                              <div
+                                :class="
+                                  currentCommentIndex == comment.id
+                                    ? ''
+                                    : 'yincang'
+                                "
+                              >
+                                <emijo-com
+                                  :clearBtn="flagInfo"
+                                  :parentId="comment.id"
+                                  :nickname="comment.nickname"
+                                  @getDataFromSon="handleCommentFromSon"
+                                ></emijo-com>
+                              </div>
+                            </div>
+                            <div
+                              class="sonComment"
+                              v-show="comment.childList.length > 0"
+                            >
+                              <div
+                                v-for="commentson in comment.childList"
+                                :key="commentson.id"
+                              >
+                                <el-row>
+                                  <el-col :span="2">
+                                    <el-avatar
+                                      :size="50"
+                                      :src="commentson.avatar"
+                                    ></el-avatar>
+                                  </el-col>
+                                  <el-col :span="20">
+                                    <div class="of">
+                                      <span class="fl">
+                                        <font class="fsize12 c-blue">
+                                          {{ commentson.nickname }}</font
+                                        >
+                                        <font class="fsize12 c-999 ml5"
+                                          >@{{ commentson.replayName }}</font
+                                        ></span
+                                      >
+                                    </div>
+                                    <div class="noter-txt mt5">
+                                      <p>{{ commentson.content }}</p>
+                                    </div>
+                                    <div class="of mt5">
+                                      <el-row :gutter="20">
+                                        <el-col :span="3">
+                                          <div
+                                            @click="
+                                              handleCommentReplay(commentson)
+                                            "
+                                          >
+                                            <i
+                                              class="el-icon-chat-dot-round"
+                                            ></i>
+                                            <span>回复</span>
+                                          </div>
+                                        </el-col>
+                                        <el-col :span="3">
+                                          <el-popconfirm
+                                            @confirm="
+                                              handleDeleteId(commentson)
+                                            "
+                                            title="删除评论后将不可恢复是否继续？"
+                                          >
+                                            <div slot="reference">
+                                              <i class="el-icon-delete"></i>
+                                              <span>删除</span>
+                                            </div>
+                                          </el-popconfirm>
+                                        </el-col>
+                                      </el-row>
+
+                                      <span class="fr"
+                                        ><font class="fsize12 c-999 ml5">{{
+                                          commentson.gmtCreate
+                                        }}</font></span
+                                      >
+                                    </div>
+                                    <div>
+                                      <div
+                                        :class="
+                                          currentCommentIndex == commentson.id
+                                            ? ''
+                                            : 'yincang'
+                                        "
+                                      >
+                                        <emijo-com
+                                          :clearBtn="flagInfo"
+                                          :parentId="comment.id"
+                                          :nickname="commentson.nickname"
+                                          @getDataFromSon="handleCommentFromSon"
+                                        ></emijo-com>
+                                      </div>
+                                    </div>
+                                  </el-col>
+                                </el-row>
+                              </div>
+
+                              <!-- 当前有多少条评论 -->
+                              <div v-show="comment.sonTotal > 2">
+                                <div v-if="!comment.flagShow">
+                                  共{{ comment.sonTotal }}条回复,<span
+                                    class="fontBlue"
+                                    @click="
+                                      handleLookCommentInfo(comment, index)
+                                    "
+                                    >点击查看</span
+                                  >
+                                </div>
+                                <div v-if="comment.flagShow">
+                                  <el-pagination
+                                    background
+                                    layout="prev, pager, next"
+                                    :page-size="5"
+                                    :total="comment.sonTotal"
+                                    @current-change="
+                                      handleChangeChildComment(
+                                        $event,
+                                        index,
+                                        comment
+                                      )
+                                    "
+                                  >
+                                  </el-pagination>
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </section>
                     </section>
 
                     <!-- 公共分页 开始 -->
@@ -276,7 +494,7 @@
                         :key="page"
                         :class="{
                           current: data.current == page,
-                          undisable: data.current == page
+                          undisable: data.current == page,
                         }"
                         :title="'第' + page + '页'"
                         href="#"
@@ -311,12 +529,12 @@
             <div>
               <section class="c-infor-tabTitle c-tab-title">
                 <!-- <a title href="/teacher/">主讲讲师</a> -->
-                <nuxt-link :to="'/teacher/'+courseWebVo.teacherId">
+                <nuxt-link :to="'/teacher/' + courseWebVo.teacherId">
                   <span>主讲讲师</span>
                 </nuxt-link>
               </section>
               <section class="stud-act-list">
-                <ul style="height: auto;">
+                <ul style="height: auto">
                   <li>
                     <div class="u-face">
                       <a href="#">
@@ -329,9 +547,9 @@
                       </a>
                     </div>
                     <section class="hLh30 txtOf">
-                      <nuxt-link :to="'/teacher/'+courseWebVo.teacherId">
-                  <span>主讲讲师</span>
-                </nuxt-link>
+                      <nuxt-link :to="'/teacher/' + courseWebVo.teacherId">
+                        <span>主讲讲师</span>
+                      </nuxt-link>
                     </section>
                     <section class="hLh20 txtOf">
                       <span class="c-999">{{ courseWebVo.intro }}</span>
@@ -348,7 +566,6 @@
 
     <!-- /课程详情 结束 -->
   </div>
-
 </template>
 
 <script>
@@ -356,7 +573,11 @@ import courseApi from "@/api/course";
 import comment from "@/api/commonedu";
 import ordersApi from "@/api/orders";
 import cookie from "js-cookie";
+import emijoCom from "@/components/emijoCom";
 export default {
+  components: {
+    emijoCom,
+  },
   //和页面异步开始的
   asyncData({ params, error }) {
     return { courseId: params.id };
@@ -369,35 +590,115 @@ export default {
       total: 10,
       comment: {
         content: "",
-        courseId: ""
+        courseId: "",
       },
-      userId:"1",
-      flag:0,
+      userId: "1",
+      flag: 0,
       courseInfo: {},
       chapterVideoList: [],
       isBuy: false,
       courseWebVo: {},
       courseId: "",
-      loginInfo:{}
+      loginInfo: {},
+      currentCommentIndex: "",
+      flagInfo: false,
+      fullscreenLoading: true,
     };
   },
-  created() {
-    console.log("created")
-  },
-  mounted(){
-   this.userId=this.$store.state.userInfo.id;
+  created() {},
+  mounted() {
+    var userStr = cookie.get("underdogedu_ucenter");
+    let userInfo = JSON.parse(userStr);
+    this.userId = userInfo.id;
+    console.log(this.userId);
     this.initComment();
     this.initCourseInfo();
     this.isCollect();
-    console.log("mounted")
+    this.fullscreenLoading = false;
   },
-  updated(){
-
-  },
+  updated() {},
   methods: {
+    //删除评论
+    async handleDeleteId(comment) {
+      const res = await courseApi.deleteComment(comment.id);
+
+      // 如果一级评论则直接更新
+      if (this.$isEmpty(comment.parentId)) {
+        this.initComment();
+      } else {
+        // debugger
+        console.log(this.data.items[0]);
+        let i = this.data.items.findIndex((item) => (item.id = comment.id));
+        if (i == -1) {
+          this.$message("删除评论失败！！！");
+          return;
+        }
+        comment.sonTotal--;
+        if (this.$isEmpty(comment.page)) {
+          comment.page = 1;
+        }
+        let totalPage = parseInt(comment.sonTotal / 5);
+        if (totalPage < comment.page) {
+          comment.page = totalPage == 0 ? 1 : totalPage;
+        }
+        console.log(this.data.items[i])
+        this.handleChangeChildComment(comment.page, i, this.data.items[i]);
+      }
+    },
+    async handleCommentFromSon(value) {
+      this.comment.courseId = this.$route.params.id;
+      this.comment.teacherId = this.courseWebVo.teacherId;
+      this.comment.parentId = value.parentId;
+      this.comment.content = value.inputData;
+      if (this.$isEmpty(this.comment.content)) {
+        this.$message("内容不能为空");
+        return;
+      }
+      this.comment.replayName = value.nickname;
+      const res = await comment.addComment(this.comment);
+      if (res.data.code == 20000) {
+        this.$message("发布评论成功,您的评论在最后一页呦！！！");
+
+        // 如果一级评论则直接更新
+        if (this.$isEmpty(this.comment.parentId)) {
+          this.initComment();
+        }
+        // 如果说是二级评论，则找到对应的索引值
+        else {
+          let i = this.data.items.findIndex(
+            (item) => item.id == value.parentId
+          );
+          if (i != -1) {
+            let currentComment = this.data.items[i];
+            currentComment.sonTotal++;
+            if (currentComment.sonTotal > 5) {
+              currentComment.flagShow = true;
+            }
+            if (this.$isEmpty(currentComment.page)) {
+              currentComment.page = 1;
+            }
+            this.handleChangeChildComment(
+              currentComment.page,
+              i,
+              currentComment
+            );
+          } else {
+            this.$message("发布评论失败！！！");
+          }
+        }
+        // 清空内容
+        this.flagInfo = !this.flagInfo;
+      } else {
+        this.$message("发布评论失败！！！");
+      }
+    },
+    handleCommentReplay(comment) {
+      this.currentCommentIndex = comment.id;
+    },
+
     //查询课程详情信息
     initCourseInfo() {
-      courseApi.getCourseInfo(this.courseId).then(response => {
+      courseApi.getCourseInfo(this.courseId).then((response) => {
         this.courseWebVo = response.data.data.courseWebVo;
         this.chapterVideoList = response.data.data.chapterVideoList;
         this.isBuy = response.data.data.isBuy;
@@ -407,55 +708,77 @@ export default {
     initComment() {
       comment
         .getPageList(this.$route.params.id, this.page, this.limit)
-        .then(response => {
+        .then((response) => {
           this.data = response.data.data;
+         console.log(this.data.items[0]);
+
         });
+    },
+    // 展开详情
+    async handleLookCommentInfo(comment, index) {
+      if (this.$isEmpty(comment.page)) {
+        comment.page = 1;
+      }
+      const res = await courseApi.commentChild(comment.id, comment.page, 5);
+      if (res.data.code == 20000) {
+        comment.childList = res.data.data.list;
+      }
+      comment.flagShow = true;
+
+      this.$set(this.data.items, index, comment);
+    },
+    // 翻页问题
+    async handleChangeChildComment(e, index, comment) {
+      comment.page = e;
+      const res = await courseApi.commentChild(comment.id, e, 5);
+      if (res.data.code == 20000) {
+        comment.childList = res.data.data.list;
+      }
+      this.$set(this.data.items, index, comment);
     },
     addComment() {
       this.comment.courseId = this.$route.params.id;
       this.comment.teacherId = this.courseWebVo.teacherId;
-      comment.addComment(this.comment).then(response => {
+      comment.addComment(this.comment).then((response) => {
         if (response.data.success) {
           this.comment.content = "";
           this.initComment();
-             this.loginInfo=response.data.data.userInfo;
-            cookie.set("underdogedu_ucenter", JSON.stringify(this.loginInfo), {
-          domain: "www.feifu.top"
-        });
-        location.reload();
+          this.loginInfo = response.data.data.userInfo;
+          cookie.set("underdogedu_ucenter", JSON.stringify(this.loginInfo), {
+            domain: "www.feifu.top",
+          });
+          location.reload();
         }
       });
     },
     gotoPage(page) {
       comment
         .getPageList(this.$route.params.id, page, this.limit)
-        .then(response => {
+        .then((response) => {
           this.data = response.data.data;
         });
     },
-    setCollect(){
-
-      courseApi.
-      setCollect(this.$route.params.id,this.flag)
-      .then(response => {
-         this.isCollect();
+    setCollect() {
+      courseApi
+        .setCollect(this.$route.params.id, this.flag)
+        .then((response) => {
+          this.isCollect();
         });
     },
-    isCollect(){
-      courseApi.isCollect(this.$route.params.id)
-      .then(response => {
-          this.flag = response.data.data.flag;
-        });
-      },
-    
+    isCollect() {
+      courseApi.isCollect(this.$route.params.id).then((response) => {
+        this.flag = response.data.data.flag;
+      });
+    },
+
     //生成订单
     createOrders() {
-      ordersApi.createOrders(this.courseId).then(response => {
+      ordersApi.createOrders(this.courseId).then((response) => {
         //返回的订单号
         //生成订单之后。添砖订单显示页面
         this.$router.push({ path: "/orders/" + response.data.data.orderId });
       });
-    }
-  }
+    },
+  },
 };
 </script>

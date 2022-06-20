@@ -13,6 +13,7 @@ a.red:hover {color: #950b11;}
 /* 日历 */
 .el-calendar__body {
   padding: 0px !important;
+  
 }
 .el-calendar-table .el-calendar-day {
   text-align: center;
@@ -60,7 +61,10 @@ input,button,input[type="button"] {outline: none;font-size: 14px;}
 button,input[type="button"]  {color:#FFF;background-color: #00baf2;line-height: 20px;border:none;padding:0px 5px;cursor: pointer;}
 button:hover,input[type="button"]:hover {opacity: .9;}
 img {border:none;}
-body  {text-align: left;background-color: #eee;}
+body  {text-align: left;background-color: #eee;
+	cursor: url(https://s4.ax1x.com/2021/12/08/oW3lmq.png), default;
+
+}
 body{color: #424242;font-size:14px;line-height:1.75;background:#FFF;min-width: 1230px;}
 .red{color: #ff4a56;}
 .green {color: #49af4f;}

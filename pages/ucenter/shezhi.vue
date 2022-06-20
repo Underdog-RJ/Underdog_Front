@@ -1,5 +1,7 @@
 <template>
-  <div class="container u_blog">
+ <div>
+   <ucenterNav />
+    <div class="container u_blog">
     <el-row>
       <el-col :span="4">
         <el-menu
@@ -274,6 +276,7 @@
       </span>
     </el-dialog>
   </div>
+ </div>
 </template>
 
 <script>
@@ -290,7 +293,7 @@ export default {
     }
   },
   components: { Tinymce },
-  layout: "ucenterLayout",
+
   name: "",
   data() {
     // 验证邮箱的规则

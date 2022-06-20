@@ -13,5 +13,12 @@ export default {
       method: 'post',
       data:formItem
     })
-  }
+  },
+  getUserChannel(page,size) {
+    return request({
+      url: `/pierceservice/getUserChannel/${page}/${size}`,
+      method: 'post'
+    })
+  },
+
 }

@@ -1,74 +1,77 @@
 <template>
-  <div class="container u_index">
-    <!-- 左边 -->
-    <div class="show_left">
-      <div v-html="zhuye.content" class="contentHtml">
-        {{ zhuye.content }}
+  <div>
+    <ucenterNav />
+    <div class="container u_index">
+      <!-- 左边 -->
+      <div class="show_left">
+        <div v-html="zhuye.content" class="contentHtml">
+          {{ zhuye.content }}
+        </div>
       </div>
-    </div>
-    <!-- 右边 -->
-    <div class="show_right">
-      <div class="show_column1">
-        <!-- <div class="signStyle">
+      <!-- 右边 -->
+      <div class="show_right">
+        <div class="show_column1">
+          <!-- <div class="signStyle">
           <div>本月签到次数:{{userSignCountInfo.countMonth}}</div>
           <div>本月连续签到次数:{{userSignCountInfo.countCountinuous}}</div>
         </div> -->
 
-        <el-calendar v-model="currentDay">
-          <template slot="dateCell" slot-scope="{ date, data }">
-            <div class="calendar-day">
-              <span v-if="handleSignInfo(data, date) == 0">
-                {{ data.day.split("-").slice(2).join("-") }}
-                <div class="relateRed" v-if="handleDay(data,date)"></div>
-              </span>
-              <span v-if="handleSignInfo(data, date) == 1">
-                <div style="color: green; font-size: 30px">
-                  <i class="el-icon-circle-check"></i>
-                </div>
-              </span>
+          <el-calendar v-model="currentDay">
+            <template slot="dateCell" slot-scope="{ date, data }">
+              <div class="calendar-day">
+                <span v-if="handleSignInfo(data, date) == 0">
+                  {{ data.day.split("-").slice(2).join("-") }}
+                  <div class="relateRed" v-if="handleDay(data, date)"></div>
+                </span>
+                <span v-if="handleSignInfo(data, date) == 1">
+                  <div style="color: green; font-size: 30px">
+                    <i class="el-icon-circle-check"></i>
+                  </div>
+                </span>
+              </div>
+            </template>
+          </el-calendar>
+        </div>
+
+        <div class="show_column2">
+          <div class="show_column2_item">
+            <span>{{ countInfo.blog }}</span>
+            <span>文章数</span>
+          </div>
+
+          <div class="show_column2_item">
+            <span>{{ countInfo.kecheng }}</span>
+            <span>课程数</span>
+          </div>
+
+          <div class="show_column2_item">
+            <span>{{ countInfo.shuoshuo }}</span>
+            <span>说说数</span>
+          </div>
+        </div>
+        <div class="show_column3">
+          <div class="show_column3_item1">账号信息</div>
+          <div class="show_column3_item2">
+            <div>
+              <span>用户ID: </span>
+              <span>{{ userInfo.id }}</span>
             </div>
-          </template>
-        </el-calendar>
-      </div>
-
-      <div class="show_column2">
-        <div class="show_column2_item">
-          <span>{{ countInfo.blog }}</span>
-          <span>文章数</span>
-        </div>
-
-        <div class="show_column2_item">
-          <span>{{ countInfo.kecheng }}</span>
-          <span>课程数</span>
-        </div>
-
-        <div class="show_column2_item">
-          <span>{{ countInfo.shuoshuo }}</span>
-          <span>说说数</span>
-        </div>
-      </div>
-      <div class="show_column3">
-        <div class="show_column3_item1">账号信息</div>
-        <div class="show_column3_item2">
-          <div>
-            <span>用户ID: </span>
-            <span>{{ userInfo.id }}</span>
-          </div>
-          <div>
-            <span>昵称: </span>
-            <span>{{ userInfo.nickname }}</span>
-          </div>
-          <div>
-            <span>等级: </span>
-            <span>Lv1</span>
-          </div>
-          <div>
-            <span>U币: </span>
-            <span>{{ userInfo.ucoin }}币</span>
-          </div>
-          <div>
-            <span>注册时间: </span>
-            <span>{{ userInfo.gmtCreate }}</span>
+            <div>
+              <span>昵称: </span>
+              <span>{{ userInfo.nickname }}</span>
+            </div>
+            <div>
+              <span>等级: </span>
+              <span>Lv1</span>
+            </div>
+            <div>
+              <span>U币: </span>
+              <span>{{ userInfo.ucoin }}币</span>
+            </div>
+            <div>
+              <span>注册时间: </span>
+              <span>{{ userInfo.gmtCreate }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -79,9 +82,11 @@
 <script>
 import ucenter from "@/api/ucenter";
 import cookie from "js-cookie";
+
 export default {
-  layout: "ucenterLayout",
+  layout: "default",
   name: "",
+ 
   data() {
     return {
       targetStr: [],
@@ -136,7 +141,7 @@ export default {
         return 0;
       }
     },
-    handleDay(data,date) {
+    handleDay(data, date) {
       // console.log(date)
       let target = date.getTime();
       let now = new Date().getTime();

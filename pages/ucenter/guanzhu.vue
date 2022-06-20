@@ -1,5 +1,7 @@
 <template>
-  <div class="container u_guanzhu">
+  <div>
+    <ucenterNav />
+    <div class="container u_guanzhu">
     <el-row>
       <el-col :span="4">
         <el-menu
@@ -186,13 +188,14 @@
       </el-col>
     </el-row>
   </div>
+  </div>
 </template>
 
 <script>
 import ganzhu from "@/api/ucenterguanzhu";
 import cookie from "js-cookie";
 export default {
-  layout: "ucenterLayout",
+  // layout: "ucenterLayout",
   name: "",
   data() {
     return {

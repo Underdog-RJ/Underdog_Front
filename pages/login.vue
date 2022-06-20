@@ -19,7 +19,7 @@
           prop="mobile"
           :rules="[
             { required: true, message: '请输入手机号码', trigger: 'blur' },
-            { validator: checkPhone, trigger: 'blur' }
+            { validator: checkPhone, trigger: 'blur' },
           ]"
         >
           <div>
@@ -38,6 +38,7 @@
               type="password"
               placeholder="密码"
               v-model="user.password"
+               @keyup.enter.native="submitLogin" 
             />
             <i class="iconfont icon-password" />
           </div>
@@ -78,7 +79,7 @@
           <li>
             <a
               id="weibo"
-              style="margin-left:40px;margin-top:10px"
+              style="margin-left: 40px; margin-top: 10px"
               class="weibo"
               target="_blank"
               href="http://open.51094.com/user/hezuo/2.html?appid=160b73c95dca0e&amp;token=75a5396197b78e4166f8c578c3ffc705"
@@ -105,29 +106,43 @@ export default {
     return {
       user: {
         mobile: "",
-        password: ""
+        password: "",
       },
-      loginInfo: {}
+      loginInfo: {},
     };
   },
 
   methods: {
     // 本地测试先改为Localhost,服务器改为  域名
     submitLogin() {
-      loginApi.submitLogin(this.user).then(response => {
-        cookie.set("underdogedu_token", response.data.data.token, {
-          domain: "www.feifu.top"
-        });
-        //调用接口，根据token获取用户信息，为了首页面显示
-        loginApi.getLoginUserInfo().then(response => {
-          this.loginInfo = response.data.data.userInfo;
-          //获取返回用户信息，放到cookie里面
-          cookie.set("underdogedu_ucenter", JSON.stringify(this.loginInfo), {
-            domain: "www.feifu.top"
+      this.$refs.userForm.validate((valid) => {
+        if (valid) {
+          loginApi.submitLogin(this.user).then((response) => {
+            if (response.data.code == 20000) {
+              cookie.set("underdogedu_token", response.data.data.token, {
+                domain: "www.feifu.top",
+              });
+              //调用接口，根据token获取用户信息，为了首页面显示
+              loginApi.getLoginUserInfo().then((response) => {
+                this.loginInfo = response.data.data.userInfo;
+                //获取返回用户信息，放到cookie里面
+                cookie.set(
+                  "underdogedu_ucenter",
+                  JSON.stringify(this.loginInfo),
+                  {
+                    domain: "www.feifu.top",
+                  }
+                );
+                //跳转页面
+                window.location.href = "/";
+              });
+            } else {
+              this.$message(response.data.message);
+            }
           });
-          //跳转页面
-          window.location.href = "/";
-        });
+        } else {
+          this.$message("字段检验失败");
+        }
       });
     },
 
@@ -137,8 +152,8 @@ export default {
         return callback(new Error("手机号码格式不正确"));
       }
       return callback();
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

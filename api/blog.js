@@ -1,6 +1,24 @@
 import request from '@/utils/request'
 export default {
 
+// 获取评论的展开页面
+commentChild(blogId,page,size){
+  return request({
+    url: `/eduservice/blogcomment/commentChild/${blogId}/${page}/${size}`,
+    method: 'post'
+  })
+
+},
+
+  //课程详情的方法
+  deleteBlog(id) {
+    return request({
+      url: `/eduservice/blog/deleteBlogById/${id}`,
+      method: 'delete'
+    })
+  },
+
+  // 分页获取博客
   getBlogList(page,limit,searchObj) {
     return request({
       url: `/eduservice/Blogfront/getFrontBlogList/${page}/${limit}`,

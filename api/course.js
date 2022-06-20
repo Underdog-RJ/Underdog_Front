@@ -1,11 +1,24 @@
 import request from '@/utils/request'
 export default {
-
-  getCourseList(page,limit,searchObj) {
+  // 删除评论
+  deleteComment(commentId){
+    return request({
+      url: `/eduservice/comment/deleteComment/${commentId}`,
+      method: 'delete'
+    })
+  },
+  // 获取评论的展开页面
+  commentChild(courseId, page, size) {
+    return request({
+      url: `/eduservice/comment/commentChild/${courseId}/${page}/${size}`,
+      method: 'post'
+    })
+  },
+  getCourseList(page, limit, searchObj) {
     return request({
       url: `/eduservice/coursefront/getFrontCourseList/${page}/${limit}`,
       method: 'post',
-      data:searchObj
+      data: searchObj
     })
   },
   //查询所有分类的方法
@@ -23,13 +36,13 @@ export default {
     })
   },
 
-  setCollect(courseId,flag) {
+  setCollect(courseId, flag) {
     return request({
       url: '/educenter/ucenter-kecheng/set_collect',
       method: 'get',
-      params:{
-        courseId:courseId,
-        flag:flag
+      params: {
+        courseId: courseId,
+        flag: flag
       }
     })
   },
@@ -37,17 +50,17 @@ export default {
     return request({
       url: '/educenter/ucenter-kecheng/is_collect',
       method: 'get',
-      params:{
-        courseId:courseId
+      params: {
+        courseId: courseId
       }
     })
   },
-    //课程详情的方法
-    getCourseInfo(id) {
-      return request({
-        url: `/eduservice/coursefront/getFrontCourseInfo/${id}`,
-        method: 'get'
-      })
-    },
+  //课程详情的方法
+  getCourseInfo(id) {
+    return request({
+      url: `/eduservice/coursefront/getFrontCourseInfo/${id}`,
+      method: 'get'
+    })
+  },
 
 }

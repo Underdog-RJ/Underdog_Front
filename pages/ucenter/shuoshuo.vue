@@ -1,5 +1,7 @@
 <template>
-  <div class="container u_index">
+  <div>
+    <ucenterNav/>
+    <div class="container u_index">
     <div class="sayContent">
       <div>
         <textarea
@@ -59,13 +61,14 @@
       </el-pagination>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
 import shuoshuo from "@/api/ucentershuoshuo";
 import cookie from "js-cookie";
 export default {
-  layout: "ucenterLayout",
+  layout: "default",
   name: "",
   data() {
     return {
@@ -87,7 +90,7 @@ export default {
     if (userStr) {
       this.userInfo = JSON.parse(userStr);
     }
-    this.id = this.userInfo.id;
+    this.id =" this.userInfo.id";
     this.initshuoshuo();
   },
   methods: {

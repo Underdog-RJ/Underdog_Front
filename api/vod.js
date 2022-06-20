@@ -5,5 +5,15 @@ export default {
       url: '/eduvod/video/getPlayAuth/'+vid,
       method: 'get'
     })
+  },
+  ossFile(file){
+    return request({
+      url: '/eduvod/eduoss/fileoss',
+      method: 'post',
+      data:file,
+      headers: {
+        'Content-Type': "multipart/form-data",
+      },
+    })
   }
 }

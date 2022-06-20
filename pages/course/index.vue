@@ -123,27 +123,29 @@
                       >
                     </div>
                   </section>
-                  <h3 class="hLh30 txtOf mt10">
-                    <a
-                      :href="'/course/' + item.id"
-                      :title="item.title"
-                      class="course-title fsize18 c-333"
-                      >{{ item.title }}</a
-                    >
-                  </h3>
-                  <section class="mt10 hLh20 of">
-                    <span
-                      v-if="Number(item.price) === 0"
-                      class="fr jgTag bg-green"
-                    >
-                      <i class="c-fff fsize12 f-fA">免费</i>
-                    </span>
-                    <span class="fl jgAttr c-ccc f-fA">
-                      <i class="c-999 f-fA">{{ item.viewCount }}人学习</i>
-                      |
-                      <i class="c-999 f-fA">9634评论</i>
-                    </span>
-                  </section>
+                  <div class="itemBottom">
+                    <h3 class="hLh20 txtOf mt10">
+                      <a
+                        :href="'/course/' + item.id"
+                        :title="item.title"
+                        class="course-title fsize18 c-333"
+                        >{{ item.title }}</a
+                      >
+                    </h3>
+                    <section class="mt10 hLh20 of">
+                      <span
+                        v-if="Number(item.price) === 0"
+                        class="fr jgTag bg-green"
+                      >
+                        <i class="c-fff fsize12 f-fA">免费</i>
+                      </span>
+                      <span class="fl jgAttr c-ccc f-fA">
+                        <i class="c-999 f-fA">{{ item.viewCount }}人学习</i>
+                        |
+                        <i class="c-999 f-fA">9634评论</i>
+                      </span>
+                    </section>
+                  </div>
                 </div>
               </li>
             </ul>
@@ -173,7 +175,7 @@
               :key="page"
               :class="{
                 current: data.current == page,
-                undisable: data.current == page
+                undisable: data.current == page,
               }"
               :title="'第' + page + '页'"
               href="#"
@@ -217,35 +219,32 @@ export default {
       twoIndex: -1,
       buyCountSort: "",
       gmtCreateSort: "",
-      priceSort: ""
+      priceSort: "",
     };
   },
-  created() {
-    
-  },
-  mounted(){
-//课程第一次查询
+  created() {},
+  mounted() {
+    //课程第一次查询
     this.initCourseFirst();
     //一级分类额显示
     this.initSubject();
   },
   methods: {
-    
     //1.查询第一页数据
     initCourseFirst() {
-      courseApi.getCourseList(1, 8, this.searchObj).then(response => {
+      courseApi.getCourseList(1, 8, this.searchObj).then((response) => {
         this.data = response.data.data;
       });
     },
     //2查询所有的分类
     initSubject() {
-      courseApi.getAllSubject().then(response => {
+      courseApi.getAllSubject().then((response) => {
         this.subjectNestedList = response.data.data.list;
       });
     },
     //分页切换的方法
     gotoPage(page) {
-      courseApi.getCourseList(page, 8, this.searchObj).then(response => {
+      courseApi.getCourseList(page, 8, this.searchObj).then((response) => {
         this.data = response.data.data;
       });
     },
@@ -286,29 +285,28 @@ export default {
       this.gotoPage(1);
     },
     //根据销量做排序
-    searchBuyCount(){
+    searchBuyCount() {
       //设置对应变量值，为了样式生效
-      this.buyCountSort="1"
-      this.gmtCreateSort=""
-      this.priceSort=""
-
+      this.buyCountSort = "1";
+      this.gmtCreateSort = "";
+      this.priceSort = "";
 
       //把值复制到searchobj
-      this.searchObj.buyCountSort=this.buyCountSort
-       this.searchObj.gmtCreateSort = this.gmtCreateSort;
+      this.searchObj.buyCountSort = this.buyCountSort;
+      this.searchObj.gmtCreateSort = this.gmtCreateSort;
       this.searchObj.priceSort = this.priceSort;
-      this.gotoPage(this.page)
+      this.gotoPage(this.page);
     },
     //更新时间查询
     searchGmtCreate() {
-      debugger
+      debugger;
       this.buyCountSort = "";
       this.gmtCreateSort = "1";
       this.priceSort = "";
       this.searchObj.buyCountSort = this.buyCountSort;
       this.searchObj.gmtCreateSort = this.gmtCreateSort;
       this.searchObj.priceSort = this.priceSort;
-      this.gotoPage(this.page)
+      this.gotoPage(this.page);
     },
     //价格查询
     searchPrice() {
@@ -318,12 +316,16 @@ export default {
       this.searchObj.buyCountSort = this.buyCountSort;
       this.searchObj.gmtCreateSort = this.gmtCreateSort;
       this.searchObj.priceSort = this.priceSort;
-      this.gotoPage(this.page)
+      this.gotoPage(this.page);
     },
-  }
+  },
 };
 </script>
 <style scoped>
+.itemBottom{
+  background-color: #fff;
+  padding: 3px;
+}
 .active {
   background: greenyellow;
 }

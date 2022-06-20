@@ -64,42 +64,15 @@
                 class="ml5"
                 >退出</a
               > -->
-              <el-popover
-                class="popLogin"
-                placement="bottom"
-                width="200"
-                trigger="hover"
-              >
-                <div slot="reference">
-                  <div class="loginPop">
-                    <div>
-                      <el-avatar :size="30" :src="loginInfo.avatar"></el-avatar>
-                    </div>
-                    <span id="userName" style="margin-left: 5px">{{
-                      loginInfo.nickname
-                    }}</span>
-                    <i
-                      class="el-icon-caret-bottom"
-                      style="margin-left: 5px"
-                    ></i>
-                  </div>
-                </div>
-                <div class="popShow">
-                  <div class="popHeader">
-                    <div class="headerHover" @click="goUserCenter">
-                      <i class="el-icon-s-home" :size="50"></i>
-                      <div
-                        style="
-                          font-size: 12px;
-                          margin-left: 5px;
-                          cursor: pointer;
-                        "
-                      >
-                        进入主页
-                      </div>
-                    </div>
-
-                    <div class="popUser">
+              <div class="userPopcover">
+                <el-popover
+                  class="popLogin"
+                  placement="bottom"
+                  width="300"
+                  trigger="hover"
+                >
+                  <div slot="reference">
+                    <div class="loginPop">
                       <div>
                         <el-avatar
                           :size="30"
@@ -115,86 +88,120 @@
                       ></i>
                     </div>
                   </div>
-                  <div class="popContent">
-                    <div class="popContentItem">
-                      <div>{{ countInfo.blog }}</div>
-                      <div>文章</div>
-                    </div>
-                    <div class="popContentItem">
-                      <div>{{ countInfo.kecheng }}</div>
-                      <div>课程</div>
-                    </div>
-                    <div class="popContentItem">
-                      <div>{{ countInfo.shuoshuo }}</div>
-                      <div>说说</div>
-                    </div>
-                  </div>
-                  <div style="text-align: center">
-                    <el-button
-                      v-if="userSignFlag == false"
-                      icon="el-icon-s-promotion"
-                      size="small"
-                      class="qdStyle"
-                      @click="goSign"
-                      >签到</el-button
-                    >
-                    <el-button
-                      v-else
-                      icon="el-icon-s-promotion"
-                      size="small"
-                      style="border-radius: 10px"
-                      type="primary"
-                      >已签到</el-button
-                    >
-                  </div>
-                  <!-- <hr style="margin-top: 20px" /> -->
-                  <div class="popUserInfo">
-                    <div class="popUserInfoItem" @click="goUserCenter">
-                      <div class="popUserInfoItemPro">
-                        <i class="el-icon-s-home popIcon"></i>个人中心
+                  <div class="popShow">
+                    <div class="popHeader">
+                      <div class="headerHover" @click="goUserCenter">
+                        <i class="el-icon-s-home" :size="50"></i>
+                        <div
+                          style="
+                            font-size: 12px;
+                            margin-left: 5px;
+                            cursor: pointer;
+                          "
+                        >
+                          进入主页
+                        </div>
                       </div>
-                      <div class="popUserInfoItemText">普通用户</div>
-                    </div>
-                    <div class="popUserInfoItem">
-                      <div class="popUserInfoItemPro">
-                        <i class="el-icon-user-solid popIcon"></i>账号
-                      </div>
-                      <div class="popUserInfoItemText">{{ loginInfo.id }}</div>
-                    </div>
-                    <div class="popUserInfoItem">
-                      <div class="popUserInfoItemPro">
-                        <i class="el-icon-s-flag popIcon"></i>等级
-                      </div>
-                      <div class="popUserInfoItemText">Lv1</div>
-                    </div>
-                    <div class="popUserInfoItem">
-                      <div class="popUserInfoItemPro">
-                        <i class="el-icon-coin popIcon"></i>U币
-                      </div>
-                      <div class="popUserInfoItemText">
-                        {{ loginInfo.ucoin }}币
-                      </div>
-                    </div>
-                    <div class="popUserInfoItem" @click="goSetting">
-                      <div class="popUserInfoItemPro">
-                        <i class="el-icon-s-tools popIcon"></i>个人设置
-                      </div>
-                    </div>
-                  </div>
-                  <!-- <hr style="margin-top: 20px" /> -->
-                  <div class="popUserInfo">
-                    <div class="popUserInfoItem" @click="logout()">
-                      <div class="popUserInfoItemPro">
+
+                      <div class="popUser">
+                        <div>
+                          <el-avatar
+                            :size="30"
+                            :src="loginInfo.avatar"
+                          ></el-avatar>
+                        </div>
+                        <span id="userName" style="margin-left: 5px">{{
+                          loginInfo.nickname
+                        }}</span>
                         <i
-                          class="el-icon-apple"
-                          style="font-size: 25px; margin-right: 5px"
-                        ></i
-                        >退出登录
+                          class="el-icon-caret-bottom"
+                          style="margin-left: 5px"
+                        ></i>
+                      </div>
+                    </div>
+                    <div class="popContent">
+                      <div class="popContentItem">
+                        <div>{{ countInfo.blog }}</div>
+                        <div>文章</div>
+                      </div>
+                      <div class="popContentItem">
+                        <div>{{ countInfo.kecheng }}</div>
+                        <div>课程</div>
+                      </div>
+                      <div class="popContentItem">
+                        <div>{{ countInfo.shuoshuo }}</div>
+                        <div>说说</div>
+                      </div>
+                    </div>
+                    <div style="text-align: center">
+                      <el-button
+                        v-if="userSignFlag == false"
+                        icon="el-icon-s-promotion"
+                        size="small"
+                        class="qdStyle"
+                        @click="goSign"
+                        >签到</el-button
+                      >
+                      <el-button
+                        v-else
+                        icon="el-icon-s-promotion"
+                        size="small"
+                        style="border-radius: 10px"
+                        type="primary"
+                        >已签到</el-button
+                      >
+                    </div>
+                    <!-- <hr style="margin-top: 20px" /> -->
+                    <div class="popUserInfo">
+                      <div class="popUserInfoItem" @click="goUserCenter">
+                        <div class="popUserInfoItemPro">
+                          <i class="el-icon-s-home popIcon"></i>个人中心
+                        </div>
+                        <div class="popUserInfoItemText">普通用户</div>
+                      </div>
+                      <div class="popUserInfoItem">
+                        <div class="popUserInfoItemPro">
+                          <i class="el-icon-user-solid popIcon"></i>账号
+                        </div>
+                        <div class="popUserInfoItemText">
+                          {{ loginInfo.id }}
+                        </div>
+                      </div>
+                      <div class="popUserInfoItem">
+                        <div class="popUserInfoItemPro">
+                          <i class="el-icon-s-flag popIcon"></i>等级
+                        </div>
+                        <div class="popUserInfoItemText">Lv1</div>
+                      </div>
+                      <div class="popUserInfoItem">
+                        <div class="popUserInfoItemPro">
+                          <i class="el-icon-coin popIcon"></i>U币
+                        </div>
+                        <div class="popUserInfoItemText">
+                          {{ loginInfo.ucoin }}币
+                        </div>
+                      </div>
+                      <div class="popUserInfoItem" @click="goSetting">
+                        <div class="popUserInfoItemPro">
+                          <i class="el-icon-s-tools popIcon"></i>个人设置
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <hr style="margin-top: 20px" /> -->
+                    <div class="popUserInfo">
+                      <div class="popUserInfoItem" @click="logout()">
+                        <div class="popUserInfoItemPro">
+                          <i
+                            class="el-icon-apple"
+                            style="font-size: 25px; margin-right: 5px"
+                          ></i
+                          >退出登录
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </el-popover>
+                </el-popover>
+              </div>
             </li>
             <!-- /未登录显示第1 li；登录后显示第2，3 li -->
           </ul>
@@ -221,7 +228,7 @@
     </header>
     <!-- /公共头引入 -->
 
-    <nuxt />
+    <nuxt class="commonBg" />
 
     <!-- 公共底引入 -->
     <footer id="footer">
@@ -289,6 +296,7 @@ https://underdogedu.oss-cn-beijing.aliyuncs.com/%E7%B4%A0%E6%9D%90/2c6cb9ba7cc69
   </div>
 </template>
 <script>
+import LwFirewords from "lw_firewords";
 import "~/assets/css/reset.css";
 import "~/assets/css/theme.css";
 import "~/assets/css/global.css";
@@ -326,6 +334,11 @@ export default {
     };
   },
   methods: {
+    // start fire
+    startFire() {
+      const lw_f = new LwFirewords(); //创建实例
+      lw_f.init(); //启动事件
+    },
     toSearch() {
       this.$router.push("/search/" + this.searchValue);
     },
@@ -421,10 +434,21 @@ export default {
   },
   mounted() {
     this.showInfo();
+    this.startFire();
   },
 };
 </script>
 <style>
+
+.commonBg {
+  height: 100%;
+  z-index: -999;
+  background: url(https://npm.elemecdn.com/lql_static@latest/bg/00189.webp)
+    no-repeat;
+  margin: 0px;
+  background-size: 100% 100%;
+  background-attachment: fixed;
+}
 .popUserInfoItem:hover {
   background-color: #eee;
   color: black;
@@ -487,10 +511,10 @@ export default {
   margin-left: auto;
   margin-right: 10px;
 }
-.el-popper .popper__arrow {
+.userPopcover .el-popper .popper__arrow {
   display: none !important;
 }
-.el-popover {
+.userPopcover .el-popover {
   margin-top: 0px !important;
   position: fixed !important;
   top: 45px !important;
@@ -498,9 +522,8 @@ export default {
   width: 300px !important;
   border-radius: 10px !important;
 }
-.popShow {
-}
-.loginPop {
+
+.userPopcover .loginPop {
   margin-top: 10px;
   display: flex;
   align-items: center;

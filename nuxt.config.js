@@ -4,6 +4,10 @@ module.exports = {
     host:'0.0.0.0'
   },
   plugins: [
+    {
+      src:'~/plugins/utils'
+    },
+    {src: "@/plugins/video", ssr: false},
     { src: '~/plugins/nuxt-swiper-plugin.js', ssr: false },
     {
       src: '~plugins/ElementUI',
@@ -26,6 +30,10 @@ module.exports = {
       ssr: false,
     },
    
+    {
+      src: '~plugins/ucentNavPlugin',
+      ssr: false,
+    },
   ],
 
   css: [

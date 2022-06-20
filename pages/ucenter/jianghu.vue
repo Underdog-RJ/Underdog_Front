@@ -1,233 +1,298 @@
 <template>
-  <div class="container u_blog">
-    <el-row>
-      <el-col :span="4">
-        <el-menu
-          default-active="1"
-          class="el-menu-vertical-demo"
-          @select="handleSelect"
-          background-color="#fff"
-          text-color="black"
-          active-text-color="#00baf2"
-        >
-          <el-menu-item index="1">
-            <i class="el-icon-menu"></i>
-            <span slot="title">文章管理</span>
-          </el-menu-item>
-          <el-menu-item index="2">
-            <i class="el-icon-document"></i>
-            <span slot="title">发布文章</span>
-          </el-menu-item>
-          <el-menu-item index="3">
-            <i class="el-icon-setting"></i>
-            <span slot="title">收藏文章</span>
-          </el-menu-item>
-        </el-menu>
-      </el-col>
-      <el-col :span="20">
-        <div v-if="flagdialog === '1'">
-          <div class="item">
-            <article class="">
-              <ul class="show" id="">
-                <li v-for="item in blogList" :key="item.id" class="show_item">
-                  <section class="blog-img">
-                    <div class="img-float">
-                      <img
-                        :src="item.firstPicture"
-                        class=""
-                        :alt="item.title"
-                      />
-                    </div>
-                    <div class="show_left">
-                      <div class="title_bolg">
-                        <a :href="'/blog/' + item.id" :title="item.title">{{
-                          item.title
-                        }}</a>
-                      </div>
-                      <div class="item_center">
-                        <span>{{ item.descption }}</span>
-                      </div>
-                      <div class="item_bottom">
-                        <a href="">
-                          <span> 作者: {{ item.authorNickname }} </span>
-                        </a>
-                        <span> 浏览: {{ item.viewCount }} </span>
-                        <span>时间: {{ item.gmtCreate }}</span>
-                      </div>
-                    </div>
-                  </section>
-                </li>
-              </ul>
-              <div class="clear"></div>
-            </article>
-          </div>
-          <el-pagination
-            background
-            layout="prev, pager, next"
-            :page-size="size"
-            :total="total1"
-            @current-change="handleChangeBlog"
+  <div>
+    <ucenterNav />
+    <div class="container u_blog">
+      <el-row>
+        <el-col :span="4">
+          <el-menu
+            default-active="1"
+            class="el-menu-vertical-demo"
+            @select="handleSelect"
+            background-color="#fff"
+            text-color="black"
+            active-text-color="#00baf2"
           >
-          </el-pagination>
-        </div>
-        <div v-if="flagdialog === '2'">
-          <div class="item">
-            <el-form label-width="100px">
-              <el-form-item label="博客标题">
-                <el-input
-                  v-model="blogInfo.title"
-                  placeholder=" 示例：机器学习项目课：从基础到搭建项目视频博客。专业名称注意大小写"
-                />
-              </el-form-item>
-              <!-- 所属分类 TODO -->
-              <el-form-item label="博客分类">
-                <el-select
-                  @change="subjectLevelOneChanged"
-                  v-model="blogInfo.subjectParentId"
-                  placeholder="请选择"
-                >
-                  <el-option
-                    v-for="subject in subjectOneList"
-                    :key="subject.id"
-                    :label="subject.title"
-                    :value="subject.id"
-                  />
-                </el-select>
-
-                <!-- 二级分类 -->
-                <el-select v-model="blogInfo.subjectId" placeholder="请选择">
-                  <el-option
-                    v-for="subject in subjectTwoList"
-                    :key="subject.id"
-                    :label="subject.title"
-                    :value="subject.id"
-                  />
-                </el-select>
-              </el-form-item>
-              <!-- 博客内容-->
-              <el-form-item label="博客内容">
-                <!-- <tinymce :height="300" v-model="blogInfo.content" /> -->
-                <mavon-editor v-model="markDown" @change="handleMarkDown" />
-              </el-form-item>
-              <el-form-item label="博客简介">
-                <el-input
-                  v-model="blogInfo.descption"
-                  :rows="10"
-                  type="textarea"
-                  placeholder="用于展示在页面上的内容"
-                />
-              </el-form-item>
-
-              <!-- 博客封面-->
-              <el-form-item label="博客封面">
-                <el-upload
-                  :show-file-list="false"
-                  :on-success="handleAvatarSuccess"
-                  :before-upload="beforeAvatarUpload"
-                  :action="BASE_API + '/eduvod/eduoss/fileoss'"
-                  class="avatar-uploader"
-                >
-                  <img :src="blogInfo.firstPicture" />
-                </el-upload>
-              </el-form-item>
-              <!-- 赞赏-->
-              <el-form-item label="博客赞赏">
-                <el-upload
-                  :show-file-list="false"
-                  :on-success="handleAvatarSuccessForZS"
-                  :before-upload="beforeAvatarUploadForZS"
-                  :action="BASE_API + '/eduvod/eduoss/fileoss'"
-                  class="avatar-uploader"
-                >
-                  <img :src="blogInfo.zsPicture" />
-                </el-upload>
-              </el-form-item>
-              <el-form-item style="text-align: center">
-                <el-button type="warning" @click="saveOrUpdate">保存</el-button>
-              </el-form-item>
-            </el-form>
+            <el-menu-item index="1">
+              <i class="el-icon-menu"></i>
+              <span slot="title">文章管理</span>
+            </el-menu-item>
+            <el-menu-item index="2">
+              <i class="el-icon-document"></i>
+              <span slot="title">发布文章</span>
+            </el-menu-item>
+            <el-menu-item index="3">
+              <i class="el-icon-setting"></i>
+              <span slot="title">收藏文章</span>
+            </el-menu-item>
+          </el-menu>
+        </el-col>
+        <el-col :span="20">
+          <div v-if="flagdialog === '1'">
+            <div class="item">
+              <article class="">
+                <ul class="show" id="">
+                  <li v-for="item in blogList" :key="item.id" class="show_item">
+                    <section class="blog-img">
+                      <div class="img-float">
+                        <img
+                          :src="item.firstPicture"
+                          class=""
+                          :alt="item.title"
+                        />
+                      </div>
+                      <div class="show_left">
+                        <div class="title_bolg">
+                          <a :href="'/blog/' + item.id" :title="item.title">{{
+                            item.title
+                          }}</a>
+                        </div>
+                        <div class="item_center">
+                          <span>{{ item.descption }}</span>
+                        </div>
+                        <div class="item_bottom">
+                          <a href="">
+                            <span> 作者: {{ item.authorNickname }} </span>
+                          </a>
+                          <span> 浏览: {{ item.viewCount }} </span>
+                          <span>时间: {{ item.gmtCreate }}</span>
+                          <dir style="margin-left: auto">
+                            <el-button
+                              type="danger"
+                              @click="handleDelete(item.id)"
+                              >删除</el-button
+                            >
+                            <el-button
+                              type="primary"
+                              @click="handleBtnUpdate(item)"
+                              >修改</el-button
+                            >
+                          </dir>
+                        </div>
+                      </div>
+                    </section>
+                  </li>
+                </ul>
+                <div class="clear"></div>
+              </article>
+            </div>
+            <el-pagination
+              background
+              layout="prev, pager, next"
+              :page-size="size"
+              :total="total1"
+              @current-change="handleChangeBlog"
+            >
+            </el-pagination>
           </div>
-        </div>
-        <div v-if="flagdialog === '3'">
-          <div class="item">
-            <article class="">
-              <ul class="show" id="">
-                <li v-for="item in enjoyList" :key="item.id" class="show_item">
-                  <section class="blog-img">
-                    <div class="img-float">
-                      <img
-                        :src="item.firstPicture"
-                        class=""
-                        :alt="item.title"
+          <div v-if="flagdialog === '2'">
+            <div class="item">
+              <el-form
+                label-width="100px"
+                :model="blogInfo"
+                ref="blogInfoRef"
+                :rules="blogInfoRules"
+              >
+                <el-form-item label="博客标题" prop="title">
+                  <el-input
+                    v-model="blogInfo.title"
+                    placeholder=" 示例：机器学习项目课：从基础到搭建项目视频博客。专业名称注意大小写"
+                  />
+                </el-form-item>
+                <!-- 所属分类 TODO -->
+                <el-form-item label="博客分类" prop="subjectId">
+                  <el-select
+                    @change="subjectLevelOneChanged"
+                    v-model="blogInfo.subjectParentId"
+                    placeholder="请选择"
+                  >
+                    <el-option
+                      v-for="subject in subjectOneList"
+                      :key="subject.id"
+                      :label="subject.title"
+                      :value="subject.id"
+                    />
+                  </el-select>
+
+                  <!-- 二级分类 -->
+                  <el-select v-model="blogInfo.subjectId" placeholder="请选择">
+                    <el-option
+                      v-for="subject in subjectTwoList"
+                      :key="subject.id"
+                      :label="subject.title"
+                      :value="subject.id"
+                    />
+                  </el-select>
+                </el-form-item>
+                <!-- 博客内容-->
+                <!-- <el-form-item label="博客内容">
+                  <tinymce :height="300" v-model="blogInfo.content" />
+                </el-form-item> -->
+                <el-form-item label="博客内容" prop="mdContent">
+                  <!-- <tinymce :height="300" v-model="blogInfo.content" /> -->
+                  <mavon-editor
+                    ref="md"
+                    v-model="blogInfo.mdContent"
+                    @change="handleMarkDown"
+                    @imgAdd="imgAdd"
+                    class="mavonSytle"
+                  />
+                </el-form-item>
+                <el-form-item label="简介/封面">
+                  <el-row :gutter="30">
+                    <el-col :span="11">
+                      <el-upload
+                        class="coverStyle"
+                        :show-file-list="false"
+                        :on-success="handleAvatarSuccess"
+                        :before-upload="beforeAvatarUpload"
+                        :action="BASE_API + '/eduvod/eduoss/fileoss'"
+                      >
+                        <img
+                          v-if="
+                            blogInfo.firstPicture != undefined &&
+                            blogInfo.firstPicture != ''
+                          "
+                          :src="blogInfo.firstPicture"
+                          class="fileUplpadStyle"
+                        />
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                      </el-upload>
+                    </el-col>
+                    <!-- <el-col :span="1" v-show="firstPictureFlag">
+                      <i class="el-icon-delete"></i>
+                    </el-col> -->
+                    <el-col :span="12">
+                      <el-input
+                        v-model="blogInfo.descption"
+                        :rows="10"
+                        :autosize="{ minRows: 6, maxRows: 6 }"
+                        type="textarea"
+                        placeholder="用于展示在页面上的内容,如果为空默认使用标题作为简介。"
                       />
-                    </div>
-                    <div class="show_left">
-                      <div class="title_bolg">
-                        <a :href="'/blog/' + item.id" :title="item.title">{{
-                          item.title
-                        }}</a>
-                      </div>
-                      <div class="item_center">
-                        <span>{{ item.descption }}</span>
-                      </div>
+                    </el-col>
+                  </el-row>
+                </el-form-item>
 
-                      <div class="item_bottom">
-                        <a href="">
-                          <span> 作者: {{ item.authorNickname }} </span>
-                        </a>
-                        <span> 浏览: {{ item.viewCount }} </span>
-                        <span>时间: {{ item.gmtCreate }}</span>
-                      </div>
-                    </div>
-                  </section>
-                </li>
-              </ul>
-              <div class="clear"></div>
-            </article>
+                <!-- 博客封面-->
+                <!--  <el-form-item label="博客封面">
+                    <el-upload
+                      :show-file-list="false"
+                      :on-success="handleAvatarSuccess"
+                      :before-upload="beforeAvatarUpload"
+                      :action="BASE_API + '/eduvod/eduoss/fileoss'"
+                      class="avatar-uploader"
+                    >
+                      <img :src="blogInfo.firstPicture" />
+                    </el-upload>
+                  </el-form-item> -->
+                <!-- 赞赏-->
+                <!-- <el-form-item label="博客设置">
+                  <el-radio-group v-model="radio">
+                    <el-radio :label="3">开启赞赏</el-radio>
+                    <el-radio :label="6">关闭赞赏</el-radio>
+                  </el-radio-group>
+                </el-form-item> -->
+                <el-form-item style="text-align: center">
+                  <el-button type="warning" @click="saveOrUpdate"
+                    >保存</el-button
+                  >
+                </el-form-item>
+              </el-form>
+            </div>
           </div>
-          <el-pagination
-            background
-            layout="prev, pager, next"
-            :page-size="size"
-            :total="total2"
-            @current-change="handleChangeEnjoy"
-          >
-          </el-pagination>
-        </div>
-      </el-col>
-    </el-row>
+          <div v-if="flagdialog === '3'">
+            <div class="item">
+              <article class="">
+                <ul class="show" id="">
+                  <li
+                    v-for="item in enjoyList"
+                    :key="item.id"
+                    class="show_item"
+                  >
+                    <section class="blog-img">
+                      <div class="img-float">
+                        <img
+                          :src="item.firstPicture"
+                          class=""
+                          :alt="item.title"
+                        />
+                      </div>
+                      <div class="show_left">
+                        <div class="title_bolg">
+                          <a :href="'/blog/' + item.id" :title="item.title">{{
+                            item.title
+                          }}</a>
+                        </div>
+                        <div class="item_center">
+                          <span>{{ item.descption }}</span>
+                        </div>
+
+                        <div class="item_bottom">
+                          <a href="">
+                            <span> 作者: {{ item.authorNickname }} </span>
+                          </a>
+                          <span> 浏览: {{ item.viewCount }} </span>
+                          <span>时间: {{ item.gmtCreate }}</span>
+                        </div>
+                      </div>
+                    </section>
+                  </li>
+                </ul>
+                <div class="clear"></div>
+              </article>
+            </div>
+            <el-pagination
+              background
+              layout="prev, pager, next"
+              :page-size="size"
+              :total="total2"
+              @current-change="handleChangeEnjoy"
+            >
+            </el-pagination>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 
 <script>
 import subject from "@/api/subject";
+import ossApi from "@/api/vod";
 import blog from "@/api/blog";
 import Tinymce from "@/components/Tinymce/index";
 import cookie from "js-cookie";
 require("mavon-editor/dist/css/index.css");
 export default {
   components: { Tinymce }, //声明组件
-  layout: "ucenterLayout",
+  layout: "default",
   name: "",
   data() {
     return {
+      blogInfoRules: {
+        title: [{ required: true, message: "请输入博客名称", trigger: "blur" }],
+        subjectId: [
+          { required: true, message: "请选择博客类别", trigger: "blur" },
+        ],
+        mdContent: [
+          { required: true, message: "请输入博客内容", trigger: "blur" },
+        ],
+      },
       markDown: "",
       flagdialog: "1",
+      btnFlag: false,
       blogInfo: {
         title: "",
         subjectId: "", //二级分类id
         subjectParentId: "", //一级分类id
         content: "",
-        firstPicture:
-          "https://underdogedu.oss-cn-beijing.aliyuncs.com/%E7%B4%A0%E6%9D%90/1525939573202.jpg",
-        zsPicture:
-          "https://underdogedu.oss-cn-beijing.aliyuncs.com/%E7%B4%A0%E6%9D%90/88abf95a1dc9325bcb6c3de8001e2e2.jpg",
+        firstPicture: "",
       },
       subjectOneList: [], //一级分类
       subjectTwoList: [], //二级分类
       blogList: [],
       enjoyList: [],
-      BASE_API: "10.1.1.137", // 接口API地址
+      BASE_API: "http://127.0.0.1:8222", // 接口API地址
       uCoin: 0,
       loginInfo: {},
       pageNo1: 1,
@@ -235,50 +300,18 @@ export default {
       size: 5,
       total1: 10,
       total2: 10,
-      markdownOption: {
-        bold: true, // 粗体
-        italic: true, // 斜体
-        header: true, // 标题
-        underline: true, // 下划线
-        strikethrough: true, // 中划线
-        mark: true, // 标记
-        superscript: true, // 上角标
-        subscript: true, // 下角标
-        quote: true, // 引用
-        ol: true, // 有序列表
-        ul: true, // 无序列表
-        link: true, // 链接
-        imagelink: true, // 图片链接
-        code: true, // code
-        table: true, // 表格
-        fullscreen: true, // 全屏编辑
-        readmodel: true, // 沉浸式阅读
-        htmlcode: true, // 展示html源码
-        help: true, // 帮助
-        /* 1.3.5 */
-        undo: true, // 上一步
-        redo: true, // 下一步
-        trash: true, // 清空
-        save: true, // 保存（触发events中的save事件）
-        /* 1.4.2 */
-        navigation: true, // 导航目录
-        /* 2.1.8 */
-        alignleft: true, // 左对齐
-        aligncenter: true, // 居中
-        alignright: true, // 右对齐
-        /* 2.2.1 */
-        subfield: true, // 单双栏模式
-        preview: true, // 预览
-      },
-      handbook: "#### how to use mavonEditor in nuxt.js",
+      firstPictureFlag: false,
     };
   },
   methods: {
     handleSelect(index) {
       this.flagdialog = index;
+      if (index == "2") {
+        this.blogInfo = { subjectId: "", subjectParentId: "" };
+      }
     },
     //点击某个一级分类，出发change显示对应二级分类  value默认为id值
-    subjectLevelOneChanged(value) {
+    subjectLevelOneChanged(value, flag) {
       //遍历所有的分类，包含一级和二级
       for (var i = 0; i < this.subjectOneList.length; i++) {
         //每一个一级分类
@@ -287,16 +320,26 @@ export default {
         if (value === oneSubject.id) {
           //从一级分类中获取所有的二级分类
           this.subjectTwoList = oneSubject.children;
-          this.blogInfo.subjectId = "";
+          if (flag == undefined) {
+            this.blogInfo.subjectId = "";
+          }
         }
       }
     },
-
+    // 自定义图片上传功能
+    async imgAdd(pos, file) {
+      let imgData = new FormData();
+      imgData.append("file", file);
+      const res = await ossApi.ossFile(imgData);
+      this.$refs.md.$img2Url(pos, res.data.data.url);
+    },
+    // md5文档更新触发
     handleMarkDown(value, render) {
-      this.blogInfo.content = render;
+      // this.blogInfo.content = this.$refs.md.d_render;
     },
     // 上传封面成功调用的方法
     handleAvatarSuccess(res, file) {
+      // this.firstPictureFlag = true;
       this.blogInfo.firstPicture = res.data.url;
     },
     // 上传封面成功调用的方法
@@ -307,7 +350,6 @@ export default {
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
       const isLt2M = file.size / 1024 / 1024 < 2;
-
       if (!isJPG) {
         this.$message.error("上传头像图片只能是 JPG 格式!");
       }
@@ -316,6 +358,7 @@ export default {
       }
       return isJPG && isLt2M;
     },
+    //
     handleChangeEnjoy(e) {
       this.pageNo2 = e;
       this.EnjoyBlogList();
@@ -344,13 +387,32 @@ export default {
       });
     },
     saveOrUpdate() {
-      //判断添加还是修该
-      if (!this.blogInfo.id) {
-        //添加
-        this.addblog();
-      } else {
-        this.updateblog();
-      }
+      // 获取html的字段
+      this.blogInfo.content = this.$refs.md.d_render;
+      // 字段检验逻辑
+      this.$refs.blogInfoRef.validate((valid) => {
+        if (valid) {
+          //判断添加还是修改
+          // 如果首图为空，给默认值
+          if (this.$isEmpty(this.blogInfo.firstPicture)) {
+            this.blogInfo.firstPicture =
+              "https://underdogedu.oss-cn-beijing.aliyuncs.com/%E7%B4%A0%E6%9D%90/1525939573202.jpg";
+          }
+          // 如果简介为空，则给一个标题
+          if (this.$isEmpty(this.blogInfo.descption)) {
+            this.blogInfo.descption = this.blogInfo.title;
+          }
+          if (!this.blogInfo.id) {
+            //添加
+            this.addblog();
+          } else {
+            this.updateblog();
+          }
+          window.location.reload();
+        } else {
+          this.$message("字段检验失败");
+        }
+      });
     },
     //添加博客
     addblog() {
@@ -363,9 +425,9 @@ export default {
         cookie.set("underdogedu_ucenter", JSON.stringify(this.loginInfo), {
           domain: "www.feifu.top",
         });
-        location.reload();
       });
     },
+    // 删除文章
     handleDelete(id) {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
@@ -380,7 +442,7 @@ export default {
             type: "success",
             message: "删除成功!",
           });
-          location.reload();
+          this.getBlogByUserId();
         })
         .catch((response) => {
           // 失败
@@ -404,27 +466,31 @@ export default {
           type: "success",
           message: "修该博客信息成功!",
         });
-        location.reload();
       });
     },
+    // 根据用户id获取用户的博客列表
     async getBlogByUserId() {
       const res = await blog.getBlogByUserId(this.pageNo1, this.size);
       this.total1 = res.data.data.list.total;
-      console.log(this.total1);
       this.blogList = res.data.data.list.results;
     },
     handleEdit(id) {
       this.blogInfo.id = id;
       blog.getBlogInfo(id).then((response) => {
         this.blogInfo = response.data.data.eduBlog;
-        console.log(this.blogInfo);
       });
       this.flagdialog = "2";
     },
     async EnjoyBlogList() {
-      const res = await blog.EnjoyBlogList(this.pageNo2, this.size);
+      const res = await blog.EnjoyBlogList(this.pageNo2,5);
       this.enjoyList = res.data.data.list.results;
       this.total2 = res.data.data.list.total;
+    },
+    handleBtnUpdate(item) {
+      this.flagdialog = "2";
+      var str = JSON.stringify(item);
+      this.blogInfo = JSON.parse(str);
+      this.subjectLevelOneChanged(this.blogInfo.subjectParentId, false);
     },
   },
   mounted() {
@@ -437,6 +503,27 @@ export default {
 </script>
 
 <style scoped>
+.fileUplpadStyle {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.coverStyle {
+  width: 100%;
+  height: 132px;
+  box-sizing: border-box;
+  border: 2px dashed #ebebeb;
+  text-align: center;
+  line-height: 132px;
+}
+.coverStyle img {
+  width: 100%;
+  height: 132px;
+}
+.mavonSytle {
+  height: 500px;
+  overflow: scroll;
+}
 .operation {
   margin-left: auto;
 }

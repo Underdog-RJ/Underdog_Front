@@ -1,13 +1,13 @@
 <template>
   <div id="aBlogsList" class="aBlogsList bg-fa of">
     <div class="blogBg">
-      <div>
-        <el-button @click="updateBot">测试</el-button>
+      <div class="navBody">
+        <div class="navTitle">目录</div>
         <ol class="js-toc navStyle"></ol>
       </div>
 
       <!-- /博客详情 开始 -->
-      <section class="container">
+      <section class="container_blog">
         <div class="mt20 c-infor-box">
           <article class="">
             <section class="mr30">
@@ -58,7 +58,11 @@
                         id="contentId"
                         class="course-txt-body js-toc-content"
                       >
-                        <p class="markdown-body" v-html="blogInfo.content"></p>
+                        <p
+                          class="markdown-body"
+                          highlight
+                          v-html="blogInfo.content"
+                        ></p>
                       </div>
                     </div>
                   </div>
@@ -124,7 +128,7 @@
                               />
                             </aside>
                             <div class="of">
-                              <section class="n-reply-wrap">
+                              <!-- <section class="n-reply-wrap">
                                 <fieldset>
                                   <textarea
                                     name=""
@@ -147,7 +151,12 @@
                                     class="lh-reply-btn"
                                   />
                                 </p>
-                              </section>
+                              </section> -->
+                              <emijo-com
+                                :clearBtn="flagInfo"
+                                :parentId="''"
+                                @getDataFromSon="handleCommentFromSon"
+                              ></emijo-com>
                             </div>
                           </li>
                         </ul>
@@ -181,11 +190,126 @@
                                 <p>{{ comment.content }}</p>
                               </div>
                               <div class="of mt5">
+                                <div @click="handleCommentReplay(comment)">
+                                  <i class="el-icon-chat-dot-round"></i>
+                                  <span> 回复 </span>
+                                </div>
                                 <span class="fr"
                                   ><font class="fsize12 c-999 ml5">{{
                                     comment.gmtCreate
                                   }}</font></span
                                 >
+                              </div>
+                              <div>
+                                <div
+                                  :class="
+                                    currentCommentIndex == comment.id
+                                      ? ''
+                                      : 'yincang'
+                                  "
+                                >
+                                  <emijo-com
+                                    :clearBtn="flagInfo"
+                                    :parentId="comment.id"
+                                    :nickname="comment.nickname"
+                                    @getDataFromSon="handleCommentFromSon"
+                                  ></emijo-com>
+                                </div>
+                              </div>
+                              <div
+                                class="sonComment"
+                                v-show="comment.childList.length > 0"
+                              >
+                                <div
+                                  v-for="commentson in comment.childList"
+                                  :key="commentson.id"
+                                >
+                                  <el-row>
+                                    <el-col :span="2">
+                                      <el-avatar
+                                        :size="50"
+                                        :src="commentson.avatar"
+                                      ></el-avatar>
+                                    </el-col>
+                                    <el-col :span="20">
+                                      <div class="of">
+                                        <span class="fl">
+                                          <font class="fsize12 c-blue">
+                                            {{ commentson.nickname }}</font
+                                          >
+                                          <font class="fsize12 c-999 ml5"
+                                            >@{{ commentson.replayName }}</font
+                                          ></span
+                                        >
+                                      </div>
+                                      <div class="noter-txt mt5">
+                                        <p>{{ commentson.content }}</p>
+                                      </div>
+                                      <div class="of mt5">
+                                        <div
+                                          @click="
+                                            handleCommentReplay(commentson)
+                                          "
+                                        >
+                                          <i class="el-icon-chat-dot-round"></i>
+                                          <span> 回复 </span>
+                                        </div>
+                                        <span class="fr"
+                                          ><font class="fsize12 c-999 ml5">{{
+                                            commentson.gmtCreate
+                                          }}</font></span
+                                        >
+                                      </div>
+                                      <div>
+                                        <div
+                                          :class="
+                                            currentCommentIndex == commentson.id
+                                              ? ''
+                                              : 'yincang'
+                                          "
+                                        >
+                                          <emijo-com
+                                            :clearBtn="flagInfo"
+                                            :parentId="comment.id"
+                                            :nickname="commentson.nickname"
+                                            @getDataFromSon="
+                                              handleCommentFromSon
+                                            "
+                                          ></emijo-com>
+                                        </div>
+                                      </div>
+                                    </el-col>
+                                  </el-row>
+                                </div>
+
+                                <!-- 当前有多少条评论 -->
+                                <div v-show="comment.sonTotal > 2">
+                                  <div v-if="!comment.flagShow">
+                                    共{{ comment.sonTotal }}条回复,<span
+                                      class="fontBlue"
+                                      @click="
+                                        handleLookCommentInfo(comment, index)
+                                      "
+                                      >点击查看</span
+                                    >
+                                  </div>
+                                  <div v-if="comment.flagShow">
+                                    <el-pagination
+                                      background
+                                      layout="prev, pager, next"
+                                      :page-size="5"
+                                      :total="comment.sonTotal"
+                                      @current-change="
+                                        handleChangeChildComment(
+                                          $event,
+                                          index,
+                                          comment
+                                        )
+                                      "
+                                    >
+                                    </el-pagination>
+                                  </div>
+                                </div>
                               </div>
                             </li>
                           </ul>
@@ -244,13 +368,42 @@
               </div>
             </section>
           </article>
+          <!-- <li
+            class="emojiList"
+            v-for="(item, index) in emojis"
+            :key="index"
+            @click="handleEmoji(item)"
+          >
+            {{ item.text }}
+          </li> -->
           <div class="clear"></div>
         </div>
       </section>
-      <!-- /博客详情 结束 -->
-      <div class="m-fixed m-right-bottom m-padding">
-        <el-backtop></el-backtop>
+
+      <!-- 右侧按钮 -->
+      <div class="navRight">
+        <div class="navItem">
+          <el-badge :value="12" class="item">
+            <a href="#i-art-comment">
+              <div class="circleBtn">
+                <i class="el-icon-chat-dot-round"></i>
+              </div>
+            </a>
+          </el-badge>
+        </div>
+        <div  class="navItem">
+          <a href="#c-i-tabTitle">
+            <div class="circleBtn">
+              <i class="el-icon-s-promotion"></i>
+            </div>
+          </a>
+        </div>
       </div>
+      <!-- <VueEmoji ref="emoji" @input="onInput"  /> -->
+      <!-- /博客详情 结束 -->
+      <!-- <div class="m-fixed m-right-bottom m-padding">
+        <el-backtop></el-backtop>
+      </div> -->
     </div>
   </div>
 </template>
@@ -262,7 +415,12 @@ import Prism from "prismjs";
 import cookie from "js-cookie";
 import "mavon-editor/dist/css/index.css";
 import $ from "jquery";
+import emijoCom from "@/components/emijoCom";
+// import VueEmoji from 'emoji-vue'
 export default {
+  components: {
+    emijoCom,
+  },
   //和页面异步开始的
   asyncData({ params, error }) {
     return { blogId: params.id };
@@ -284,12 +442,12 @@ export default {
       },
       loginInfo: {},
       test: "sadasd",
+      currentCommentIndex: "",
+      flagInfo: false,
     };
   },
   created() {},
-  // beforeMount() {
-  //   console.log(Prism);
-  // },
+ 
   mounted() {
     this.initCourseInfo();
     this.initComment();
@@ -302,8 +460,59 @@ export default {
     //     .querySelectorAll("code")
     //     .forEach((block) => Prism.highlightElement(block));
   },
-  watch: {},
+  watch: {
+   
+  },
   methods: {
+    async handleCommentFromSon(value) {
+      this.comment.blogId = this.$route.params.id;
+      this.comment.parentId = value.parentId;
+      this.comment.content = value.inputData;
+      if (this.$isEmpty(this.comment.content)) {
+        this.$message("内容不能为空");
+        return;
+      }
+      this.comment.replayName = value.nickname;
+      const res = await comment.addComment(this.comment);
+      if (res.data.code == 20000) {
+        this.$message("发布评论成功,您的评论在最后一页呦！！！");
+
+        // 如果一级评论则直接更新
+        if (this.$isEmpty(this.comment.parentId)) {
+          this.initComment();
+        }
+        // 如果说是二级评论，则找到对应的索引值
+        else {
+          let i = this.data.items.findIndex(
+            (item) => item.id == value.parentId
+          );
+          if (i != -1) {
+            let currentComment = this.data.items[i];
+            currentComment.sonTotal++;
+            if (currentComment.sonTotal > 5) {
+              currentComment.flagShow = true;
+            }
+            if (this.$isEmpty(currentComment.page)) {
+              currentComment.page = 1;
+            }
+            this.handleChangeChildComment(
+              currentComment.page,
+              i,
+              currentComment
+            );
+          } else {
+            this.$message("发布评论失败！！！");
+          }
+        }
+        // 清空内容
+        this.flagInfo = !this.flagInfo;
+      } else {
+        this.$message("发布评论失败！！！");
+      }
+    },
+    handleCommentReplay(comment) {
+      this.currentCommentIndex = comment.id;
+    },
     updateBot() {
       this.test1();
       this.initDir();
@@ -320,7 +529,9 @@ export default {
         // For headings inside relative or absolute positioned containers within content.
         hasInnerContainers: true,
         // 是否需要折叠
-        collapseDepth:100
+        collapseDepth: 100,
+        // 禁止实时滚动
+        disableTocScrollSync: true,
       });
     },
     test1() {
@@ -353,8 +564,32 @@ export default {
         .getPageList(this.$route.params.id, this.page, this.limit)
         .then((response) => {
           this.data = response.data.data;
+          this.data.items.forEach((item) => (item.flagShow = false));
         });
     },
+    // 展开详情
+    async handleLookCommentInfo(comment, index) {
+      if (this.$isEmpty(comment.page)) {
+        comment.page = 1;
+      }
+      const res = await blogApi.commentChild(comment.id, comment.page, 5);
+      if (res.data.code == 20000) {
+        comment.childList = res.data.data.list;
+      }
+      comment.flagShow = true;
+
+      this.$set(this.data.items, index, comment);
+    },
+    // 翻页问题
+    async handleChangeChildComment(e, index, comment) {
+      comment.page = e;
+      const res = await blogApi.commentChild(comment.id, e, 5);
+      if (res.data.code == 20000) {
+        comment.childList = res.data.data.list;
+      }
+      this.$set(this.data.items, index, comment);
+    },
+    // 添加评论
     addComment() {
       this.comment.blogId = this.$route.params.id;
       comment.addComment(this.comment).then((response) => {
@@ -388,6 +623,9 @@ export default {
 
         // console.log(this.blogInfo);
       });
+      setTimeout(() => {
+        this.updateBot();
+      }, 200);
     },
     async handleEnjoy() {
       const res = await blogApi.enjoyBlog(this.blogId);
@@ -397,12 +635,56 @@ export default {
 };
 </script>
 <style scoped>
-.navStyle {
-  width: 500px;
-  height: 500px;
-  overflow: scroll;
+.circleBtn {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  background-color: #fff;
+  text-align: center;
+  line-height: 50px;
+}
+.navRight {
   position: fixed;
+  height: 200px;
+  width: 100px;
+  background: transparent;
+  right: 40px;
+  top: 200px;
+
+}
+.navItem{
+  margin-bottom: 20px;
+}
+
+.navBody {
+  width: 250px;
+  height: 500px;
   background: #fff;
+  padding: 20px 5px 50px 20px;
+  position: fixed;
+  left: 50px;
+  top: 100px;
+  overflow: hidden;
+  border-radius: 20px;
+}
+.navTitle {
+  height: 40px;
+  line-height: 40px;
+  margin-bottom: 5px;
+  font-size: 16px;
+  border-bottom: 1px solid #e4e6eb;
+}
+
+.navStyle {
+  height: inherit;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+  white-space: nowrap;
+}
+
+.toc-list-item {
+  padding: 10px;
 }
 .aBlogsList {
   height: 100%;
