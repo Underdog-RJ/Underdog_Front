@@ -62,5 +62,11 @@ export default {
       method: 'get'
     })
   },
-
+  // 视频
+  getVideoUrlById(id){
+    return request({
+      url: `/eduservice/video/${id}`,
+      method: 'get'
+    })
+  }
 }

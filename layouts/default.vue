@@ -25,6 +25,9 @@
             <router-link to="/living" tag="li" active-class="current">
               <a>直播</a>
             </router-link>
+            <router-link to="/application" tag="li" active-class="current">
+              <a>应用</a>
+            </router-link>
           </ul>
           <!-- / nav -->
           <ul class="h-r-login">
@@ -63,29 +66,20 @@
                 @click="logout()"
                 class="ml5"
                 >退出</a
-              > -->
+              >-->
               <div class="userPopcover">
-                <el-popover
-                  class="popLogin"
-                  placement="bottom"
-                  width="300"
-                  trigger="hover"
-                >
+                <el-popover class="popLogin" placement="bottom" width="300" trigger="hover">
                   <div slot="reference">
                     <div class="loginPop">
                       <div>
-                        <el-avatar
-                          :size="30"
-                          :src="loginInfo.avatar"
-                        ></el-avatar>
+                        <el-avatar :size="30" :src="loginInfo.avatar"></el-avatar>
                       </div>
-                      <span id="userName" style="margin-left: 5px">{{
+                      <span id="userName" style="margin-left: 5px">
+                        {{
                         loginInfo.nickname
-                      }}</span>
-                      <i
-                        class="el-icon-caret-bottom"
-                        style="margin-left: 5px"
-                      ></i>
+                        }}
+                      </span>
+                      <i class="el-icon-caret-bottom" style="margin-left: 5px"></i>
                     </div>
                   </div>
                   <div class="popShow">
@@ -98,25 +92,19 @@
                             margin-left: 5px;
                             cursor: pointer;
                           "
-                        >
-                          进入主页
-                        </div>
+                        >进入主页</div>
                       </div>
 
                       <div class="popUser">
                         <div>
-                          <el-avatar
-                            :size="30"
-                            :src="loginInfo.avatar"
-                          ></el-avatar>
+                          <el-avatar :size="30" :src="loginInfo.avatar"></el-avatar>
                         </div>
-                        <span id="userName" style="margin-left: 5px">{{
+                        <span id="userName" style="margin-left: 5px">
+                          {{
                           loginInfo.nickname
-                        }}</span>
-                        <i
-                          class="el-icon-caret-bottom"
-                          style="margin-left: 5px"
-                        ></i>
+                          }}
+                        </span>
+                        <i class="el-icon-caret-bottom" style="margin-left: 5px"></i>
                       </div>
                     </div>
                     <div class="popContent">
@@ -140,16 +128,14 @@
                         size="small"
                         class="qdStyle"
                         @click="goSign"
-                        >签到</el-button
-                      >
+                      >签到</el-button>
                       <el-button
                         v-else
                         icon="el-icon-s-promotion"
                         size="small"
                         style="border-radius: 10px"
                         type="primary"
-                        >已签到</el-button
-                      >
+                      >已签到</el-button>
                     </div>
                     <!-- <hr style="margin-top: 20px" /> -->
                     <div class="popUserInfo">
@@ -163,9 +149,7 @@
                         <div class="popUserInfoItemPro">
                           <i class="el-icon-user-solid popIcon"></i>账号
                         </div>
-                        <div class="popUserInfoItemText">
-                          {{ loginInfo.id }}
-                        </div>
+                        <div class="popUserInfoItemText">{{ loginInfo.id }}</div>
                       </div>
                       <div class="popUserInfoItem">
                         <div class="popUserInfoItemPro">
@@ -177,9 +161,7 @@
                         <div class="popUserInfoItemPro">
                           <i class="el-icon-coin popIcon"></i>U币
                         </div>
-                        <div class="popUserInfoItemText">
-                          {{ loginInfo.ucoin }}币
-                        </div>
+                        <div class="popUserInfoItemText">{{ loginInfo.ucoin }}币</div>
                       </div>
                       <div class="popUserInfoItem" @click="goSetting">
                         <div class="popUserInfoItemPro">
@@ -191,11 +173,7 @@
                     <div class="popUserInfo">
                       <div class="popUserInfoItem" @click="logout()">
                         <div class="popUserInfoItemPro">
-                          <i
-                            class="el-icon-apple"
-                            style="font-size: 25px; margin-right: 5px"
-                          ></i
-                          >退出登录
+                          <i class="el-icon-apple" style="font-size: 25px; margin-right: 5px"></i>退出登录
                         </div>
                       </div>
                     </div>
@@ -207,13 +185,7 @@
           </ul>
           <aside class="h-r-search">
             <label class="h-r-s-box">
-              <el-input
-                type="text"
-                placeholder="课程，文章,直播..."
-                v-model="searchValue"
-                value
-                @keyup.enter.native="toSearch"
-              ></el-input>
+              <el-input v-model="searchValue"></el-input>
               <button type="submit" class="s-btn" @click="toSearch">
                 <em class="icon18">&nbsp;</em>
               </button>
@@ -235,30 +207,12 @@
       <section class="container">
         <div class="b-foot">
           <div class="footer-bottom">
-            <a
-              style="color: #eee"
-              href="http://www.feifu.top/blog/1401547655095545857"
-              >关于我们</a
-            >
-            <a
-              style="color: #eee"
-              href="http://www.feifu.top/blog/1401549152113946625"
-              >加入我们</a
-            >
-            <a
-              style="color: #eee"
-              href="http://www.feifu.top/blog/1401549759927316481"
-              >联系我们</a
-            >
-            <a
-              style="color: #eee"
-              href="http://www.feifu.top/blog/1401549152113946625"
-              >帮助中心</a
-            >
+            <a style="color: #eee" href="http://www.feifu.top/blog/1401547655095545857">关于我们</a>
+            <a style="color: #eee" href="http://www.feifu.top/blog/1401549152113946625">加入我们</a>
+            <a style="color: #eee" href="http://www.feifu.top/blog/1401549759927316481">联系我们</a>
+            <a style="color: #eee" href="http://www.feifu.top/blog/1401549152113946625">帮助中心</a>
           </div>
-          <div class="footer-show2">
-            Copyright © 上海Underdog网络科技有限公司 豫ICP备2021015032号
-          </div>
+          <div class="footer-show2">Copyright © 上海Underdog网络科技有限公司 豫ICP备2021015032号</div>
           <aside class="footer-show3">
             <section class="gf-tx">
               <!-- <span>
@@ -271,7 +225,7 @@ https://underdogedu.oss-cn-beijing.aliyuncs.com/%E7%B4%A0%E6%9D%90/qrcode_for_gh
                   />
                   <el-button slot="reference">微信</el-button>
                 </el-popover>
-              </span> -->
+              </span>-->
             </section>
             <section class="gf-tx">
               <!-- <span>
@@ -285,7 +239,7 @@ https://underdogedu.oss-cn-beijing.aliyuncs.com/%E7%B4%A0%E6%9D%90/2c6cb9ba7cc69
                   />
                   <el-button slot="reference">B站</el-button>
                 </el-popover>
-              </span> -->
+              </span>-->
             </section>
           </aside>
           <div class="clear"></div>
@@ -326,11 +280,11 @@ export default {
         avatar: "",
         mobile: "",
         nickname: "",
-        sex: "",
+        sex: ""
       },
       code: "",
       userSignFlag: false,
-      countInfo: {},
+      countInfo: {}
     };
   },
   methods: {
@@ -345,7 +299,6 @@ export default {
     async getUserCountInfo() {
       const res = await ucenterApi.getUserCountInfo();
       this.countInfo = res.data.data.countInfo;
-      console.log(this.countInfo);
     },
     goSetting() {
       this.$router.push("/ucenter/shezhi");
@@ -355,7 +308,7 @@ export default {
       this.userSignFlag = res.data.data.flag;
       this.loginInfo = res.data.data.userInfo;
       cookie.set("underdogedu_ucenter", JSON.stringify(this.loginInfo), {
-        domain: "www.feifu.top",
+        domain: "www.feifu.top"
       });
       console.log(this.userSignFlag);
     },
@@ -373,7 +326,6 @@ export default {
         if (userStr) {
           this.getUserCountInfo();
           this.loginInfo = JSON.parse(userStr);
-          console.log(this.loginInfo);
           const res = await ucenterApi.checkSign();
           if (res.data.code == 20000) {
             this.userSignFlag = res.data.data.flag;
@@ -390,12 +342,11 @@ export default {
       if (res.data.code === 20000) {
         this.loginInfo = res.data.data.member;
         this.token = res.data.data.token;
-        console.log(this.loginInfo);
         cookie.set("underdogedu_token", this.token, {
-          domain: "www.feifu.top",
+          domain: "www.feifu.top"
         });
         cookie.set("underdogedu_ucenter", JSON.stringify(this.loginInfo), {
-          domain: "www.feifu.top",
+          domain: "www.feifu.top"
         });
       }
     },
@@ -420,34 +371,35 @@ export default {
         this.loginInfo = res.data.data.userInfo;
         console.log(this.loginInfo);
         cookie.set("underdogedu_ucenter", this.loginInfo, {
-          domain: "localhost",
+          domain: "localhost"
         });
       }
-    },
+    }
   },
   created() {
     this.code = this.$route.query.code;
-
-    if (this.code != null && this.code != "" && this.code != undefined) {
+    if (!this.$isEmpty(this.code)) {
+      console.log(this.code);
       this.thirdLogin(this.code);
     }
   },
   mounted() {
     this.showInfo();
-    this.startFire();
-  },
+    // this.startFire();
+  }
 };
 </script>
 <style>
-
 .commonBg {
-  height: 100%;
+  /* height: 100%;
   z-index: -999;
   background: url(https://npm.elemecdn.com/lql_static@latest/bg/00189.webp)
     no-repeat;
   margin: 0px;
   background-size: 100% 100%;
-  background-attachment: fixed;
+  background-attachment: fixed; */
+  background-color: #eee;
+  min-height: 1000px;
 }
 .popUserInfoItem:hover {
   background-color: #eee;

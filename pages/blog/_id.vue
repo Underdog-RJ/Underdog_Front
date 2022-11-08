@@ -9,28 +9,26 @@
       <!-- /博客详情 开始 -->
       <section class="container_blog">
         <div class="mt20 c-infor-box">
-          <article class="">
+          <article class>
             <section class="mr30">
               <div class="i-box">
                 <div>
-                  <section
-                    id="c-i-tabTitle"
-                    class="c-infor-tabTitle c-tab-title"
-                  >
+                  <section id="c-i-tabTitle" class="c-infor-tabTitle c-tab-title">
                     <a name="c-i" class="current" title="博客详情">博客详情</a>
                   </section>
                 </div>
 
                 <div class="comm-title">
                   <div>
-                    <img src="" alt="" />
+                    <img src alt />
                   </div>
                   <div>
-                    <i class="el-icon-s-custom"></i
-                    >{{ blogInfo.authorNickname }}
+                    <i class="el-icon-s-custom"></i>
+                    {{ blogInfo.authorNickname }}
                   </div>
                   <div>
-                    <i class="el-icon-view"></i>{{ blogInfo.viewCount }}
+                    <i class="el-icon-view"></i>
+                    {{ blogInfo.viewCount }}
                   </div>
                   <div>评论数: {{ blogInfo.viewCount }}</div>
                   <div>最后修改于：{{ blogInfo.gmtModified }}</div>
@@ -43,7 +41,7 @@
                     </h6>
                     <div class="course-txt-body-wrap">
                       <div class="blog_img">
-                        <img :src="blogInfo.firstPicture" alt="" />
+                        <img :src="blogInfo.firstPicture" alt />
                       </div>
                     </div>
                   </div>
@@ -54,15 +52,8 @@
                       <span>博客内容</span>
                     </h6>
                     <div class="course-txt-body-wrap">
-                      <div
-                        id="contentId"
-                        class="course-txt-body js-toc-content"
-                      >
-                        <p
-                          class="markdown-body"
-                          highlight
-                          v-html="blogInfo.content"
-                        ></p>
+                      <div id="contentId" class="course-txt-body js-toc-content">
+                        <p class="markdown-body" highlight v-html="blogInfo.content"></p>
                       </div>
                     </div>
                   </div>
@@ -74,40 +65,23 @@
                     </div>
                     <div>
                       <span>本文链接：</span>
-                      <a href="#"> www.underdogedu.com</a>
+                      <a href="#">www.underdogedu.com</a>
                     </div>
                   </div>
 
-                  <div
-                    style="text-align: center"
-                    v-if="blogInfo.appreciation === true"
-                  >
-                    <el-popover
-                      placement="bottom"
-                      title="打赏"
-                      width="200"
-                      trigger="click"
-                    >
-                      <img
-                        :src="blogInfo.zsPicture"
-                        alt=""
-                        style="height: 75px"
-                      />
-                      <el-button type="primary" slot="reference"
-                        >赞赏</el-button
-                      >
+                  <div style="text-align: center" v-if="blogInfo.appreciation === true">
+                    <el-popover placement="bottom" title="打赏" width="200" trigger="click">
+                      <img :src="blogInfo.zsPicture" alt style="height: 75px" />
+                      <el-button type="primary" slot="reference">赞赏</el-button>
                     </el-popover>
 
-                    <el-button
-                      v-if="flagEnjoy == false"
-                      type="warning"
-                      @click="handleEnjoy"
-                      >收藏</el-button
-                    >
+                    <el-button v-show="flagEnjoy == false" type="warning" @click="handleEnjoy">收藏</el-button>
 
-                    <el-button v-else type="warning" @click="handleRemoveEnjoy"
-                      >取消收藏</el-button
-                    >
+                    <el-button
+                      v-show="flagEnjoy == true"
+                      type="warning"
+                      @click="handleRemoveEnjoy"
+                    >取消收藏</el-button>
                   </div>
 
                   <!-- /博客大纲 -->
@@ -151,7 +125,7 @@
                                     class="lh-reply-btn"
                                   />
                                 </p>
-                              </section> -->
+                              </section>-->
                               <emijo-com
                                 :clearBtn="flagInfo"
                                 :parentId="''"
@@ -161,30 +135,18 @@
                           </li>
                         </ul>
                       </section>
-                      <section class="">
+                      <section class>
                         <section class="question-list lh-bj-list pr">
                           <ul class="pr10">
-                            <li
-                              v-for="(comment, index) in data.items"
-                              v-bind:key="index"
-                            >
+                            <li v-for="(comment, index) in data.items" v-bind:key="index">
                               <aside class="noter-pic">
-                                <img
-                                  width="50"
-                                  height="50"
-                                  class="picImg"
-                                  :src="comment.avatar"
-                                />
+                                <img width="50" height="50" class="picImg" :src="comment.avatar" />
                               </aside>
                               <div class="of">
                                 <span class="fl">
-                                  <font class="fsize12 c-blue">
-                                    {{ comment.nickname }}</font
-                                  >
-                                  <font class="fsize12 c-999 ml5"
-                                    >评论：</font
-                                  ></span
-                                >
+                                  <font class="fsize12 c-blue">{{ comment.nickname }}</font>
+                                  <font class="fsize12 c-999 ml5">评论：</font>
+                                </span>
                               </div>
                               <div class="noter-txt mt5">
                                 <p>{{ comment.content }}</p>
@@ -192,13 +154,15 @@
                               <div class="of mt5">
                                 <div @click="handleCommentReplay(comment)">
                                   <i class="el-icon-chat-dot-round"></i>
-                                  <span> 回复 </span>
+                                  <span>回复</span>
                                 </div>
-                                <span class="fr"
-                                  ><font class="fsize12 c-999 ml5">{{
+                                <span class="fr">
+                                  <font class="fsize12 c-999 ml5">
+                                    {{
                                     comment.gmtCreate
-                                  }}</font></span
-                                >
+                                    }}
+                                  </font>
+                                </span>
                               </div>
                               <div>
                                 <div
@@ -216,31 +180,20 @@
                                   ></emijo-com>
                                 </div>
                               </div>
-                              <div
-                                class="sonComment"
-                                v-show="comment.childList.length > 0"
-                              >
-                                <div
-                                  v-for="commentson in comment.childList"
-                                  :key="commentson.id"
-                                >
+                              <div class="sonComment" v-show="comment.childList.length > 0">
+                                <div v-for="commentson in comment.childList" :key="commentson.id">
                                   <el-row>
                                     <el-col :span="2">
-                                      <el-avatar
-                                        :size="50"
-                                        :src="commentson.avatar"
-                                      ></el-avatar>
+                                      <el-avatar :size="50" :src="commentson.avatar"></el-avatar>
                                     </el-col>
                                     <el-col :span="20">
                                       <div class="of">
                                         <span class="fl">
-                                          <font class="fsize12 c-blue">
-                                            {{ commentson.nickname }}</font
-                                          >
-                                          <font class="fsize12 c-999 ml5"
-                                            >@{{ commentson.replayName }}</font
-                                          ></span
-                                        >
+                                          <font class="fsize12 c-blue">{{ commentson.nickname }}</font>
+                                          <font
+                                            class="fsize12 c-999 ml5"
+                                          >@{{ commentson.replayName }}</font>
+                                        </span>
                                       </div>
                                       <div class="noter-txt mt5">
                                         <p>{{ commentson.content }}</p>
@@ -252,13 +205,15 @@
                                           "
                                         >
                                           <i class="el-icon-chat-dot-round"></i>
-                                          <span> 回复 </span>
+                                          <span>回复</span>
                                         </div>
-                                        <span class="fr"
-                                          ><font class="fsize12 c-999 ml5">{{
+                                        <span class="fr">
+                                          <font class="fsize12 c-999 ml5">
+                                            {{
                                             commentson.gmtCreate
-                                          }}</font></span
-                                        >
+                                            }}
+                                          </font>
+                                        </span>
                                       </div>
                                       <div>
                                         <div
@@ -285,13 +240,13 @@
                                 <!-- 当前有多少条评论 -->
                                 <div v-show="comment.sonTotal > 2">
                                   <div v-if="!comment.flagShow">
-                                    共{{ comment.sonTotal }}条回复,<span
+                                    共{{ comment.sonTotal }}条回复,
+                                    <span
                                       class="fontBlue"
                                       @click="
                                         handleLookCommentInfo(comment, index)
                                       "
-                                      >点击查看</span
-                                    >
+                                    >点击查看</span>
                                   </div>
                                   <div v-if="comment.flagShow">
                                     <el-pagination
@@ -306,8 +261,7 @@
                                           comment
                                         )
                                       "
-                                    >
-                                    </el-pagination>
+                                    ></el-pagination>
                                   </div>
                                 </div>
                               </div>
@@ -324,15 +278,13 @@
                           href="#"
                           title="首页"
                           @click.prevent="gotoPage(1)"
-                          >首</a
-                        >
+                        >首</a>
                         <a
                           :class="{ undisable: !data.hasPrevious }"
                           href="#"
                           title="前一页"
                           @click.prevent="gotoPage(data.current - 1)"
-                          >&lt;</a
-                        >
+                        >&lt;</a>
                         <a
                           v-for="page in data.pages"
                           :key="page"
@@ -343,22 +295,19 @@
                           :title="'第' + page + '页'"
                           href="#"
                           @click.prevent="gotoPage(page)"
-                          >{{ page }}</a
-                        >
+                        >{{ page }}</a>
                         <a
                           :class="{ undisable: !data.hasNext }"
                           href="#"
                           title="后一页"
                           @click.prevent="gotoPage(data.current + 1)"
-                          >&gt;</a
-                        >
+                        >&gt;</a>
                         <a
                           :class="{ undisable: !data.hasNext }"
                           href="#"
                           title="末页"
                           @click.prevent="gotoPage(data.pages)"
-                          >末</a
-                        >
+                        >末</a>
                         <div class="clear" />
                       </div>
                       <!-- 公共分页 结束 -->
@@ -375,7 +324,7 @@
             @click="handleEmoji(item)"
           >
             {{ item.text }}
-          </li> -->
+          </li>-->
           <div class="clear"></div>
         </div>
       </section>
@@ -391,7 +340,7 @@
             </a>
           </el-badge>
         </div>
-        <div  class="navItem">
+        <div class="navItem">
           <a href="#c-i-tabTitle">
             <div class="circleBtn">
               <i class="el-icon-s-promotion"></i>
@@ -403,7 +352,7 @@
       <!-- /博客详情 结束 -->
       <!-- <div class="m-fixed m-right-bottom m-padding">
         <el-backtop></el-backtop>
-      </div> -->
+      </div>-->
     </div>
   </div>
 </template>
@@ -419,7 +368,7 @@ import emijoCom from "@/components/emijoCom";
 // import VueEmoji from 'emoji-vue'
 export default {
   components: {
-    emijoCom,
+    emijoCom
   },
   //和页面异步开始的
   asyncData({ params, error }) {
@@ -429,29 +378,33 @@ export default {
     return {
       data: {},
       page: 1,
-      flagEnjoy: true,
+      flagEnjoy: false,
       limit: 4,
       total: 10,
       blogInfo: {
-        type: 1,
+        type: 1
       },
       blogId: "",
       comment: {
         content: "",
-        blogId: "",
+        blogId: ""
       },
       loginInfo: {},
       test: "sadasd",
       currentCommentIndex: "",
-      flagInfo: false,
+      flagInfo: false
     };
   },
   created() {},
- 
+
   mounted() {
-    this.initCourseInfo();
+    this.initBlogInfo();
     this.initComment();
-    this.initEnjoy();
+    var userStr = cookie.get("underdogedu_ucenter");
+    if (!this.$isEmpty(userStr)) {
+      this.initEnjoy();
+    }
+
     this.initDir();
   },
   updated() {
@@ -460,9 +413,7 @@ export default {
     //     .querySelectorAll("code")
     //     .forEach((block) => Prism.highlightElement(block));
   },
-  watch: {
-   
-  },
+  watch: {},
   methods: {
     async handleCommentFromSon(value) {
       this.comment.blogId = this.$route.params.id;
@@ -483,9 +434,7 @@ export default {
         }
         // 如果说是二级评论，则找到对应的索引值
         else {
-          let i = this.data.items.findIndex(
-            (item) => item.id == value.parentId
-          );
+          let i = this.data.items.findIndex(item => item.id == value.parentId);
           if (i != -1) {
             let currentComment = this.data.items[i];
             currentComment.sonTotal++;
@@ -531,7 +480,7 @@ export default {
         // 是否需要折叠
         collapseDepth: 100,
         // 禁止实时滚动
-        disableTocScrollSync: true,
+        disableTocScrollSync: true
       });
     },
     test1() {
@@ -553,6 +502,7 @@ export default {
     async initEnjoy() {
       const res = await blogApi.IsEnjoyBlog(this.blogId);
       this.flagEnjoy = res.data.data.flag;
+      console.log(this.flagEnjoy);
     },
     async handleRemoveEnjoy() {
       const res = await blogApi.RemoveEnjoyBlog(this.blogId);
@@ -562,9 +512,9 @@ export default {
     initComment() {
       comment
         .getPageList(this.$route.params.id, this.page, this.limit)
-        .then((response) => {
+        .then(response => {
           this.data = response.data.data;
-          this.data.items.forEach((item) => (item.flagShow = false));
+          this.data.items.forEach(item => (item.flagShow = false));
         });
     },
     // 展开详情
@@ -592,13 +542,13 @@ export default {
     // 添加评论
     addComment() {
       this.comment.blogId = this.$route.params.id;
-      comment.addComment(this.comment).then((response) => {
+      comment.addComment(this.comment).then(response => {
         if (response.data.success) {
           this.comment.content = "";
           this.initComment();
           this.loginInfo = response.data.data.userInfo;
           cookie.set("underdogedu_ucenter", JSON.stringify(this.loginInfo), {
-            domain: "www.feifu.top",
+            domain: "www.feifu.top"
           });
           location.reload();
         }
@@ -607,14 +557,14 @@ export default {
     gotoPage(page) {
       comment
         .getPageList(this.$route.params.id, page, this.limit)
-        .then((response) => {
+        .then(response => {
           this.data = response.data.data;
         });
     },
     //查询博客详情信息
-    initCourseInfo() {
+    initBlogInfo() {
       console.log(this.blogId);
-      blogApi.getBlogInfo(this.blogId).then((response) => {
+      blogApi.getBlogInfo(this.blogId).then(response => {
         this.blogInfo = response.data.data.eduBlog;
         // process.browser &&
         //   document
@@ -628,10 +578,15 @@ export default {
       }, 200);
     },
     async handleEnjoy() {
-      const res = await blogApi.enjoyBlog(this.blogId);
-      this.flagEnjoy = true;
-    },
-  },
+      var userStr = cookie.get("underdogedu_ucenter");
+      if (this.$isEmpty(userStr)) {
+        this.$message.success("请先登录后收藏");
+      } else {
+        const res = await blogApi.enjoyBlog(this.blogId);
+        this.flagEnjoy = true;
+      }
+    }
+  }
 };
 </script>
 <style scoped>
@@ -650,14 +605,13 @@ export default {
   background: transparent;
   right: 40px;
   top: 200px;
-
 }
-.navItem{
+.navItem {
   margin-bottom: 20px;
 }
 
 .navBody {
-  width: 250px;
+  width: 350px;
   height: 500px;
   background: #fff;
   padding: 20px 5px 50px 20px;

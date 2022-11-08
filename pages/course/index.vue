@@ -124,7 +124,7 @@
                     </div>
                   </section>
                   <div class="itemBottom">
-                    <h3 class="hLh20 txtOf mt10">
+                    <h3 class="hLh20 txtOf">
                       <a
                         :href="'/course/' + item.id"
                         :title="item.title"
@@ -132,7 +132,7 @@
                         >{{ item.title }}</a
                       >
                     </h3>
-                    <section class="mt10 hLh20 of">
+                    <section class=" hLh20 of">
                       <span
                         v-if="Number(item.price) === 0"
                         class="fr jgTag bg-green"

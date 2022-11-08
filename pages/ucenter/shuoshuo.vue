@@ -97,10 +97,9 @@ export default {
     //初始化说说
     initshuoshuo() {
       shuoshuo.getPageList(1, this.limit, this.id).then(response => {
-        console.log("id是" + this.id);
         this.data = response.data.data;
-        console.log("pages" + this.data.pages);
       });
+      
     },
     gotoPage(page) {
       shuoshuo.getPageList(page, this.limit, this.id).then(response => {

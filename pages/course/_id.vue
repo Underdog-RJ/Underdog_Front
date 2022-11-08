@@ -1,17 +1,15 @@
 <template>
-  <div
-    id="aCoursesList"
-    class="bg-fa of"
-    v-loading.fullscreen.lock="fullscreenLoading"
-  >
+  <div id="aCoursesList" class="bg-fa of" v-loading.fullscreen.lock="fullscreenLoading">
     <!-- /课程详情 开始 -->
     <section class="container">
       <section class="path-wrap txtOf hLh30">
         <a href="#" title class="c-999 fsize14">首页</a>
         \
-        <a href="#" title class="c-999 fsize14">{{
+        <a href="#" title class="c-999 fsize14">
+          {{
           courseWebVo.subjectLevelOne
-        }}</a>
+          }}
+        </a>
         \
         <span class="c-333 fsize14">{{ courseWebVo.subjectLevelTwo }}</span>
       </section>
@@ -30,20 +28,18 @@
         <aside class="c-attr-wrap">
           <section class="ml20 mr15">
             <h2 class="hLh30 txtOf mt15">
-              <span class="c-fff fsize24" style="text-align: center">{{
+              <span class="c-fff fsize24" style="text-align: center">
+                {{
                 courseWebVo.title
-              }}</span>
+                }}
+              </span>
             </h2>
             <section class="c-attr-jg">
               <span class="c-fff">价格：</span>
-              <b class="c-yellow" style="font-size: 24px"
-                >￥{{ courseWebVo.price }}</b
-              >
+              <b class="c-yellow" style="font-size: 24px">￥{{ courseWebVo.price }}</b>
             </section>
             <section class="c-attr-mt c-attr-undis">
-              <span class="c-fff fsize14"
-                >主讲： {{ courseWebVo.teacherName }}&nbsp;&nbsp;&nbsp;</span
-              >
+              <span class="c-fff fsize14">主讲： {{ courseWebVo.teacherName }}&nbsp;&nbsp;&nbsp;</span>
             </section>
             <section class="c-attr-mt of">
               <span class="ml10 vam">
@@ -51,30 +47,14 @@
                   <em v-if="this.flag == 0" class="icon18 scIcon"></em>
                   <em v-else class="icon18 sc-end"></em>
                 </span>
-                <a @click="setCollect" class="c-fff vam" title="收藏" href="#"
-                  >收藏</a
-                >
+                <a @click="setCollect" class="c-fff vam" title="收藏" href="#">收藏</a>
               </span>
             </section>
-            <section
-              class="c-attr-mt"
-              v-if="isBuy || Number(courseWebVo.price) === 0"
-            >
-              <a
-                :href="'/player/' + courseId"
-                title="立即观看"
-                class="comm-btn c-btn-3"
-                >立即观看</a
-              >
+            <section class="c-attr-mt" v-if="isBuy || Number(courseWebVo.price) === 0">
+              <a :href="'/player/' + courseId" title="立即观看" class="comm-btn c-btn-3">立即观看</a>
             </section>
             <section class="c-attr-mt" v-else>
-              <a
-                @click="createOrders()"
-                href="#"
-                title="立即购买"
-                class="comm-btn c-btn-3"
-                >立即购买</a
-              >
+              <a @click="createOrders()" href="#" title="立即购买" class="comm-btn c-btn-3">立即购买</a>
             </section>
           </section>
         </aside>
@@ -126,9 +106,7 @@
                   </h6>
                   <div class="course-txt-body-wrap">
                     <section class="course-txt-body">
-                      <p v-html="courseWebVo.description">
-                        {{ courseWebVo.description }}
-                      </p>
+                      <p v-html="courseWebVo.description">{{ courseWebVo.description }}</p>
                     </section>
                   </div>
                 </div>
@@ -147,13 +125,9 @@
                             v-for="chapter in chapterVideoList"
                             :key="chapter.id"
                           >
-                            <a
-                              href="javascript: void(0)"
-                              :title="chapter.title"
-                              class="current-1"
-                            >
-                              <em class="lh-menu-i-1 icon18 mr10"></em
-                              >{{ chapter.title }}
+                            <a href="javascript: void(0)" :title="chapter.title" class="current-1">
+                              <em class="lh-menu-i-1 icon18 mr10"></em>
+                              {{ chapter.title }}
                             </a>
                             <ol class="lh-menu-ol" style="display: block">
                               <li
@@ -163,8 +137,8 @@
                               >
                                 <!--target="_blank"在新的页面打开-->
 
-                                <em class="lh-menu-i-2 icon16 mr5">&nbsp;</em
-                                >{{ video.title }}
+                                <em class="lh-menu-i-2 icon16 mr5">&nbsp;</em>
+                                {{ video.title }}
                               </li>
                             </ol>
                           </li>
@@ -257,7 +231,7 @@
                           </li>
                         </ul>
                       </section>
-                    </section> -->
+                    </section>-->
 
                     <section class="lh-bj-list pr mt20 replyhtml">
                       <ul>
@@ -280,30 +254,18 @@
                         </li>
                       </ul>
                     </section>
-                    <section class="">
+                    <section class>
                       <section class="question-list lh-bj-list pr">
                         <ul class="pr10">
-                          <li
-                            v-for="(comment, index) in data.items"
-                            v-bind:key="index"
-                          >
+                          <li v-for="(comment, index) in data.items" v-bind:key="index">
                             <aside class="noter-pic">
-                              <img
-                                width="50"
-                                height="50"
-                                class="picImg"
-                                :src="comment.avatar"
-                              />
+                              <img width="50" height="50" class="picImg" :src="comment.avatar" />
                             </aside>
                             <div class="of">
                               <span class="fl">
-                                <font class="fsize12 c-blue">
-                                  {{ comment.nickname }}</font
-                                >
-                                <font class="fsize12 c-999 ml5"
-                                  >评论：</font
-                                ></span
-                              >
+                                <font class="fsize12 c-blue">{{ comment.nickname }}</font>
+                                <font class="fsize12 c-999 ml5">评论：</font>
+                              </span>
                             </div>
                             <div class="noter-txt mt5">
                               <p>{{ comment.content }}</p>
@@ -316,10 +278,7 @@
                                     <span>回复</span>
                                   </div>
                                 </el-col>
-                                <el-col
-                                  :span="3"
-                                  v-show="userId == comment.memberId"
-                                >
+                                <el-col :span="3" v-show="userId == comment.memberId">
                                   <el-popconfirm
                                     @confirm="handleDeleteId(comment)"
                                     title="删除评论后，评论下所有回复都会被删除是否继续？"
@@ -332,11 +291,13 @@
                                 </el-col>
                               </el-row>
 
-                              <span class="fr"
-                                ><font class="fsize12 c-999 ml5">{{
+                              <span class="fr">
+                                <font class="fsize12 c-999 ml5">
+                                  {{
                                   comment.gmtCreate
-                                }}</font></span
-                              >
+                                  }}
+                                </font>
+                              </span>
                             </div>
                             <div>
                               <div
@@ -354,31 +315,18 @@
                                 ></emijo-com>
                               </div>
                             </div>
-                            <div
-                              class="sonComment"
-                              v-show="comment.childList.length > 0"
-                            >
-                              <div
-                                v-for="commentson in comment.childList"
-                                :key="commentson.id"
-                              >
+                            <div class="sonComment" v-show="comment.childList.length > 0">
+                              <div v-for="commentson in comment.childList" :key="commentson.id">
                                 <el-row>
                                   <el-col :span="2">
-                                    <el-avatar
-                                      :size="50"
-                                      :src="commentson.avatar"
-                                    ></el-avatar>
+                                    <el-avatar :size="50" :src="commentson.avatar"></el-avatar>
                                   </el-col>
                                   <el-col :span="20">
                                     <div class="of">
                                       <span class="fl">
-                                        <font class="fsize12 c-blue">
-                                          {{ commentson.nickname }}</font
-                                        >
-                                        <font class="fsize12 c-999 ml5"
-                                          >@{{ commentson.replayName }}</font
-                                        ></span
-                                      >
+                                        <font class="fsize12 c-blue">{{ commentson.nickname }}</font>
+                                        <font class="fsize12 c-999 ml5">@{{ commentson.replayName }}</font>
+                                      </span>
                                     </div>
                                     <div class="noter-txt mt5">
                                       <p>{{ commentson.content }}</p>
@@ -391,9 +339,7 @@
                                               handleCommentReplay(commentson)
                                             "
                                           >
-                                            <i
-                                              class="el-icon-chat-dot-round"
-                                            ></i>
+                                            <i class="el-icon-chat-dot-round"></i>
                                             <span>回复</span>
                                           </div>
                                         </el-col>
@@ -412,11 +358,13 @@
                                         </el-col>
                                       </el-row>
 
-                                      <span class="fr"
-                                        ><font class="fsize12 c-999 ml5">{{
+                                      <span class="fr">
+                                        <font class="fsize12 c-999 ml5">
+                                          {{
                                           commentson.gmtCreate
-                                        }}</font></span
-                                      >
+                                          }}
+                                        </font>
+                                      </span>
                                     </div>
                                     <div>
                                       <div
@@ -441,13 +389,13 @@
                               <!-- 当前有多少条评论 -->
                               <div v-show="comment.sonTotal > 2">
                                 <div v-if="!comment.flagShow">
-                                  共{{ comment.sonTotal }}条回复,<span
+                                  共{{ comment.sonTotal }}条回复,
+                                  <span
                                     class="fontBlue"
                                     @click="
                                       handleLookCommentInfo(comment, index)
                                     "
-                                    >点击查看</span
-                                  >
+                                  >点击查看</span>
                                 </div>
                                 <div v-if="comment.flagShow">
                                   <el-pagination
@@ -462,8 +410,7 @@
                                         comment
                                       )
                                     "
-                                  >
-                                  </el-pagination>
+                                  ></el-pagination>
                                 </div>
                               </div>
                             </div>
@@ -480,15 +427,13 @@
                         href="#"
                         title="首页"
                         @click.prevent="gotoPage(1)"
-                        >首</a
-                      >
+                      >首</a>
                       <a
                         :class="{ undisable: !data.hasPrevious }"
                         href="#"
                         title="前一页"
                         @click.prevent="gotoPage(data.current - 1)"
-                        >&lt;</a
-                      >
+                      >&lt;</a>
                       <a
                         v-for="page in data.pages"
                         :key="page"
@@ -499,22 +444,19 @@
                         :title="'第' + page + '页'"
                         href="#"
                         @click.prevent="gotoPage(page)"
-                        >{{ page }}</a
-                      >
+                      >{{ page }}</a>
                       <a
                         :class="{ undisable: !data.hasNext }"
                         href="#"
                         title="后一页"
                         @click.prevent="gotoPage(data.current + 1)"
-                        >&gt;</a
-                      >
+                      >&gt;</a>
                       <a
                         :class="{ undisable: !data.hasNext }"
                         href="#"
                         title="末页"
                         @click.prevent="gotoPage(data.pages)"
-                        >末</a
-                      >
+                      >末</a>
                       <div class="clear" />
                     </div>
                     <!-- 公共分页 结束 -->
@@ -538,12 +480,7 @@
                   <li>
                     <div class="u-face">
                       <a href="#">
-                        <img
-                          :src="courseWebVo.avatar"
-                          width="50"
-                          height="50"
-                          alt
-                        />
+                        <img :src="courseWebVo.avatar" width="50" height="50" alt />
                       </a>
                     </div>
                     <section class="hLh30 txtOf">
@@ -576,7 +513,7 @@ import cookie from "js-cookie";
 import emijoCom from "@/components/emijoCom";
 export default {
   components: {
-    emijoCom,
+    emijoCom
   },
   //和页面异步开始的
   asyncData({ params, error }) {
@@ -590,7 +527,7 @@ export default {
       total: 10,
       comment: {
         content: "",
-        courseId: "",
+        courseId: ""
       },
       userId: "1",
       flag: 0,
@@ -602,15 +539,18 @@ export default {
       loginInfo: {},
       currentCommentIndex: "",
       flagInfo: false,
-      fullscreenLoading: true,
+      fullscreenLoading: true
     };
   },
-  created() {},
+  created() {
+  },
   mounted() {
     var userStr = cookie.get("underdogedu_ucenter");
+    if (this.$isEmpty(userStr)) {
+      window.location.href = "/login";
+    }
     let userInfo = JSON.parse(userStr);
     this.userId = userInfo.id;
-    console.log(this.userId);
     this.initComment();
     this.initCourseInfo();
     this.isCollect();
@@ -627,8 +567,7 @@ export default {
         this.initComment();
       } else {
         // debugger
-        console.log(this.data.items[0]);
-        let i = this.data.items.findIndex((item) => (item.id = comment.id));
+        let i = this.data.items.findIndex(item => (item.id = comment.id));
         if (i == -1) {
           this.$message("删除评论失败！！！");
           return;
@@ -641,7 +580,6 @@ export default {
         if (totalPage < comment.page) {
           comment.page = totalPage == 0 ? 1 : totalPage;
         }
-        console.log(this.data.items[i])
         this.handleChangeChildComment(comment.page, i, this.data.items[i]);
       }
     },
@@ -658,16 +596,13 @@ export default {
       const res = await comment.addComment(this.comment);
       if (res.data.code == 20000) {
         this.$message("发布评论成功,您的评论在最后一页呦！！！");
-
         // 如果一级评论则直接更新
         if (this.$isEmpty(this.comment.parentId)) {
           this.initComment();
         }
         // 如果说是二级评论，则找到对应的索引值
         else {
-          let i = this.data.items.findIndex(
-            (item) => item.id == value.parentId
-          );
+          let i = this.data.items.findIndex(item => item.id == value.parentId);
           if (i != -1) {
             let currentComment = this.data.items[i];
             currentComment.sonTotal++;
@@ -698,7 +633,7 @@ export default {
 
     //查询课程详情信息
     initCourseInfo() {
-      courseApi.getCourseInfo(this.courseId).then((response) => {
+      courseApi.getCourseInfo(this.courseId).then(response => {
         this.courseWebVo = response.data.data.courseWebVo;
         this.chapterVideoList = response.data.data.chapterVideoList;
         this.isBuy = response.data.data.isBuy;
@@ -708,10 +643,8 @@ export default {
     initComment() {
       comment
         .getPageList(this.$route.params.id, this.page, this.limit)
-        .then((response) => {
+        .then(response => {
           this.data = response.data.data;
-         console.log(this.data.items[0]);
-
         });
     },
     // 展开详情
@@ -739,46 +672,44 @@ export default {
     addComment() {
       this.comment.courseId = this.$route.params.id;
       this.comment.teacherId = this.courseWebVo.teacherId;
-      comment.addComment(this.comment).then((response) => {
+      comment.addComment(this.comment).then(response => {
         if (response.data.success) {
           this.comment.content = "";
           this.initComment();
-          this.loginInfo = response.data.data.userInfo;
-          cookie.set("underdogedu_ucenter", JSON.stringify(this.loginInfo), {
-            domain: "www.feifu.top",
-          });
-          location.reload();
+          // this.loginInfo = response.data.data.userInfo;
+          // cookie.set("underdogedu_ucenter", JSON.stringify(this.loginInfo), {
+          //   domain: "www.feifu.top"
+          // });
+          // location.reload();
         }
       });
     },
     gotoPage(page) {
       comment
         .getPageList(this.$route.params.id, page, this.limit)
-        .then((response) => {
+        .then(response => {
           this.data = response.data.data;
         });
     },
     setCollect() {
-      courseApi
-        .setCollect(this.$route.params.id, this.flag)
-        .then((response) => {
-          this.isCollect();
-        });
+      courseApi.setCollect(this.$route.params.id, this.flag).then(response => {
+        this.isCollect();
+      });
     },
     isCollect() {
-      courseApi.isCollect(this.$route.params.id).then((response) => {
+      courseApi.isCollect(this.$route.params.id).then(response => {
         this.flag = response.data.data.flag;
       });
     },
 
     //生成订单
     createOrders() {
-      ordersApi.createOrders(this.courseId).then((response) => {
+      ordersApi.createOrders(this.courseId).then(response => {
         //返回的订单号
         //生成订单之后。添砖订单显示页面
         this.$router.push({ path: "/orders/" + response.data.data.orderId });
       });
-    },
-  },
+    }
+  }
 };
 </script>

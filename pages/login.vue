@@ -115,10 +115,10 @@ export default {
   methods: {
     // 本地测试先改为Localhost,服务器改为  域名
     submitLogin() {
-      this.$refs.userForm.validate((valid) => {
+      this.$refs.userForm.validate(async (valid) => {
         if (valid) {
           loginApi.submitLogin(this.user).then((response) => {
-            if (response.data.code == 20000) {
+            if (response.data.success) {
               cookie.set("underdogedu_token", response.data.data.token, {
                 domain: "www.feifu.top",
               });

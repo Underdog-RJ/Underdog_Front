@@ -162,7 +162,7 @@ export default {
     return {
       page: 1, //当前页
       data: {}, //课程列表
-      subjectNestedList: [], // 一级分类列表
+      subjectNestedList: [ ], // 一级分类列表
       subSubjectList: [], // 二级分类列表
       searchObj: {}, // 查询表单对象
       oneIndex: -1,
@@ -180,19 +180,21 @@ export default {
     this.initBlogFirst();
     //一级分类额显示
     this.initSubject();
+    // this.searchOne(0,0)
   },
   methods: {
     //1.查询第一页数据
     initBlogFirst() {
       blogApi.getBlogList(1, 8, this.searchObj).then(response => {
         this.data = response.data.data;
-        console.log(this.data);
+   
       });
     },
     //2查询所有的分类
     initSubject() {
       blogApi.getAllSubject().then(response => {
         this.subjectNestedList = response.data.data.list;
+   
       });
     },
     //分页切换的方法
@@ -203,6 +205,7 @@ export default {
     },
     //点击某个一级分类，查询对应的二级分类
     searchOne(subjectParentId, index) {
+      console.log(subjectParentId,index)
       //把传递index值赋值给oneIndex为了active样式生效
       this.oneIndex = index;
 

@@ -9,7 +9,9 @@ a:hover, .color81 a:hover, .color81 a.cur {color: #000}
 a.red {color: #ff4a56;}
 a.red:hover {color: #950b11;}
 .color81, .color81 a {color:#818181;}
-
+.video-js{
+  height: 900px !important;
+}
 /* 日历 */
 .el-calendar__body {
   padding: 0px !important;
@@ -62,7 +64,7 @@ button,input[type="button"]  {color:#FFF;background-color: #00baf2;line-height: 
 button:hover,input[type="button"]:hover {opacity: .9;}
 img {border:none;}
 body  {text-align: left;background-color: #eee;
-	cursor: url(https://s4.ax1x.com/2021/12/08/oW3lmq.png), default;
+	/* cursor: url(https://s4.ax1x.com/2021/12/08/oW3lmq.png), default; */
 
 }
 body{color: #424242;font-size:14px;line-height:1.75;background:#FFF;min-width: 1230px;}
