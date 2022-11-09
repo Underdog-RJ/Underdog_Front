@@ -86,8 +86,8 @@ export default {
     };
   },
   mounted() {
-    this.initCourseInfo();
-    console.log(this.vid);
+    
+    
   },
   methods: {
     async ToLook(video, index,PIndex) {
@@ -112,10 +112,12 @@ export default {
       const res = await courseApi.getCourseInfo(this.courseId);
       this.courseWebVo = res.data.data.courseWebVo;
       this.chapterVideoList = res.data.data.chapterVideoList;
+
     }
   },
   mounted() {
     //页面渲染之后
+    this.initCourseInfo();
     console.log(this.vid);
     // this.player = new Aliplayer(
     //   {
