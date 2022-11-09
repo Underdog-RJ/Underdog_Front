@@ -212,7 +212,7 @@ export default {
       messageList: [],
       userAvatar: "",
       friendAvatar: "",
-      path: "10.1.1.160:11010/ws",
+      path: "ws://10.1.1.160:11010/ws",
       socket: {},
       message: {
         type: 0,
@@ -236,7 +236,6 @@ export default {
       //把字符串转换成json对象(js对象)
       if (userStr) {
         this.userInfo = JSON.parse(userStr);
-        console.log("mounted")
       }
     this.userId = this.userInfo.id;
     this.userAvatar = this.userInfo.avatar;
@@ -333,7 +332,6 @@ export default {
       } else {
         // 实例化socket
         var socket = new WebSocket(this.path);
-        console.log("saas"+socket);
         this.socket = socket;
         socket.onopen = res => {
           console.log("连接建立成功");

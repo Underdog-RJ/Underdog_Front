@@ -132,7 +132,7 @@
   >
      <img src="
 https://underdogedu.oss-cn-beijing.aliyuncs.com/%E7%B4%A0%E6%9D%90/qrcode_for_gh_6ecad3479e5f_258.jpg" alt="" style="height:200px">
-    <el-button slot="reference">微信</el-button>
+    <!-- <el-button slot="reference">微信</el-button> -->
   </el-popover>
               </span>
             </section>
@@ -147,7 +147,7 @@ https://underdogedu.oss-cn-beijing.aliyuncs.com/%E7%B4%A0%E6%9D%90/qrcode_for_gh
    <img src="
 
 https://underdogedu.oss-cn-beijing.aliyuncs.com/%E7%B4%A0%E6%9D%90/2c6cb9ba7cc69cfb242b973b742e1ca.jpg" alt="" style="height:200px">
-    <el-button slot="reference">B站</el-button>
+    <!-- <el-button slot="reference">B站</el-button> -->
   </el-popover>
               </span>
             </section>
