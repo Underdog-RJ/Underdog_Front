@@ -212,7 +212,7 @@ export default {
       messageList: [],
       userAvatar: "",
       friendAvatar: "",
-      path: "10.1.1.137:11010/ws",
+      path: "10.1.1.160:11010/ws",
       socket: {},
       message: {
         type: 0,
