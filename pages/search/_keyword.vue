@@ -6,7 +6,9 @@
           <!-- 搜索框 -->
           <el-row>
             <el-col :offset="2" :span="18">
-              <el-input v-model="inputValue"></el-input>
+              <el-input v-model="inputValue"  
+              @keyup.enter.native="hanleSearchBtn" 
+              ></el-input>
             </el-col>
             <el-col :span="2">
               <div class="searchButton" @click="hanleSearchBtn">搜索</div>

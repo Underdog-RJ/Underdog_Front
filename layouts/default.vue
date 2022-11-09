@@ -185,7 +185,9 @@
           </ul>
           <aside class="h-r-search">
             <label class="h-r-s-box">
-              <el-input v-model="searchValue"></el-input>
+              <el-input v-model="searchValue" 
+              @keyup.enter.native="toSearch" 
+              ></el-input>
               <button type="submit" class="s-btn" @click="toSearch">
                 <em class="icon18">&nbsp;</em>
               </button>
