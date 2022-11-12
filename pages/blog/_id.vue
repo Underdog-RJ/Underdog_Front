@@ -1,15 +1,30 @@
 <template>
   <div id="aBlogsList" class="aBlogsList bg-fa of">
     <div class="blogBg">
-      <div class="navBody">
+      <!-- <div class="navBody">
         <div class="navTitle">目录</div>
         <ol class="js-toc navStyle"></ol>
+      </div>-->
+
+      <div
+        class="navBody"
+        :style="{width: windowWidth/1920*350+'px',height:windowWidth/1920*500+'px'}"
+      >
+        <el-tree
+          :data="data1"
+          :props="defaultProps"
+          @node-click="handleNodeClick"
+          :highlight-current="true"
+        ></el-tree>
       </div>
 
-      <!-- /博客详情 开始 -->
-      <section class="container_blog">
+      <!-- /博客详情 开始 :style="{ transform: `scale(${windowWidth/2000})` }"-->
+      <section
+        class="container_blog"
+        :style="{width: windowWidth/1920*1200+'px',marginLeft:windowWidth/1920*500+'px'}"
+      >
         <div class="mt20 c-infor-box">
-          <article class>
+          <article>
             <section class="mr30">
               <div class="i-box">
                 <div>
@@ -22,15 +37,11 @@
                   <div>
                     <img src alt />
                   </div>
-                  <div>
-                    <i class="el-icon-s-custom"></i>
-                    {{ blogInfo.authorNickname }}
-                  </div>
-                  <div>
-                    <i class="el-icon-view"></i>
-                    {{ blogInfo.viewCount }}
-                  </div>
-                  <div>评论数: {{ blogInfo.viewCount }}</div>
+
+                  <span class="mr20">作者: {{ blogInfo.authorNickname }}</span>
+                  <span class="mr20">章节: {{ blogInfo.zhangjie }}</span>
+                  <span class="mr20">阅读: {{ blogInfo.viewCount }}</span>
+                  <span class="mr20">收藏: {{ blogInfo.shoucang }}</span>
                   <div>最后修改于：{{ blogInfo.gmtModified }}</div>
                 </div>
                 <h1 style="text-align: center">{{ blogInfo.title }}</h1>
@@ -52,8 +63,11 @@
                       <span>博客内容</span>
                     </h6>
                     <div class="course-txt-body-wrap">
-                      <div id="contentId" class="course-txt-body js-toc-content">
-                        <p class="markdown-body" highlight v-html="blogInfo.content"></p>
+                      <div
+                        id="contentId"
+                        class="course-txt-body js-toc-content editormd-preview-container markdown-body"
+                      >
+                        <p class highlight v-html="dataHtml"></p>
                       </div>
                     </div>
                   </div>
@@ -65,7 +79,7 @@
                     </div>
                     <div>
                       <span>本文链接：</span>
-                      <a href="#">www.underdogedu.com</a>
+                      <a href="#">www.feifu.top</a>
                     </div>
                   </div>
 
@@ -361,6 +375,10 @@
 import blogApi from "@/api/blog";
 import comment from "@/api/blogcomment";
 import Prism from "prismjs";
+// 引入插件对应主题样式
+import "prismjs/themes/prism-okaidia.css";
+import "prismjs/themes/prism.css";
+
 import cookie from "js-cookie";
 import "mavon-editor/dist/css/index.css";
 import $ from "jquery";
@@ -376,6 +394,11 @@ export default {
   },
   data() {
     return {
+      data1: [],
+      defaultProps: {
+        children: "children",
+        label: "label"
+      },
       data: {},
       page: 1,
       flagEnjoy: false,
@@ -392,12 +415,15 @@ export default {
       loginInfo: {},
       test: "sadasd",
       currentCommentIndex: "",
-      flagInfo: false
+      flagInfo: false,
+      windowWidth: 0,
+      dataHtml: ""
     };
   },
   created() {},
 
   mounted() {
+    this.windowWidth = document.documentElement.clientWidth;
     this.initBlogInfo();
     this.initComment();
     var userStr = cookie.get("underdogedu_ucenter");
@@ -406,15 +432,28 @@ export default {
     }
 
     this.initDir();
+    this.initBlogMenu();
   },
   updated() {
-    // process.browser &&
-    //   document
-    //     .querySelectorAll("code")
-    //     .forEach((block) => Prism.highlightElement(block));
+    process.browser &&
+      document
+        .querySelectorAll("code")
+        .forEach(block => Prism.highlightElement(block));
   },
   watch: {},
   methods: {
+    async initBlogMenu() {
+      const res = await blogApi.getBlogMenu(this.blogId);
+      this.data1 = res.data.data.data;
+      if (!this.$isEmpty(this.data1)) {
+        const res = await blogApi.getContentByCid(this.data1[0]["uid"]);
+        this.dataHtml = res.data.data.data.replaceAll("data-original","src");
+      }
+    },
+    async handleNodeClick(data) {
+      const res = await blogApi.getContentByCid(data.uid);
+      this.dataHtml = res.data.data.data.replaceAll("data-original","src");
+    },
     async handleCommentFromSon(value) {
       this.comment.blogId = this.$route.params.id;
       this.comment.parentId = value.parentId;
@@ -566,16 +605,16 @@ export default {
       console.log(this.blogId);
       blogApi.getBlogInfo(this.blogId).then(response => {
         this.blogInfo = response.data.data.eduBlog;
-        // process.browser &&
-        //   document
-        //     .querySelectorAll("pre code")
-        //     .forEach((block) => Prism.highlightElement(block));
 
-        // console.log(this.blogInfo);
+        process.browser &&
+          document
+            .querySelectorAll("pre code")
+            .forEach(block => Prism.highlightElement(block));
       });
-      setTimeout(() => {
-        this.updateBot();
-      }, 200);
+
+      // setTimeout(() => {
+      //   this.updateBot();
+      // }, 200);
     },
     async handleEnjoy() {
       var userStr = cookie.get("underdogedu_ucenter");
@@ -611,14 +650,12 @@ export default {
 }
 
 .navBody {
-  width: 350px;
-  height: 500px;
   background: #fff;
   padding: 20px 5px 50px 20px;
   position: fixed;
   left: 50px;
-  top: 100px;
-  overflow: hidden;
+  top: 150px;
+  overflow: scroll;
   border-radius: 20px;
 }
 .navTitle {

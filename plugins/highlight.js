@@ -12,6 +12,8 @@ Highlight.install = function (Vue) {
    inserted: function (el) {
      let blocks = el.querySelectorAll('pre code');
      for (let i = 0; i < blocks.length; i++) {
+      console.log("ssss")
+      console.log(blocks[i])
          Hljs.highlightBlock(blocks[i]);
          blocks[i].innerHTML = `<ol><li>${blocks[i].innerHTML.replace(
           /\n/g,
@@ -23,6 +25,8 @@ Highlight.install = function (Vue) {
    componentUpdated: function (el) {
     let blocks = el.querySelectorAll('pre code');
     for (let i = 0; i < blocks.length; i++) {
+      console.log("ssss")
+      console.log(blocks[i])
         Hljs.highlightBlock(blocks[i]);
     }
    }

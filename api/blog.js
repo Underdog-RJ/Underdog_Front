@@ -1,6 +1,19 @@
 import request from '@/utils/request'
 export default {
 
+  getContentByCid(cid){
+    return request({
+      url: `/eduservice/Blogfront/getContentByCid/${cid}`,
+      method: 'get'
+    })
+  },
+
+  getBlogMenu(blogId){
+    return request({
+      url: `/eduservice/Blogfront/getFrontBlogMenu/${blogId}`,
+      method: 'get'
+    })
+  },
 // 获取评论的展开页面
 commentChild(blogId,page,size){
   return request({

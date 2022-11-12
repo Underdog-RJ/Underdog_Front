@@ -27,8 +27,7 @@
                     :title="item.title"
                     href="#"
                     @click="searchOne(item.id, index)"
-                    >{{ item.title }}</a
-                  >
+                  >{{ item.title }}</a>
                 </li>
               </ul>
             </dd>
@@ -48,8 +47,7 @@
                     :title="item.title"
                     href="#"
                     @click="searchTwo(item.id, index)"
-                    >{{ item.title }}</a
-                  >
+                  >{{ item.title }}</a>
                 </li>
               </ul>
             </dd>
@@ -61,35 +59,47 @@
           <!-- /无数据提示 开始-->
           <section class="no-data-wrap" v-if="data.total == 0">
             <em class="icon30 no-data-ico">&nbsp;</em>
-            <span class="c-666 fsize14 ml10 vam"
-              >没有相关数据，小编正在努力整理中...</span
-            >
+            <span class="c-666 fsize14 ml10 vam">没有相关数据，小编正在努力整理中...</span>
           </section>
           <!-- /无数据提示 结束-->
 
-          <article class="" v-if="data.total > 0">
-            <ul class="show" id="">
+          <article class v-if="data.total > 0">
+            <ul class="show" id>
               <li v-for="item in data.list" :key="item.id" class="show_item">
                 <section class="blog-img">
                   <div class="img-float">
-                    <img :src="item.firstPicture" class="" :alt="item.title" />
+                    <img :src="item.firstPicture" class :alt="item.title" />
                   </div>
                   <div class="show_left">
                     <div class="title_bolg">
-                      <a :href="'/blog/' + item.id" :title="item.title">{{
+                      <a :href="'/blog/' + item.id" :title="item.title">
+                        {{
                         item.title
-                      }}</a>
+                        }}
+                      </a>
+                    </div>
+                    <div>
+                      <el-tag
+                      class="tagStyle"
+                      @click = "handleClick(tag)"
+                        v-for="(tag,index) in item.tagslist"
+                        :key="index"
+                        :type="index ==0 ?'success':index==1?'info':index==2?'warning':'danger'"
+                      >{{tag}}</el-tag>
                     </div>
                     <div class="item_center">
                       <span>{{item.descption}}</span>
                     </div>
 
                     <div class="item_bottom">
-                      <a href="">
-                         <span> 作者: {{ item.authorNickname }} </span>
-                      </a>
-                      <span> 浏览: {{ item.viewCount }} </span>
+                      <span>作者: {{ item.authorNickname }}</span>
+
                       <span>时间: {{ item.gmtCreate }}</span>
+                    </div>
+                    <div class="item_bottom">
+                      <span>章节: {{ item.zhangjie }}</span>
+                      <span>阅读: {{ item.viewCount }}</span>
+                      <span>收藏: {{ item.shoucang }}</span>
                     </div>
                   </div>
                 </section>
@@ -102,7 +112,7 @@
         <div>
           <div class="paging">
             <!-- undisable这个class是否存在，取决于数据属性hasPrevious -->
-            <a
+            <!-- <a
               :class="{ undisable: !data.hasPrevious }"
               href="#"
               title="首页"
@@ -141,7 +151,15 @@
               title="末页"
               @click.prevent="gotoPage(data.pages)"
               >末</a
-            >
+            >-->
+            <el-pagination
+              @current-change="gotoPage"
+              :current-page="data.current"
+              :page-size="5"
+              background
+              layout="total, prev, pager, next, jumper"
+              :total="data.total"
+            ></el-pagination>
             <div class="clear" />
           </div>
         </div>
@@ -162,7 +180,7 @@ export default {
     return {
       page: 1, //当前页
       data: {}, //课程列表
-      subjectNestedList: [ ], // 一级分类列表
+      subjectNestedList: [], // 一级分类列表
       subSubjectList: [], // 二级分类列表
       searchObj: {}, // 查询表单对象
       oneIndex: -1,
@@ -172,40 +190,47 @@ export default {
       priceSort: ""
     };
   },
-  created() {
-   
-  },
-  mounted(){
- //博客第一次查询
+  created() {},
+  mounted() {
+    //博客第一次查询
     this.initBlogFirst();
     //一级分类额显示
     this.initSubject();
     // this.searchOne(0,0)
   },
   methods: {
+    handleClick(data){
+      this.$router.push("/search/" + data);
+    },
     //1.查询第一页数据
     initBlogFirst() {
-      blogApi.getBlogList(1, 8, this.searchObj).then(response => {
+      blogApi.getBlogList(1, 5, this.searchObj).then(response => {
         this.data = response.data.data;
-   
       });
     },
     //2查询所有的分类
     initSubject() {
       blogApi.getAllSubject().then(response => {
         this.subjectNestedList = response.data.data.list;
-   
       });
     },
     //分页切换的方法
     gotoPage(page) {
-      blogApi.getBlogList(page, 8, this.searchObj).then(response => {
+      blogApi.getBlogList(page, 5, this.searchObj).then(response => {
         this.data = response.data.data;
+        this.data.list.forEach(e => {
+          if (!this.$isEmpty(e["tags"])) {
+            var tmp = e["tags"].split(",");
+            let n = tmp.length;
+            e["tagslist"] = tmp.splice(0, n - 1);
+          }
+          console.log(e);
+        });
       });
     },
     //点击某个一级分类，查询对应的二级分类
     searchOne(subjectParentId, index) {
-      console.log(subjectParentId,index)
+      console.log(subjectParentId, index);
       //把传递index值赋值给oneIndex为了active样式生效
       this.oneIndex = index;
 
@@ -244,5 +269,12 @@ export default {
 };
 </script>
 <style scoped>
-
+.tagStyle{
+  margin: 10px;
+  cursor: pointer;
+ 
+}
+.tagStyle:hover{
+  transform: scale(1.1);
+}
 </style>

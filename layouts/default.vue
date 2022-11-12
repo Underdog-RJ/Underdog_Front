@@ -387,7 +387,7 @@ export default {
   },
   mounted() {
     this.showInfo();
-    // this.startFire();
+    this.startFire();
   }
 };
 </script>
@@ -398,8 +398,8 @@ export default {
   background: url(https://npm.elemecdn.com/lql_static@latest/bg/00189.webp)
     no-repeat;
   margin: 0px;
-  background-size: 100% 100%;
-  background-attachment: fixed; */
+  background-size: 100% 100%; */
+  background-attachment: fixed;
   background-color: #eee;
   min-height: 1000px;
 }
