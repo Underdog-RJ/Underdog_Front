@@ -387,7 +387,7 @@ export default {
   },
   mounted() {
     this.showInfo();
-    this.startFire();
+    // this.startFire();
   }
 };
 </script>
