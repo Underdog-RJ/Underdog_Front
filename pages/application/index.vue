@@ -93,7 +93,7 @@ export default {
   data() {
     return {
       imageUrl: "",
-      BASE_API: "http://192.168.0.35:8222", // 接口API地址
+      BASE_API: "http://127.0.0.1:8222", // 接口API地址
       img_list: [],
       subjectNestedList: [
         {

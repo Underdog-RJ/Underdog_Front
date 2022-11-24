@@ -64,7 +64,7 @@ export default {
   data() {
     return {
       chapterVideoList: [],
-      URL_PRE: "http://10.1.1.160:8888/video/",
+      URL_PRE: "http://159.27.184.52:9001/video/",
       vid: "b6556044e3104c1ca22340b05b1ffb66",
       playAuth: "",
       player: {},
