@@ -24,10 +24,10 @@ service.interceptors.request.use(
 // http response 拦截器
 service.interceptors.response.use(
   response => {
-    if(response.data.code==20001){
-      window.location.href="/error"
-      return
-    }
+    // if(response.data.code==20001){
+    //   window.location.href="/error"
+    //   return
+    // }
     //debugger
     if (response.data.code == 28004) {
         window.location.href="/login"
