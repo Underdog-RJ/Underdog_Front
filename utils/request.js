@@ -44,7 +44,7 @@ service.interceptors.response.use(
     }
   },
   error => {
-    window.location.href="/error"
+    // window.location.href="/error"
     return Promise.reject(error.response)   // 返回接口返回的错误信息
 });
 export default service
