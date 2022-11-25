@@ -1,13 +1,30 @@
 module.exports = {
-  server:{
-    port:80,
-    host:'0.0.0.0'
+  modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy'
+  ],
+  axios: {
+    proxy: true
+    ,
+  },
+  proxy: {
+    '/api': {
+      target: 'http://10.1.1.160:8222',
+      pathRewrite: {
+        '^/api/': '/',
+        changeOrigin: true
+      }
+    }
+  },
+  server: {
+    port: 80,
+    host: '0.0.0.0'
   },
   plugins: [
     {
-      src:'~/plugins/utils'
+      src: '~/plugins/utils'
     },
-    {src: "@/plugins/video", ssr: false},
+    { src: "@/plugins/video", ssr: false },
     { src: '~/plugins/nuxt-swiper-plugin.js', ssr: false },
     {
       src: '~plugins/ElementUI',
@@ -17,7 +34,7 @@ module.exports = {
       src: '~plugins/tinymce',
       ssr: false,
     },
-     {
+    {
       src: '~plugins/tocbot.min.js',
       ssr: false,
     },
@@ -29,7 +46,7 @@ module.exports = {
       src: '@plugins/highlight',
       ssr: false,
     },
-   
+
     {
       src: '~plugins/ucentNavPlugin',
       ssr: false,
@@ -42,7 +59,7 @@ module.exports = {
     './static/tinymce4.7.5/skins/lightgray/skin.min.css',
     './static/tinymce4.7.5/skins/lightgray/content.min.css',
     './static/tinymce4.7.5/plugins/codesample/css/prism.css',
-      './static/tocbot/tocbot.css',
+    './static/tocbot/tocbot.css',
 
   ],
   /*
@@ -67,43 +84,43 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    
+
     babel: {
-      compact:false,
+      compact: false,
       plugins: [
         [
           'prismjs',
           {
             theme: 'coy',
             css: true,
-              languages: [
-                  'html',
-                  'css',
-                  'javascript',
-                  'php',
-                  'dart',
-                  'bash',
-                  'nginx',
-                  'sql',
-                  'c',
-                  'cpp',
-                  'python',
-                  'go',
-                  'java'
-              ],
-              plugins: [
-                  'show-language',
-                  'copy-to-clipboard'
-              ],
-            
+            languages: [
+              'html',
+              'css',
+              'javascript',
+              'php',
+              'dart',
+              'bash',
+              'nginx',
+              'sql',
+              'c',
+              'cpp',
+              'python',
+              'go',
+              'java'
+            ],
+            plugins: [
+              'show-language',
+              'copy-to-clipboard'
+            ],
+
           }
+        ]
       ]
-      ]
-  },
+    },
     /*
     ** Run ESLint on save
     */
-    extend (config, { isDev, isClient }) {
+    extend(config, { isDev, isClient }) {
       if (isDev && isClient) {
         config.module.rules.push({
           enforce: 'pre',
@@ -114,7 +131,7 @@ module.exports = {
       }
     }
   },
-  vendor:['element-ui'] ,  //防止element-ui被打包多次
- 
+  vendor: ['element-ui'],  //防止element-ui被打包多次
+
 }
 

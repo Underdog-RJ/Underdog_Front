@@ -5,7 +5,7 @@ const service = axios.create({
     // baseURL:'http://192.168.172.110:8222/',
     // baseURL:'http://127.0.0.1:8222/',
     // baseURL:'http://159.27.184.52:9002/',
-    baseURL:'http://10.1.1.160:8222/',
+    baseURL:'/api',
     timeout:30000
 })
 

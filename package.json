@@ -34,6 +34,8 @@
     "vue-video-player": "^5.0.2"
   },
   "devDependencies": {
+    "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/proxy": "^2.1.0",
     "babel-eslint": "^10.0.1",
     "babel-plugin-prismjs": "^2.0.1",
     "eslint": "^4.19.1",
