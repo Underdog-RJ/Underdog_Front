@@ -292,7 +292,7 @@ export default {
       subjectTwoList: [], //二级分类
       blogList: [],
       enjoyList: [],
-      BASE_API: "http://127.0.0.1:8222", // 接口API地址
+      BASE_API: "http://10.1.1.160:8222", // 接口API地址
       uCoin: 0,
       loginInfo: {},
       pageNo1: 1,

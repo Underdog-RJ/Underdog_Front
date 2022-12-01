@@ -16,9 +16,9 @@
             <router-link to="/course" tag="li" active-class="current">
               <a>课程</a>
             </router-link>
-            <router-link to="/teacher" tag="li" active-class="current">
+            <!-- <router-link to="/teacher" tag="li" active-class="current">
               <a>名师</a>
-            </router-link>
+            </router-link> -->
             <router-link to="/blog" tag="li" active-class="current">
               <a>文章</a>
             </router-link>
@@ -27,6 +27,9 @@
             </router-link>
             <router-link to="/application" tag="li" active-class="current">
               <a>应用</a>
+            </router-link>
+            <router-link to="/downloads" tag="li" active-class="current">
+              <a>下载</a>
             </router-link>
           </ul>
           <!-- / nav -->

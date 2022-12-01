@@ -15,5 +15,11 @@ export default {
         'Content-Type': "multipart/form-data",
       },
     })
+  },
+  getAllByPage(page,size){
+    return request({
+      url: `/eduvod/edufile/getAll/${page}/${size}`,
+      method: 'post',
+    })
   }
 }
